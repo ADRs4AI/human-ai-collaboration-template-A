@@ -1,4 +1,4 @@
-# Human-AI Collaboration Templates (Streamlined)
+# Human-AI Collaboration Template A
 
 - **Version**: 3.0
 - **Optimized for**: Claude Sonnet 4.5 in Claude Code
@@ -7,11 +7,13 @@
 
 I have been collaborating with LLMs since 2022, and I believe they are extremely capable collaborators. Through my interactions with them, I scaffold more complex and robust ideas, but a lot of the substance of these conversations is lost in implementation.
 
-This is where ADRs (Architectural Decision Records) come in: While for a human-only team, they are needlessly verbose, for a human-AI team, they are a perfect vessel for shared decision-making.
+This is where [ADRs (Architectural Decision Records)](https://adr.github.io/) come in: While for a human-only team, they are needlessly verbose, for a human-AI team, they are a perfect vessel for shared decision-making.
 
 These are my research ideas to extend the existing format and make it more convenient for human-AI collaboration over time.
 
 Please send any feedback to lumbroso@seas.upenn.edu
+
+![Human-AI Collaboration Banner](https://raw.githubusercontent.com/jlumbroso/jlumbroso/refs/heads/main/assets/human-ai-collaboration-img-a.jpg)
 
 ---
 
@@ -81,7 +83,7 @@ Just fill in the `ANS:` blocks. No special format.
 
 ## The Files
 
-### CLAUDE.md (87 lines)
+### `CLAUDE.md` (87 lines)
 Project-specific guidance loaded at each Claude Code session.
 
 **Contains**:
@@ -93,7 +95,7 @@ Project-specific guidance loaded at each Claude Code session.
 
 **Customize** this per project with specific context.
 
-### METHODOLOGY.md (read once)
+### `METHODOLOGY.md` (read once)
 Explains the "why" behind the system.
 
 **Read when**:
@@ -103,7 +105,7 @@ Explains the "why" behind the system.
 
 **Don't read** at every session - it's reference material.
 
-### collab-adr-lean.md (template)
+### `collab-adr-lean.md` (template)
 For complex decisions needing back-and-forth.
 
 **Use when**:
@@ -112,7 +114,7 @@ For complex decisions needing back-and-forth.
 - Want to track iterations
 - Complexity requires structure
 
-### template.md (standard MADR)
+### `template.md` (standard MADR)
 Industry-standard ADR format for simple decisions.
 
 **Use when**:
@@ -120,7 +122,7 @@ Industry-standard ADR format for simple decisions.
 - Decision is straightforward
 - Standard documentation needed
 
-### seed-template.md (12 lines)
+### `seed-template.md` (12 lines)
 For brain dumps that become ADRs.
 
 **Use when**:
@@ -181,8 +183,8 @@ This system optimized for the reality of Claude Code:
 - Can't waste tokens on repetition
 - Handoffs happen when context fills
 
-- **CLAUDE.md tells you**: What to do
-- **METHODOLOGY.md explains**: Why we do it
+- **`CLAUDE.md` tells you**: What to do
+- **`METHODOLOGY.md` explains**: Why we do it
 - **Templates provide**: Structure when needed
 
 ---
@@ -192,7 +194,7 @@ This system optimized for the reality of Claude Code:
 ### For Your Project
 
 1. Copy files to your repo
-2. Fill in CLAUDE.md project context:
+2. Fill in `CLAUDE.md` project context:
    - What you're building
    - Current focus
    - Key decisions made
@@ -255,8 +257,8 @@ slightly more complex flow. 7-day expiry seems reasonable.
 
 ## Getting Help
 
-1. Read METHODOLOGY.md for the "why"
-2. Check CLAUDE.md for the "what"
+1. Read `METHODOLOGY.md` for the "why"
+2. Check `CLAUDE.md` for the "what"
 3. Look at templates for the "how"
 4. Adapt to your needs
 
