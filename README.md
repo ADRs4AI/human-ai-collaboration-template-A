@@ -1,9 +1,9 @@
 # Human-AI Collaboration Templates (Streamlined)
 
-**Version**: 3.0
-**Optimized for**: Claude Sonnet 4.5 in Claude Code
-**Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1
-**Philosophy**: Preserve conversations, minimize ceremony
+- **Version**: 3.0
+- **Optimized for**: Claude Sonnet 4.5 in Claude Code
+- **Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1
+- **Philosophy**: Preserve conversations, minimize ceremony
 
 I have been collaborating with LLMs since 2022, and I believe they are extremely capable collaborators. Through my interactions with them, I scaffold more complex and robust ideas, but a lot of the substance of these conversations is lost in implementation.
 
@@ -181,9 +181,9 @@ This system optimized for the reality of Claude Code:
 - Can't waste tokens on repetition
 - Handoffs happen when context fills
 
-**CLAUDE.md tells you**: What to do
-**METHODOLOGY.md explains**: Why we do it
-**Templates provide**: Structure when needed
+- **CLAUDE.md tells you**: What to do
+- **METHODOLOGY.md explains**: Why we do it
+- **Templates provide**: Structure when needed
 
 ---
 
