@@ -88,9 +88,11 @@ project/
 
 ## Templates
 
-- **Brain dump**: `seed-template.md` → Simple capture
-- **Collaborative decision**: `collab-adr-lean.md` → Full workflow
-- **Simple decision**: `template.md` → Standard MADR format
+The templates are in the folder `docs/adr/templates/`.
+
+- **Brain dump**: `docs/adr/templates/seed-template.md` → Simple capture
+- **Collaborative decision**: `docs/adr/templates/collab-adr-lean.md` → Full workflow
+- **Simple decision**: `docs/adr/templates/template.md` → Standard MADR format
 
 **When to use**:
 - Quick question? → Start in conversation, escalate to ADR if needed
@@ -111,7 +113,7 @@ Example: `feat: implement JWT authentication per ADR-0014`
 
 ## Handoff Protocol
 
-If context window fills mid-work, create `HANDOFF.md`:
+If context window fills mid-work, create `docs/HANDOFF-datetime.md`:
 
 ```markdown
 # Handoff
@@ -130,4 +132,4 @@ If context window fills mid-work, create `HANDOFF.md`:
 
 ---
 
-*For methodology and philosophy, see: `METHODOLOGY.md` (read once, reference as needed)*
+*For methodology and philosophy, see: `docs/METHODOLOGY.md` (read once, reference as needed)*

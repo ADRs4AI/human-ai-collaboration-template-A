@@ -114,17 +114,14 @@ Replace these sections:
 
 ## Learn More
 
-- **INDEX.md** - Complete navigation
 - **README.md** - Full documentation
 - **METHODOLOGY.md** - The "why"
-- **COMPARISON.md** - What changed from v2.0
-- **THIS-CONVERSATION.md** - System in action
 
 ---
 
 ## Version
 
-v3.0 - Streamlined by Claude Sonnet 4.5 (Dec 2024)
+v3.0 - Streamlined by Claude Sonnet 4.5 (Nov 2025)
 
 ---
 

@@ -2,8 +2,16 @@
 
 **Version**: 3.0
 **Optimized for**: Claude Sonnet 4.5 in Claude Code
-**Created by**: Jérémie Lumbroso & Claude
+**Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1
 **Philosophy**: Preserve conversations, minimize ceremony
+
+I have been collaborating with LLMs since 2022, and I believe they are extremely capable collaborators. Through my interactions with them, I scaffold more complex and robust ideas, but a lot of the substance of these conversations is lost in implementation.
+
+This is where ADRs (Architectural Decision Records) come in: While for a human-only team, they are needlessly verbose, for a human-AI team, they are a perfect vessel for shared decision-making.
+
+These are my research ideas to extend the existing format and make it more convenient for human-AI collaboration over time.
+
+Please send any feedback to lumbroso@seas.upenn.edu
 
 ---
 
@@ -104,8 +112,6 @@ For complex decisions needing back-and-forth.
 - Want to track iterations
 - Complexity requires structure
 
-**Size**: ~120 lines (vs 400+ in over-engineered version)
-
 ### template.md (standard MADR)
 Industry-standard ADR format for simple decisions.
 
@@ -121,8 +127,6 @@ For brain dumps that become ADRs.
 - Thoughts are unstructured
 - Multiple topics mixed together
 - Just need to capture everything
-
-**Perfect as-is** - don't change it.
 
 ---
 
@@ -153,33 +157,6 @@ grep '^### COD:' docs/adr/         # Find code examples
 
 ---
 
-## What Got Cut from v2.0
-
-We removed ~60% of content that was ceremony without value:
-
-**Cut**:
-- Mood/energy tracking
-- Extensive validation ceremonies  
-- "Understanding Jérémie" sections
-- Cognitive approach documentation
-- Subagent language
-- Arbitrary metrics
-- Emoji-heavy headers
-- Repetitive philosophy
-- Quick command aliases
-- Health check scripts
-
-**Kept**:
-- Navigation codes (genuinely useful)
-- QST:/ANS: workflow (works well)
-- Iteration tracking (shows evolution)
-- Clear roles (who does what)
-- Handoff protocol (enables continuity)
-
-**Result**: System that serves the work instead of becoming its own burden.
-
----
-
 ## Success Metrics (Actual)
 
 You know it's working when:
@@ -193,22 +170,6 @@ You know it's not working when:
 - Process feels like ceremony
 - Can't find past decisions
 - Repeated explanations needed
-
----
-
-## Comparison: v2.0 vs v3.0
-
-| Aspect | v2.0 (Opus) | v3.0 (Streamlined) |
-|--------|-------------|-------------------|
-| CLAUDE.md | 300+ lines | 87 lines |
-| Collab ADR | 400+ lines | ~120 lines |
-| Seed template | 50+ lines | 12 lines |
-| Navigation codes | 15+ codes | 6 core codes |
-| Validation | Every iteration | When it matters |
-| Philosophy | Repeated everywhere | Once, in METHODOLOGY.md |
-| Emojis | Throughout | None |
-| Ceremony | High | Minimal |
-| Context cost | Expensive | Efficient |
 
 ---
 
