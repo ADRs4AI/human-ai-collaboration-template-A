@@ -42,6 +42,7 @@ COD:  # Code examples → grep '^### COD:' docs/adr/
 API:  # API calls     → grep '^### API:' docs/adr/
 FIL:  # Files         → grep '^### FIL:' docs/adr/
 DOC:  # Documentation → grep '^### DOC:' docs/adr/
+NOT:  # Notes, remarks, comments, observations → grep 'NOT:' docs/adr/
 ```
 
 ---

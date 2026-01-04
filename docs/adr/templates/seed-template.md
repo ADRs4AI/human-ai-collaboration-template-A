@@ -1,7 +1,7 @@
 # SEED: [Topic]
 
-**Date**: [YYYY-MM-DD]
-**From**: [Your name]
+- **Date**: [YYYY-MM-DD]
+- **From**: [Your name]
 
 ---
 

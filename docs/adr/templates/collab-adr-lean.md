@@ -1,9 +1,9 @@
 # [ADR Title - Decision/Topic]
 
-**Date**: [YYYY-MM-DD]
-**Iteration**: [N]
-**Status**: [Draft | Accepted | Implemented | Superseded]
-**Deciders**: [Human name], [AI model]
+- **Date**: [YYYY-MM-DD]
+- **Iteration**: [N]
+- **Status**: [Draft | Accepted | Implemented | Superseded]
+- **Deciders**: [Human name], [AI model]
 
 ---
 

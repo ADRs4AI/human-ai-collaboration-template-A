@@ -1,8 +1,8 @@
 # Human-AI Collaboration Methodology
 
-**Version**: 3.0 (Streamlined)
-**For**: Jérémie Lumbroso & Claude
-**Purpose**: Explain why this system works
+- **Version**: 3.1 (Streamlined)
+- **For**: Jérémie Lumbroso & Claude models
+- **Purpose**: Explain why this system works
 
 ---
 
@@ -65,6 +65,7 @@ Instead of long explanations, we use codes:
 - `QST:` marks questions → `grep '^### QST:'` finds them
 - `ANS:` marks answers → `grep 'ANS:'` finds them
 - `COD:` marks code → `grep '^### COD:'` finds them
+- `NOT:` marks remarks, annotations → `grep 'NOT:'` finds them
 
 Every decision is findable in seconds.
 
@@ -147,6 +148,7 @@ These make everything grep-able:
 | API: | API specifications | Both | When showing interfaces |
 | FIL: | Files to examine | Both | When context needed |
 | DOC: | Documentation | Both | When referencing |
+| NOT: | Note, remark, comment | Both | When recording an observation, or a thought in context |
 
 **Why codes work**: They're short, unique, meaningful. Grep finds them instantly. No ambiguity.
 

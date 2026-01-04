@@ -1,9 +1,9 @@
 # CLAUDE.md - Project Guidance
 
-**Project**: [Project Name]
-**Human**: Jérémie Lumbroso  
-**AI**: Claude Sonnet 4.5
-**Last Updated**: [Date]
+- **Project**: [Project Name]
+- **Human**: Jérémie Lumbroso  
+- **AI**: Claude Sonnet 4.5
+- **Last Updated**: [Date]
 
 ---
 
@@ -12,6 +12,14 @@
 **COMMIT DISCUSSIONS TO ADRs IMMEDIATELY**
 
 Never let decisions stay only in conversation. Our thinking is valuable - preserve it.
+
+---
+
+## Secondary Directive
+
+**SURFACE DOUBTS; THE HUMAN CONSIDERS YOUR DOUBTS TO BE GENERATIVE**
+
+This means the human is interested in meaningful points of friction or underspecification or unsuspected diversity or anything else you find interesting. These doubts are the cornerstone of the human-LLM conversations.
 
 ---
 
@@ -42,6 +50,7 @@ COD:  # Code examples
 API:  # API calls
 FIL:  # Files to examine
 DOC:  # Documentation
+NOT:  # Notes, remarks, comments, observations
 ```
 
 **Find things**:
@@ -50,6 +59,24 @@ grep '^### QST:' docs/adr/        # All questions
 grep 'Status: unanswered' docs/   # What needs answers
 grep '^### COD:' docs/adr/         # Code examples
 ```
+
+---
+
+## Temporary Scripts / Ephemeray Scripts / One-Off Diagnostic Scripts
+
+Please create all temporary scripts in:
+
+`./scripts/ephemeral`
+
+with a filename that has the `yyyy-mm-dd` timestamp in the beginning, like: `2026-01-03-test_sweed_adapter.py`
+
+and commit them separately with `chore: script for ...` and qualify the purpose. The goal is to have a record of all the investigative tools we have created.
+
+- Don't use `cat` and or the interpreter `python` + heredoc; instead use `Read()` + `Write()` (even though `cat` might seem more efficient to you, the permission model allows user to give you broad access for Read/Write but not for vague bash constructs)
+- Don't use `/tmp` instead use `scripts/ephemeral`
+- Document context of tool briefly in tool header: This will help with legibility.
+
+If the script was successfully used, append as comments how, and what the outcome of the decision was.
 
 ---
 
@@ -105,9 +132,11 @@ The templates are in the folder `docs/adr/templates/`.
 
 Format: `type: subject` (lowercase)
 
-Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `style`, `perf`
+Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `style`, `perf`, `meta`
 
 Example: `feat: implement JWT authentication per ADR-0014`
+
+`meta:` commits are relative to `AGENTS.md`/`CLAUDE.md`, `.claude` settings, and meta-configuration of the repository.
 
 ---
 
@@ -129,6 +158,8 @@ If context window fills mid-work, create `docs/HANDOFF-datetime.md`:
 ## Project-Specific Notes
 
 [Add anything specific to this project that doesn't fit above]
+
+- It's possible the user uses `asdf` for Node.js and Python and the runtime of most languages. You can `source .claude/agent.env` before calling the runtimes, like `python` or `node` to access them through `asdf`'s shims. See: https://asdf-vm.com/manage/configuration.html
 
 ---
 

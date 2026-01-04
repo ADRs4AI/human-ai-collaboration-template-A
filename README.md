@@ -1,7 +1,7 @@
 # Human-AI Collaboration Template A
 
-- **Version**: 3.0
-- **Optimized for**: Claude Sonnet 4.5 in Claude Code
+- **Version**: 3.1
+- **Optimized for**: Claude models in general (and Sonnet 4.5 in particular) in Claude Code
 - **Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1
 - **Philosophy**: Preserve conversations, minimize ceremony
 
