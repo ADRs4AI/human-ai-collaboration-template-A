@@ -1,6 +1,6 @@
 # Quick Start Card
 
-**Streamlined Human-AI Collaboration System v3.0**
+**Streamlined Human-AI Collaboration System A v3.2**
 
 ---
 
