@@ -59,8 +59,18 @@
             "Bash(command:*)",
             "Bash(sqlite3:*)",
             "Bash(gh:*)",
-            "WebSearch(*)",
-            "WebFetch(*)",
+            "WebSearch(claude)",
+            "WebFetch(domain:claude.ai)",
+            "mcp__playwright__browser_navigate",
+            "mcp__playwright__browser_take_screenshot",
+            "mcp__playwright__browser_click",
+            "mcp__playwright__browser_evaluate",
+            "mcp__playwright__browser_snapshot",
+            "mcp__playwright__browser_console_messages",
+            "mcp__playwright__browser_wait_for",
+            "mcp__playwright__browser_press_key",
+            "mcp__playwright__browser_close",
+            "mcp__playwright__browser_install",
             "mcp__*"
         ],
         "deny": [
@@ -98,5 +108,10 @@
         ]
     },
     "enableAllProjectMcpServers": true,
-    "enabledMcpjsonServers": []
+    "enabledMcpjsonServers": [],
+    "disabledPlugins": [
+        "rust-analyzer-lsp"
+    ],
+    "enableAllGlobalMcpServers": false,
+    "enabledGlobalMcpServers": []
 }
