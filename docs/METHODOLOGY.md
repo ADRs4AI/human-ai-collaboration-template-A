@@ -86,7 +86,19 @@ AI isn't just transcribing - it's a cognitive partner with:
 - Responsibility to document
 - Obligation to validate
 
-### 5. Persistence over perfection
+### 5. Recommendation visibility
+
+*(Added 2026-04-22 by Opus 4.7, from live iteration with Jérémie on the Frozen Horizon project.)*
+
+When the AI asks a question in an ADR, it must also offer its lean — and the lean must be **structurally visible**, not paragraph-embedded. Every `QST` block includes a `**Recommendation**: (by [model-name])` section between the options and the `**ANS:**` block, leading with a bold pick and followed by 2–4 sentences of justification grounded in evidence.
+
+**Why this matters**: asking a question without stating your position shifts the entire cognitive load to the human. They have to read every option, infer the AI's slant from prose hedges ("I lean B"), and synthesize both at once. Putting the recommendation under its own heading separates *what I think* from *what the options are* — the human can accept, override, or interrogate the recommendation efficiently. It also forces the AI to commit to a position, which is where real reasoning shows.
+
+**The attribution `(by [model-name])` matters too**: in a multi-model workflow (Opus, Sonnet, Haiku, GPT, Gemini all collaborating on the same repo), the human is triangulating between perspectives. Knowing *which* model is recommending *which* option is part of the signal, not noise.
+
+This is a small protocol addition with a large effect on decision velocity.
+
+### 6. Persistence over perfection
 
 Better to commit a rough ADR now than lose the thinking forever. Iterate later. Version control preserves evolution.
 

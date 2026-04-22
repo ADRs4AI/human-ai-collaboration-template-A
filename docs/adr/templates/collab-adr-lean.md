@@ -53,10 +53,18 @@ grep '^### COD:' file.md            # Code examples
 
 ## Questions
 
+**Protocol** (added 2026-04-22 by Opus 4.7): every QST block must include a `**Recommendation**: (by [model-name])` section between the options and the `**ANS:**` block. The human should not have to extract the AI's lean from prose — put it under its own heading with a clear pick and a short justification grounded in evidence (data, prior ADRs, constraints). Lead the recommendation with a bold pick (`**B — short name.**`) so a skim reveals the AI's position without reading. If walking back an earlier lean during iteration, say so explicitly.
+
 ### QST: [Question text]
 - Status: unanswered
 - Why asking: [How this shapes my approach]
 - Need: [yes/no | explanation | code example | etc]
+
+[List the options A / B / C ... with a short description of each]
+
+**Recommendation**: (by [model-name, e.g. Opus 4.7])
+
+[One clear sentence naming the pick — e.g. "**B — persistent annotation.**" — followed by 2–4 sentences of justification. Reference evidence rather than taste. If walking back an earlier lean, say so explicitly.]
 
 **ANS:** (by [name])
 [Fill this in]
@@ -67,6 +75,10 @@ grep '^### COD:' file.md            # Code examples
 - Status: unanswered  
 - Why asking: [Context]
 - Need: [Format]
+
+**Recommendation**: (by [model-name])
+
+[Clear pick + justification.]
 
 **ANS:** (by [name])
 [Fill this in]

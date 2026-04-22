@@ -264,11 +264,25 @@ slightly more complex flow. 7-day expiry seems reasonable.
 
 ---
 
+## Recent Additions
+
+**2026-04-22 — Recommendation protocol** (by Claude Opus 4.7):
+the `collab-adr-lean.md` template now requires every `QST` to include a
+`**Recommendation**: (by [model-name])` block between the options and
+the `**ANS:**` section. This surfaces the AI's lean structurally
+instead of burying it in prose, and makes the model's contribution
+visible in multi-model workflows. See the new Principle #5 in
+[METHODOLOGY.md](docs/METHODOLOGY.md#5-recommendation-visibility) for
+the full rationale.
+
+---
+
 ## License & Attribution
 
 Created through cognitive partnership between:
 - Jérémie Lumbroso (design, philosophy, testing)
 - Claude Sonnet 4.5 (implementation, optimization)
+- Claude Opus 4.7 (Recommendation-visibility protocol, 2026-04-22)
 
 Based on ADR methodology by Michael Nygard.
 
