@@ -3,6 +3,9 @@
 - **Date**: [YYYY-MM-DD]
 - **From**: [Your name]
 
+<!-- MODEL INSTRUCTIONS: look for "Model Response Request" and engage dialogically and epistemically until chunking the seed into ADRs following `collab-adr-lean.md` + referencing ADRs in "Derived Into" section, see instructions below.
+-->
+
 ---
 
 ## Brain Dump
@@ -47,7 +50,7 @@
 
 *(This seed has not yet been chunked into ADRs)*
 
-<!-- When this seed is processed, the AI should update this section with:
+<!-- MODEL INSTRUCTIONS: When this seed is processed, the AI should update this section with:
 - ADR-NNNN: Brief title
 - ADR-NNNN: Brief title
 
