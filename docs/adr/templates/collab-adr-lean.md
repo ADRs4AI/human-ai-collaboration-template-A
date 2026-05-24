@@ -32,7 +32,7 @@ grep '^### COD:' file.md            # Code examples
 
 **Source**: [Type and link to where this ADR originated, e.g.:
 - `Human dump (below)` — stream-of-consciousness from a contributor
-- `Brief: <path/to/brief.md>` — a brief from another contributor
+- `Brief: <path/to/brief.md>` — a brief from another contributor (see also: [INBOX-PROTOCOL.md](../../../INBOX-PROTOCOL.md) if your project uses the inbox-based coordination protocol)
 - `Seed: <path/to/seed.md>` — a seed that was chunked into multiple ADRs
 - `Prior ADR open question: <ADR-xxxx#QST-N>` — a follow-up
 - `Code review / observation / external discussion / etc.`

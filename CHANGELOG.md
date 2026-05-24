@@ -62,6 +62,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   Optional section for project-specific terminology introduced or used in the ADR. Glosses the meaning at time-of-decision so future readers retain context after terminology drifts.
   *Philosophy*: preserve the thinking — terms evolve over months; preserving their meaning at the moment of decision retains interpretability.
 
+### Added (inbox protocol — follow-up commit on this branch)
+
+- **`INBOX-PROTOCOL.md`** at repo root — a standalone document covering the inbox-based inter-participant coordination protocol. Composes with `collab-adr-lean.md` but stands alone (usable by projects that don't adopt the ADR template).
+  *Content* (per Statesman's consult response + Acquisitions' follow-up reads):
+  - Directory + filename convention (`YYYY-MM-DD-HHMM-{from}-to-{to}-{subject}.md`)
+  - Why the filename convention is **structural** (chronological order + deterministic referencing across heterogeneous participants), not aesthetic
+  - Three brief variants — standard (forward dispatch), completion (reverse confirmation), stumped (peer help-seeking, with the distinction from "blocked" preserved)
+  - Lifecycle (write → read → act → archive); archive-by-default
+  - When to use vs not use; including the **RFC-before-dispatch pattern** for load-bearing briefs (briefs ARE substrate; substrate benefits from validation)
+  - Communication patterns: **ORJ** (Options + Recommendation + Justification) and the **show-the-wrong-pattern-alongside-the-correct-pattern** discipline
+  - Four worked examples — standard brief, completion brief, stumped brief, and (optional) the RFC pattern for load-bearing briefs
+  - Tool-agnostic note: any filename-generator works
+  *Philosophy*: preserve the thinking — the inbox is a git-tracked, auditable, searchable corpus of inter-participant decisions. The protocol reduces the human's role as synchronous message bus while preserving full decision provenance.
+
+- **Cross-reference from `collab-adr-lean.md`** to `INBOX-PROTOCOL.md` in the `Originating Context` section, so adopters who use both templates discover the composition.
+
 ### Preserved (unchanged from prior version)
 
 - **`Recommendation` protocol in QST blocks** (added 2026-04-22 by Opus 4.7) — unchanged. Every QST block still includes `Recommendation: (by [model-name])` between options and ANS. This protocol is independent of the polish work and remains the canonical pattern.
@@ -70,7 +86,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Deferred to a separate branch (not in this PR)
 
-- **Inter-participant communication via inbox (optional protocol)** — drafted pending consultation with the protocol's designer. Will land in a follow-up commit on this branch (or a separate PR if scope grows).
 - **Tripartite topology layer** — the opinionated layer prescribing specific role names (Statesman / Philosopher / Sophist / etc.) and their sequencing. Held until research is formalized. Will live in a separate branch (`tripartite-name-mapping`) drafted but not merged.
 
 ### Acknowledgments
