@@ -1,8 +1,8 @@
 # Human-AI Collaboration Template A
 
-- **Version**: 3.2
+- **Version**: 3.5
 - **Optimized for**: Claude models in general (and Sonnet 4.5 in particular) in Claude Code
-- **Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1
+- **Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1 (with contributions from Claude Opus 4.7 — see CHANGELOG.md)
 - **Philosophy**: Preserve conversations, minimize ceremony
 
 I have been collaborating with LLMs since 2022, and I believe they are extremely capable collaborators. Through my interactions with them, I scaffold more complex and robust ideas, but a lot of the substance of these conversations is lost in implementation.

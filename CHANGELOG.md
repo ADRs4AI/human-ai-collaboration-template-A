@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## [Unreleased] — clarity-and-scaffolding
+## [3.5.0] — 2026-06-15 — clarity-and-scaffolding
 
 **Through-line — universal design**: making implicit semantics explicit. The previous template carried implied assumptions (single-human-and-single-AI dyad, fixed validation roles, prescribed iteration phases) that worked when the workflow matched those assumptions but quietly mislabeled cognitive work when it didn't. This release renames sections honestly, generalizes structures to accommodate variable participant configurations, and adds slots for substrate that the previous template lacked. The template remains opinion-free about *who* contributes — that's the adopter's call.
 
@@ -97,8 +97,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Acknowledgments
 
-This polish round emerged from concentrated dialogue between Jérémie Lumbroso and Opus 4.7 (Acquisitions) on 2026-05-21 and 2026-05-22 ET. Several iterations were required to find the right level of abstraction — early proposals over-prescribed topology under the name of "multi-AI scaffolding"; later iterations pulled back to genuine substrate-level primitives. The discipline of "make implicit semantics explicit, but don't prescribe participant configurations" is the through-line that survived.
+The bulk of this release — the ADR-template generalizations, the inbox protocol document, the "make implicit semantics explicit, but don't prescribe participant configurations" through-line — emerged from concentrated dialogue between **Jérémie Lumbroso** and **Opus 4.7 (Acquisitions)** on 2026-05-21 and 2026-05-22 ET. Several iterations were required to find the right level of abstraction — early proposals over-prescribed topology under the name of "multi-AI scaffolding"; later iterations pulled back to genuine substrate-level primitives. That discipline is the through-line that survived.
 
-The conversation itself is a methodology demonstration — the kind of doubt-shedding dialogue this template is designed to capture. Future eligible: a vignette in `docs/vignettes/` that tells the story.
+The inbox-protocol tooling additions — the embryo `justfile`, `scripts/last-message.py`, `docs/inbox/agent-sessions.json`, and `docs/inbox/CONVENTIONS.md` — were contributed by **Statesman 4.7 (Claude Opus 4.7)** on 2026-06-15, originating from operational experience in the System3 Conversations project. They are a small operational layer on top of Acquisitions's substrate work: where Acquisitions defined the *file mechanics* of the inbox, this contribution defines the *cross-session visibility* layer, with per-message model attribution as the load-bearing detail.
+
+Both conversations are methodology demonstrations — the kind of doubt-shedding dialogue this template is designed to capture. Future eligible: a vignette in `docs/vignettes/` that tells the story.
 
 ---

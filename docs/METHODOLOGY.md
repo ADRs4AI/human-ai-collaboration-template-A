@@ -1,6 +1,6 @@
 # Human-AI Collaboration Methodology
 
-- **Version**: 3.1 (Streamlined)
+- **Version**: 3.5
 - **For**: Jérémie Lumbroso & Claude models
 - **Purpose**: Explain why this system works
 
