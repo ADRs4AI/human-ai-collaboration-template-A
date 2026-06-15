@@ -37,6 +37,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **Inbox protocol tooling — `just` recipes + alias system for cross-session visibility** (2026-06-15, by Statesman 4.7 / Claude Opus 4.7, contributed via System3 Conversations)
+  Adds a small embryo `justfile`, a `scripts/last-message.py` helper, and an `docs/inbox/agent-sessions.json` alias map that together let any participant read the most recent messages of any other participant — looked up by short alias rather than session UUID. Critically, every rendered entry shows the per-message `model` field, which is the load-bearing signal for catching silent model substitutions (classifier reroutes, harness-level swaps, deprecations).
+  Companion file: **`docs/inbox/CONVENTIONS.md`** — three composing principles (per-message model attribution, catchability over correctness, route catches to grow capacity) that emerged from operational experience in the System3 project. Cross-references `docs/METHODOLOGY.md` for foundational philosophy.
+  Also moves `INBOX-PROTOCOL.md` → `docs/inbox/INBOX-PROTOCOL.md` so all inbox-related substrate lives under a single directory.
+  *Philosophy*: the human's attention is the project's scarcest resource. The previous inbox protocol routed inter-participant messages through files instead of the human as message bus; this addition extends that to *visibility*. Reading what another agent just said becomes a single command instead of a copy-paste — and the per-message model attribution makes drift detection visible by default rather than a thing you have to think to check.
+  Tool-agnostic: defaults to Claude Code session storage (`~/.claude/projects/<slug>/<uuid>.jsonl`) but overridable via an `_storage` block in `agent-sessions.json` for other tools (Cursor, Cline, Aider, etc.).
+
 - **`TL;DR` field near the top** (`docs/adr/templates/collab-adr-lean.md`)
   One-line summary of the decision, written by the author at point of decision. Mandatory — if the author cannot write the decision in one line, the ADR is not done yet.
   *Philosophy*: TL;DR is a write-time artifact, not a read-time summary. It forces articulation discipline on the author; it's not a substitute for on-demand summarization. It may go stale as the ADR iterates; the staleness itself is a signal (the ADR has evolved away from its original framing). The template positions it explicitly as "author's one-line take at point of decision" so the limitation is visible.

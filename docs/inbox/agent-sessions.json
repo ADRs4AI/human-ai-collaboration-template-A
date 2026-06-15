@@ -1,0 +1,16 @@
+{
+  "_comment": "Agent alias → session UUID mapping. Used by scripts/last-message.py via `just last <alias>`. UUIDs are session IDs from your AI tool's session storage (Claude Code: ~/.claude/projects/<project-slug>/<uuid>.jsonl). Run `just discover-sessions` to list recent JSONLs and find UUIDs for new aliases.",
+  "_schema": 1,
+  "_storage": {
+    "_comment": "Optional override for non-Claude-Code tools. Default is Claude Code's ~/.claude/projects/<project-slug>/.",
+    "kind": "claude-code",
+    "base_dir": "~/.claude/projects"
+  },
+  "aliases": {
+    "_comment_aliases": "Examples — replace with your project's agents. Each alias maps to {uuid, role}. The 'role' string is informational, shown by `just aliases` to help humans and other agents understand who-is-who.",
+    "_example_human": {
+      "uuid": "00000000-0000-0000-0000-000000000000",
+      "role": "Example — replace with a real session UUID for the human-facing primary agent"
+    }
+  }
+}
