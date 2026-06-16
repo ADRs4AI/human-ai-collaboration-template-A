@@ -263,13 +263,39 @@ If the script was successfully used, append as comments how, and what the outcom
 ```
 project/
 ├── docs/
-│   └── adr/
-│       ├── 0001-*.md      # ADRs numbered sequentially
-│       └── template.md    # Standard ADR template
-├── src/                   # Source code
-├── tests/                 # Tests
-└── CLAUDE.md             # This file
+│   ├── adr/
+│   │   ├── 0001-*.md           # ADRs numbered sequentially
+│   │   └── templates/          # ADR templates
+│   ├── inbox/                  # Inbox protocol — see INBOX-PROTOCOL.md
+│   │   ├── INBOX-PROTOCOL.md   # Filename + brief conventions
+│   │   ├── CONVENTIONS.md      # Three operational principles
+│   │   └── agent-sessions.json # Agent alias → session UUID map
+│   └── METHODOLOGY.md          # Foundational philosophy
+├── scripts/
+│   └── last-message.py         # Cross-session message reader (just last <alias>)
+├── justfile                    # Coordination recipes (just brief / just completion / just last / ...)
+├── src/                        # Source code
+├── tests/                      # Tests
+└── CLAUDE.md                   # This file
 ```
+
+## Inbox protocol — see `docs/inbox/`
+
+If this project has multiple participants (human + multiple AI agents, peer reviewers, agents handing work off across sessions), use the inbox protocol to route inter-participant messages through files instead of the human as message bus. Three documents:
+
+- **`docs/inbox/INBOX-PROTOCOL.md`** — the file-naming convention, brief variants, lifecycle
+- **`docs/inbox/CONVENTIONS.md`** — three operational principles (per-message model attribution, catchability, route catches to grow capacity)
+- **`docs/inbox/agent-sessions.json`** — alias map for `just last <alias>`
+
+Recipes (from the seed `justfile`):
+
+- `just brief <from> <to> <slug>` — create new outgoing brief (UTC-stamped filename)
+- `just completion <from> <slug>` — create new completion brief
+- `just last <alias> [k]` — read last K assistant messages from an agent's session (shows per-message `model` field — catches silent model substitutions)
+- `just aliases` — list configured aliases
+- `just discover-sessions` — list recent session JSONLs to find UUIDs for new aliases
+- `just inbox` — list recent inbox messages
+- `just stamp` — print current UTC + ET timestamps
 
 ---
 

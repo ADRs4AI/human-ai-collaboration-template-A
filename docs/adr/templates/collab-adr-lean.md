@@ -2,8 +2,10 @@
 
 - **Date**: [YYYY-MM-DD]
 - **Iteration**: [N]
-- **Status**: [Draft | Accepted | Implemented | Superseded]
-- **Deciders**: [Human name], [AI model]
+- **Status**: [Draft | Proposed | Accepted | Implemented | Superseded]
+- **Deciders**: [Names / roles of contributors]
+
+**TL;DR**: [One-line summary of the decision, written by the author at point of decision. May go stale as the ADR iterates; treat as the author's intent at write-time, not the canonical current rendering. Mandatory field — if you cannot write this in one line, the ADR is not done yet.]
 
 ---
 
@@ -26,32 +28,46 @@ grep '^### COD:' file.md            # Code examples
 
 ---
 
-## Human Context
+## Originating Context
 
-**Your stream-of-consciousness here** - no structure needed, just dump everything.
+**Source**: [Type and link to where this ADR originated, e.g.:
+- `Human dump (below)` — stream-of-consciousness from a contributor
+- `Brief: <path/to/brief.md>` — a brief from another contributor (see also: [INBOX-PROTOCOL.md](../../../INBOX-PROTOCOL.md) if your project uses the inbox-based coordination protocol)
+- `Seed: <path/to/seed.md>` — a seed that was chunked into multiple ADRs
+- `Prior ADR open question: <ADR-xxxx#QST-N>` — a follow-up
+- `Code review / observation / external discussion / etc.`
 
-[Your thoughts, questions, frustrations, ideas, code snippets, whatever's on your mind about this decision]
+Multiple sources may be listed.]
 
-**Agency Grant**: [Optional: What freedom does AI have? "Implement as you see fit" / "Explore options" / "Just structure my thoughts"]
+[If the source is a human dump, drop the stream-of-consciousness here — no structure needed, just everything that's on your mind about this decision]
+
+[If the source is a brief, seed, or other reference, you may summarize the originating constraints here in a paragraph, OR rely on the link above.]
+
+**Agency Grant**: [Optional: What freedom does the author have? "Implement as you see fit" / "Explore options" / "Just structure my thoughts"]
 
 ---
 
-## AI Interpretation
+## Explicitation
 
-**What I understand you're asking**:
+*Making explicit what the Originating Context implied or contained tacitly. The author reflects back what they understand the problem to be, so misalignment surfaces here, not later.*
 
-1. [Thread/topic 1] - [why it matters]
-2. [Thread/topic 2] - [why it matters]
+**What I understand**:
 
-**Assumptions I'm making**:
+1. [Thread/topic 1] — [why it matters]
+2. [Thread/topic 2] — [why it matters]
+
+**Assumptions**:
+
 - [Assumption 1]
 - [Assumption 2]
 
-**Confirm**: Does this match what you meant?
+**Confirm**: [Who is the author asking to confirm? Could be the originator (if a brief or dump), another contributor, or a self-check before moving on.]
 
 ---
 
 ## Questions
+
+**Use the `QST:` / `ANS:` codes for open questions.** They're required for grep-ability and for any tooling (e.g., the ADRs4AI extension) that parses ADRs as structured documents. Open questions outside this format are invisible to those tools.
 
 **Protocol** (added 2026-04-22 by Opus 4.7): every QST block must include a `**Recommendation**: (by [model-name])` section between the options and the `**ANS:**` block. The human should not have to extract the AI's lean from prose — put it under its own heading with a clear pick and a short justification grounded in evidence (data, prior ADRs, constraints). Lead the recommendation with a bold pick (`**B — short name.**`) so a skim reveals the AI's position without reading. If walking back an earlier lean during iteration, say so explicitly.
 
@@ -143,18 +159,40 @@ POST /endpoint
 
 ---
 
+## Open Follow-ups
+
+*Concerns, observations, or questions surfaced during this ADR that don't block acceptance but shouldn't be lost. Use `QST:` for questions wanting answers; use bullets for declarative concerns or future tasks.*
+
+### QST: [Open question to revisit later]
+- Status: unresolved
+- Why deferring: [Reason it's not blocking this ADR]
+
+**ANS:** [Fill when resolved; or link to the ADR / discussion that resolved it]
+
+---
+
+- [ ] [Concern: a worry we accepted but want to monitor]
+- [ ] [Future task: something this decision implies but doesn't require now]
+- [ ] [Unverified assumption: something to verify before [milestone]]
+
+---
+
 ## Action Items
 
-- [ ] [Task 1] - Owner: [who]
-- [ ] [Task 2] - Owner: [who]
+- [ ] [Task 1] - Owner: [name / role]
+- [ ] [Task 2] - Owner: [name / role]
 
 ---
 
 ## Validation
 
-When we both agree:
-- [ ] Human: Decision captured correctly
-- [ ] AI: Understood the requirements
+*Each contributor confirms (add rows as needed; the prescribed examples are illustrative — replace with what's actually being confirmed):*
+
+- [ ] [Name / role]: Decision captured matches intent
+- [ ] [Name / role]: Reasoning is sound
+- [ ] [Name / role]: Approach is implementable
+- [ ] [Name / role]: Risks are acknowledged
+- [ ] [Name / role]: [What they're confirming]
 
 **Notes**: [Any caveats or follow-up needed]
 
@@ -162,14 +200,28 @@ When we both agree:
 
 ## Iterations
 
+*Each iteration captures how the ADR evolved. `Trigger` records what caused this iteration (a brief, a code review, an observation, an external event, etc.); `Outcome` records what changed and any status transition.*
+
 ### Iteration 1 ([date])
-- Human: [What you provided]
-- AI: [What I did]  
-- Outcome: [What changed]
+- Trigger: [What caused this iteration — e.g., initial draft from human dump / brief at <path> / etc.]
+- Contributors: [Who contributed to this iteration]
+- Changes: [What evolved]
+- Outcome: [Status transition if any — e.g., `Draft → Proposed`]
 
 ### Iteration 2 ([date])
-- [Updated information]
-- [How approach evolved]
+- Trigger: [What caused this iteration]
+- Contributors: [Who contributed]
+- Changes: [How approach evolved]
+- Outcome: [Status transition if any]
+
+---
+
+## Glossary (optional)
+
+*Project-specific terms introduced or used in this ADR, glossed for future readers. Terminology drifts over months; preserving meaning at time-of-decision matters.*
+
+- **[Term]**: [Definition at time-of-decision]
+- **[Term]**: [Definition]
 
 ---
 

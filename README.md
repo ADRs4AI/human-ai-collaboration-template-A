@@ -1,8 +1,8 @@
 # Human-AI Collaboration Template A
 
-- **Version**: 3.2
+- **Version**: 3.5
 - **Optimized for**: Claude models in general (and Sonnet 4.5 in particular) in Claude Code
-- **Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1
+- **Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1 (with contributions from Claude Opus 4.7 — see CHANGELOG.md)
 - **Philosophy**: Preserve conversations, minimize ceremony
 
 I have been collaborating with LLMs since 2022, and I believe they are extremely capable collaborators. Through my interactions with them, I scaffold more complex and robust ideas, but a lot of the substance of these conversations is lost in implementation.
@@ -266,6 +266,9 @@ slightly more complex flow. 7-day expiry seems reasonable.
 
 ## Recent Additions
 
+**2026-06-15 — Inbox-protocol tooling: `just last <alias>` for cross-session visibility** (by Statesman 4.7 / Claude Opus 4.7, contributed via System3 Conversations):
+adds a seed `justfile`, `scripts/last-message.py`, and a `docs/inbox/agent-sessions.json` alias map. Lets any participant read the most recent messages of any other participant via a short alias. Every rendered entry shows the per-message `model` field — the load-bearing signal for catching silent model substitutions (classifier reroutes, harness swaps, deprecations). Companion file `docs/inbox/CONVENTIONS.md` documents the three principles this tooling operationalizes. See CHANGELOG.md for the full rationale.
+
 **2026-04-22 — Recommendation protocol** (by Claude Opus 4.7):
 the `collab-adr-lean.md` template now requires every `QST` to include a
 `**Recommendation**: (by [model-name])` block between the options and
@@ -283,6 +286,7 @@ Created through cognitive partnership between:
 - Jérémie Lumbroso (design, philosophy, testing)
 - Claude Sonnet 4.5 (implementation, optimization)
 - Claude Opus 4.7 (Recommendation-visibility protocol, 2026-04-22)
+- Statesman 4.7 / Claude Opus 4.7 (Inbox-protocol tooling, 2026-06-15, contributed via System3 Conversations)
 
 Based on ADR methodology by Michael Nygard.
 

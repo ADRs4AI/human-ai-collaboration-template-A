@@ -1,6 +1,6 @@
 # Human-AI Collaboration Methodology
 
-- **Version**: 3.1 (Streamlined)
+- **Version**: 3.5
 - **For**: Jérémie Lumbroso & Claude models
 - **Purpose**: Explain why this system works
 
@@ -117,7 +117,7 @@ Better to commit a rough ADR now than lose the thinking forever. Iterate later. 
 **Why it works**: One ADR = one decision. Keeps focus tight.
 
 ### Phase 3: Seeding
-**AI**: Extracts relevant parts of dump into each ADR's "Human Context" section.
+**AI**: Extracts relevant parts of the dump (or other source — brief, prior ADR, observation) into each ADR's "Originating Context" section.
 
 **Why it works**: Preserves original thinking. Context isn't lost.
 
