@@ -287,7 +287,7 @@ If this project has multiple participants (human + multiple AI agents, peer revi
 - **`docs/inbox/CONVENTIONS.md`** — three operational principles (per-message model attribution, catchability, route catches to grow capacity)
 - **`docs/inbox/agent-sessions.json`** — alias map for `just last <alias>`
 
-Recipes (from the embryo `justfile`):
+Recipes (from the seed `justfile`):
 
 - `just brief <from> <to> <slug>` — create new outgoing brief (UTC-stamped filename)
 - `just completion <from> <slug>` — create new completion brief

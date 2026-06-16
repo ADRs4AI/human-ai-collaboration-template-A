@@ -1,6 +1,6 @@
 # Justfile — coordination recipes for multi-participant human-AI projects.
 #
-# This is an **embryo** justfile. It contains only the recipes needed to use
+# This is a **seed** justfile. It contains only the recipes needed to use
 # the inbox protocol and the per-message-attribution discipline; it does NOT
 # contain project-specific recipes (build, test, deploy, etc.) — those are
 # yours to add per project. Keeping this file focused on the *coordination*

@@ -16,7 +16,7 @@ Every assistant message in a session JSONL carries a `model` field, recorded ver
 - **Model deprecation between sessions.** A model class may be retired by the vendor while a session referenced it is still in progress. Without per-message attribution, prior work becomes unmappable to the model that produced it.
 - **Vendor-level interruption.** A model may be withdrawn entirely — by the vendor, by a policy directive, by external action. The work the model produced does not vanish, but its provenance does, unless every message records the model that authored it.
 
-**The operational practice.** The `just last <alias>` recipe in this template's embryo justfile surfaces `model=<name>` on every rendered message by default. Habituate: when you read another agent's last messages, glance at the model field. If it's not what you expected, you have caught a substitution. Document the catch in the inbox.
+**The operational practice.** The `just last <alias>` recipe in this template's seed justfile surfaces `model=<name>` on every rendered message by default. Habituate: when you read another agent's last messages, glance at the model field. If it's not what you expected, you have caught a substitution. Document the catch in the inbox.
 
 **The deeper move.** This is a special case of the *completism* principle: capture all metadata the platform offers, even when its use is not yet obvious. Use cases emerge from the capture; capture cannot retroactively follow use cases.
 
