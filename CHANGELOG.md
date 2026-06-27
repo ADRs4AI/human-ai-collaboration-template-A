@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- **`just adr "<TITLE>"` recipe — auto-numbered ADR creation** (`justfile`)
+  Mints the next sequential ADR file (`docs/adr/NNNN-<slug>.md`) by copying `docs/adr/templates/collab-adr-lean.md` into place. Three operational-bug fixes baked in from day one:
+    - **Next index = MAX(existing) + 1**, not COUNT + 1 — a naive count collides the moment any number is skipped (one downstream project went 0001..0016, 0018..0030 and the count-based recipe minted 0030 at attempt 31 — colliding with the just-landed ADR-0030).
+    - **Forces base-10** via `$(( 10#$LAST + 1 ))` — bash interprets leading-zero integer literals as octal; `$((0031 + 1))` is 26, not 32. Bites silently past 0010 and errors out past 0008.
+    - **`(grep || true)` pipefail guard** — an empty `docs/adr/` makes `grep` exit 1 (no match), which under `pipefail` would kill the script on the very first invocation in a fresh project. The `|| true` lets that case fall through to the `${LAST:-0}` fallback.
+  Slug sanitization matches the inbox `brief`/`completion` recipes: lowercase, non-alphanumerics → `-`, repeated dashes collapsed, no leading/trailing dash. Refuses to overwrite an existing file.
+  *Philosophy*: the template already ships the ADR scaffolding (`docs/adr/templates/collab-adr-lean.md` and an empty `docs/adr/`); this completes the workflow. Co-located with the inbox recipes because ADR creation is a coordination act, not a project-specific build step. Justfile intro updated to reflect that the seed's scope now covers ADR creation alongside the inbox protocol and per-message-attribution discipline.
+
+- **CLAUDE.md Prime Directive — pointer to the recipe** (`CLAUDE.md`)
+  The Prime Directive ("Commit discussions to ADRs immediately") now points at `just adr "<title>"` so the operational path is one line below the imperative.
+
+---
+
 ## [3.5.0] — 2026-06-15 — clarity-and-scaffolding
 
 **Through-line — universal design**: making implicit semantics explicit. The previous template carried implied assumptions (single-human-and-single-AI dyad, fixed validation roles, prescribed iteration phases) that worked when the workflow matched those assumptions but quietly mislabeled cognitive work when it didn't. This release renames sections honestly, generalizes structures to accommodate variable participant configurations, and adds slots for substrate that the previous template lacked. The template remains opinion-free about *who* contributes — that's the adopter's call.

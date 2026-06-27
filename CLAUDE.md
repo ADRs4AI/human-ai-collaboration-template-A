@@ -11,7 +11,7 @@
 
 **COMMIT DISCUSSIONS TO ADRs IMMEDIATELY**
 
-Never let decisions stay only in conversation. Our thinking is valuable - preserve it.
+Never let decisions stay only in conversation. Our thinking is valuable - preserve it. Use `just adr "<title>"` to mint the next-numbered ADR from the lean template.
 
 ---
 
