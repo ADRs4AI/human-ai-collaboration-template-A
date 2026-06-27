@@ -160,7 +160,9 @@ discover-sessions:
 adr TITLE:
     #!/usr/bin/env bash
     set -euo pipefail
-    LAST=$(ls docs/adr/ 2>/dev/null | grep -E '^[0-9]{4}-' | sed 's/-.*//' | sort -n | tail -1)
+    # `(grep || true)` so an empty docs/adr/ doesn't abort under pipefail
+    # (grep exits 1 on no-match → first invocation of an empty project would die).
+    LAST=$(ls docs/adr/ 2>/dev/null | { grep -E '^[0-9]{4}-' || true; } | sed 's/-.*//' | sort -n | tail -1)
     NEXT=$(printf "%04d" $(( 10#${LAST:-0} + 1 )))
     SLUG=$(echo "{{TITLE}}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
     FILE="docs/adr/${NEXT}-${SLUG}.md"
