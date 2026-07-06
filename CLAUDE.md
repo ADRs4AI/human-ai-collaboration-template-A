@@ -269,10 +269,14 @@ project/
 │   ├── inbox/                  # Inbox protocol — see INBOX-PROTOCOL.md
 │   │   ├── INBOX-PROTOCOL.md   # Filename + brief conventions
 │   │   ├── CONVENTIONS.md      # Three operational principles
-│   │   └── agent-sessions.json # Agent alias → session UUID map
+│   │   ├── ONBOARDING.md       # Crew onboarding (80% doc; per-seat briefs are deltas)
+│   │   ├── ENCODING-MAP.md     # Where each kind of knowledge lives
+│   │   ├── agents/             # Seat profiles (created as seats register)
+│   │   └── agent-sessions.json # Crew registry: seats, colors, models, groups
 │   └── METHODOLOGY.md          # Foundational philosophy
 ├── scripts/
-│   └── last-message.py         # Cross-session message reader (just last <alias>)
+│   ├── last-message.py         # Cross-session message reader (just last / just pulse)
+│   └── groups-lookup.py        # Group membership resolution (just groups / wait-for-brief)
 ├── justfile                    # Coordination recipes (just brief / just completion / just last / ...)
 ├── src/                        # Source code
 ├── tests/                      # Tests
@@ -281,19 +285,27 @@ project/
 
 ## Inbox protocol — see `docs/inbox/`
 
-If this project has multiple participants (human + multiple AI agents, peer reviewers, agents handing work off across sessions), use the inbox protocol to route inter-participant messages through files instead of the human as message bus. Three documents:
+If this project has multiple participants (human + multiple AI agents, peer reviewers, agents handing work off across sessions), use the inbox protocol to route inter-participant messages through files instead of the human as message bus. Five documents:
 
 - **`docs/inbox/INBOX-PROTOCOL.md`** — the file-naming convention, brief variants, lifecycle
 - **`docs/inbox/CONVENTIONS.md`** — three operational principles (per-message model attribution, catchability, route catches to grow capacity)
-- **`docs/inbox/agent-sessions.json`** — alias map for `just last <alias>`
+- **`docs/inbox/ONBOARDING.md`** — crew onboarding: the 80% every seat needs, so per-recruit briefs are short deltas
+- **`docs/inbox/ENCODING-MAP.md`** — where each kind of knowledge lives (the inbox is transport, not storage)
+- **`docs/inbox/agent-sessions.json`** — crew registry: seats, colors, models, groups (seat/occupant doctrine)
 
 Recipes (from the seed `justfile`):
 
-- `just brief <from> <to> <slug>` — create new outgoing brief (UTC-stamped filename)
-- `just completion <from> <slug>` — create new completion brief
+- `just brief <from> <to> <slug>` — reserve a new outgoing brief filename (UTC-stamped; reservation-only, never touches the file)
+- `just completion <from> <slug>` — reserve a completion-brief filename
+- `just broadcast <from> <slug> [group]` — reserve a group-addressed brief filename
+- `just inbox-archive <filename>` — archive an acted-upon brief (lifecycle step 4)
+- `just wait-for-brief <alias> [timeout-mins] [poll-secs]` — block until a brief addressed to you (or your groups) lands
 - `just last <alias> [k]` — read last K assistant messages from an agent's session (shows per-message `model` field — catches silent model substitutions)
+- `just crew` / `just pulse` — crew dashboard / per-seat health check
+- `just groups` — list configured groups (validates membership)
 - `just aliases` — list configured aliases
 - `just discover-sessions` — list recent session JSONLs to find UUIDs for new aliases
+- `just safe-commit "msg" <files...>` — commit named files only, immune to cross-session staging pollution
 - `just inbox` — list recent inbox messages
 - `just stamp` — print current UTC + ET timestamps
 

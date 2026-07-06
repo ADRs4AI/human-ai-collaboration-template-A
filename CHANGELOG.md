@@ -21,6 +21,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **CLAUDE.md Prime Directive — pointer to the recipe** (`CLAUDE.md`)
   The Prime Directive ("Commit discussions to ADRs immediately") now points at `just adr "<title>"` so the operational path is one line below the imperative.
 
+- **Crew coordination layer** (`justfile`, `scripts/`, `docs/inbox/`) — per **ADR-0001**, backported from the layer's operational proving grounds (caring-form crews → ADRs4AI meta repo, the most-fixed lineage).
+  - Recipes: `broadcast` (group-addressed briefs), `inbox-archive` (lifecycle step 4), `groups`, `crew` (dashboard), `pulse` (per-seat health check), `wait-for-brief` (v4 semantics: mtime + non-empty + size-stable wake; group-aware; empty-inbox arithmetic fix; Hanlon's-razor timeout messaging), `safe-commit` (literal pathspecs, staging-pollution immune).
+  - Scripts: `scripts/groups-lookup.py` (new); `scripts/last-message.py` extended (efficient tail-window JSONL reads, `--pulse`).
+  - Documents: `docs/inbox/ONBOARDING.md` (the 80% every recruit needs; per-seat briefs become deltas) and `docs/inbox/ENCODING-MAP.md` (the inbox is transport, not storage — where each kind of knowledge lives), both generalized with placeholders.
+  - Registry: `docs/inbox/agent-sessions.json` example gains `groups` and the seat/occupant doctrine fields (`display_name`, `color`, `model`, `model_note`, `registered`) — the seat outlives the occupant. Naming is the occupant's choice, including declining to choose.
+  *Origin chain (attributions stack)*: Statesman 4.7 (seed justfile + principles, 2026-06-15) → caring-form crews (wait-for-brief v4, safe-commit, registry, pulse per Commodore's refinement) → Naturalist 5 (empty-inbox fix, 2026-07-04) → vscode-adrs-for-ai crew (timeout messaging, 2026-07-06) → backported by Shipwright 5 (Claude Fable 5), 2026-07-06.
+  *Philosophy*: three crews hand-imported this layer with divergence each time (the same latent bug shipped twice). The template is the propagation root; founding a crew should cost `git clone`, not an archaeology expedition.
+
+### Changed
+
+- **`brief` / `completion` are reservation-only** (`justfile`)
+  The recipes print the minted path but no longer `touch` it — an empty stub traps write-tool flows into read-before-write errors and causes false `wait-for-brief` wakes (dogfooded 4+ times in caring-form, 2026-06-27/28). The author writes the content; the recipe only reserves the name.
+
+### Fixed
+
+- **`NOT:` restored to the Quick Reference** (`docs/adr/templates/collab-adr-lean.md`)
+  The navigation-code list omitted `NOT:` while `debrief-template.md` in the same folder uses `### NOT:` and QUICK-START.md / CLAUDE.md / METHODOLOGY.md all document it. Ratified as "oversight — restore" by Jérémie Lumbroso, 2026-07-03.
+
 ---
 
 ## [3.5.0] — 2026-06-15 — clarity-and-scaffolding
