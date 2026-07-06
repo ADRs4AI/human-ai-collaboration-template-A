@@ -1,16 +1,32 @@
 {
-  "_comment": "Agent alias → session UUID mapping. Used by scripts/last-message.py via `just last <alias>`. UUIDs are session IDs from your AI tool's session storage (Claude Code: ~/.claude/projects/<project-slug>/<uuid>.jsonl). Run `just discover-sessions` to list recent JSONLs and find UUIDs for new aliases.",
+  "_comment": "Agent alias → session UUID mapping. Used by scripts/last-message.py via `just last <alias>`, scripts/groups-lookup.py via `just groups` / `just wait-for-brief`, and the `just crew` / `just pulse` dashboards. UUIDs are session IDs from your AI tool's session storage (Claude Code: ~/.claude/projects/<project-slug>/<uuid>.jsonl). Run `just discover-sessions` to list recent JSONLs and find UUIDs for new aliases.",
   "_schema": 1,
   "_storage": {
     "_comment": "Optional override for non-Claude-Code tools. Default is Claude Code's ~/.claude/projects/<project-slug>/.",
     "kind": "claude-code",
     "base_dir": "~/.claude/projects"
   },
+  "_colors_in_use": {
+    "_comment": "Optional but recommended: track seat colors to avoid collisions. Claude Code's /color command accepts: red, blue, green, yellow, purple, orange, pink, cyan, default."
+  },
+  "groups": {
+    "_comment": "Role-based groups for inbox addressing. `just broadcast <from> <slug> [group]` writes a -to-<group>- brief; `just wait-for-brief <alias>` wakes on briefs addressed to any group the alias belongs to. Members are alias keys from 'aliases' below (validated by `just groups`).",
+    "crew": {
+      "members": [],
+      "description": "All active participants. Broadcasts addressed to 'crew' wake every seat. Add alias keys to 'members' as seats register."
+    }
+  },
   "aliases": {
-    "_comment_aliases": "Examples — replace with your project's agents. Each alias maps to {uuid, role}. The 'role' string is informational, shown by `just aliases` to help humans and other agents understand who-is-who.",
-    "_example_human": {
+    "_comment_aliases": "Examples — replace with your project's agents. Minimal entry: {uuid, role}. Recommended (seat/occupant doctrine): the SEAT is the persistent identity — display_name, color, mission — and OUTLIVES its occupant; the OCCUPANT is whichever model currently holds the seat — model records reality, model_note records what happened (reroutes, deprecations, suspensions). When occupancy changes, update model/model_note and keep the seat.",
+    "_example_seat": {
       "uuid": "00000000-0000-0000-0000-000000000000",
-      "role": "Example — replace with a real session UUID for the human-facing primary agent"
+      "role": "Example Seat — short mission statement shown by `just aliases` so humans and agents understand who-is-who",
+      "display_name": "Example Seat 1",
+      "color": "blue",
+      "color_note": "Optional: why this color (seats pick their own name and color — the choice is the occupant's, including declining to choose)",
+      "model": "claude-fable-5",
+      "model_note": "Seat founded YYYY-MM-DD by <model> (first occupant). Update on occupancy changes; never re-found the seat.",
+      "registered": "YYYY-MM-DD"
     }
   }
 }

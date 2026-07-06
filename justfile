@@ -1,12 +1,14 @@
 # Justfile — coordination recipes for multi-participant human-AI projects.
 #
 # This is a **seed** justfile. It contains only the recipes needed to use
-# the inbox protocol, the per-message-attribution discipline, and ADR
-# creation (the latter coupled to the `docs/adr/templates/` files this
-# template ships); it does NOT contain project-specific recipes (build,
-# test, deploy, etc.) — those are yours to add per project. Keeping this
-# file focused on the *coordination* layer lets it drop into any project
-# without conflicting with the project's own justfile structure.
+# the inbox protocol, the per-message-attribution discipline, the crew
+# coordination layer (named seats, groups, wait-for-brief, safe commits,
+# crew health), and ADR creation (the latter coupled to the
+# `docs/adr/templates/` files this template ships); it does NOT contain
+# project-specific recipes (build, test, deploy, etc.) — those are yours
+# to add per project. Keeping this file focused on the *coordination*
+# layer lets it drop into any project without conflicting with the
+# project's own justfile structure.
 #
 # Two design choices worth knowing as you extend this:
 #
@@ -23,6 +25,12 @@
 # Contributed by Statesman 4.7 (Claude Opus 4.7), 2026-06-15, via System3
 # Conversations. See docs/inbox/CONVENTIONS.md for origin and the principles
 # this file operationalizes.
+#
+# Crew coordination layer (broadcast, inbox-archive, groups, crew, pulse,
+# wait-for-brief, safe-commit; reservation-only brief semantics) backported
+# 2026-07-06 by Shipwright 5 (Claude Fable 5) per ADR-0001, from the layer's
+# operational proving grounds (caring-form crews → ADRs4AI meta repo, with
+# fixes by Naturalist 5 and the vscode-adrs-for-ai crew). Attributions stack.
 
 # Default: list available recipes when `just` is run with no args.
 default:
@@ -64,7 +72,11 @@ brief from to slug:
     file="docs/inbox/${ts}-{{from}}-to-{{to}}-${slug}.md"
     if [[ -e "$file" ]]; then echo "Error: $file already exists" >&2; exit 1; fi
     mkdir -p docs/inbox
-    touch "$file"
+    # Deliberately do NOT touch the file — this recipe only RESERVES the
+    # filename; the author creates the content (e.g. via an AI Write tool).
+    # An empty stub traps Write-tool flows into read-before-write errors and
+    # causes false wait-for-brief wakes (dogfooded 4+ times, caring-form
+    # 2026-06-27/28).
     echo "$file"
 
 # Create a new completion brief (response to an earlier dispatch).
@@ -83,8 +95,44 @@ completion from slug:
     file="docs/inbox/${ts}-{{from}}-completion-${slug}.md"
     if [[ -e "$file" ]]; then echo "Error: $file already exists" >&2; exit 1; fi
     mkdir -p docs/inbox
-    touch "$file"
+    # Reservation only — see `brief` recipe note.
     echo "$file"
+
+# Create a new broadcast brief (1:many, group-addressed). Groups are defined
+# in docs/inbox/agent-sessions.json ("groups" key); wait-for-brief wakes every
+# member of an addressed group. Group defaults to "crew".
+#
+# Example: just broadcast planner all-hands-schema-change
+[group('inbox')]
+[doc("Create new broadcast brief: just broadcast <from> <slug> [group=crew]")]
+broadcast from slug group='crew':
+    #!/usr/bin/env bash
+    set -euo pipefail
+    ts=$(date -u +"%Y-%m-%d-%H%M")
+    slug=$(echo "{{slug}}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
+    file="docs/inbox/${ts}-{{from}}-to-{{group}}-${slug}.md"
+    if [[ -e "$file" ]]; then echo "Error: $file already exists" >&2; exit 1; fi
+    mkdir -p docs/inbox
+    # Reservation only — see `brief` recipe note.
+    echo "$file"
+
+# Archive an acted-upon brief: git mv to docs/inbox/archive/ and commit.
+# Closes lifecycle step 4 of INBOX-PROTOCOL.md (write → read → act → archive).
+# Opinionated: auto-commits with a `chore(inbox):` message — adapt if your
+# project batches archive commits differently.
+[group('inbox')]
+[doc("Archive an acted-upon brief: just inbox-archive <filename>")]
+inbox-archive filename:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    file="docs/inbox/{{filename}}"
+    if [[ ! -f "$file" ]]; then echo "❌ Not found: $file" >&2; exit 1; fi
+    git restore --staged . 2>/dev/null || true
+    mkdir -p docs/inbox/archive
+    git mv "$file" "docs/inbox/archive/{{filename}}"
+    echo "📦 Archived: {{filename}}"
+    git diff --cached --stat
+    git commit -m "chore(inbox): archive {{filename}}"
 
 # ─── inbox protocol — cross-session awareness via session JSONLs ─────────────
 #
@@ -124,6 +172,205 @@ aliases:
 [doc("Discover recent session JSONLs in this project (find UUIDs for new aliases)")]
 discover-sessions:
     @python3 scripts/last-message.py --discover
+
+# ─── crew — named seats, groups, health, wait discipline ─────────────────────
+#
+# The crew layer treats each participant as a persistent, named, colored,
+# model-attributed SEAT (docs/inbox/agent-sessions.json). The seat outlives
+# the occupant: when a model is deprecated, rerouted, or suspended, the
+# seat's name and mission persist; the registry records occupant reality
+# (`model`, `model_note`) separately from seat identity (`display_name`).
+# See docs/inbox/ONBOARDING.md for the crew model.
+#
+# Backported per ADR-0001 from operational crews (caring-form → ADRs4AI
+# meta repo); attributions in each recipe where they are load-bearing.
+
+# List configured groups for group addressing (validates membership).
+[group('crew')]
+[doc("List configured groups (docs/inbox/agent-sessions.json)")]
+groups:
+    @python3 scripts/groups-lookup.py --list
+
+# Quick crew status dashboard: aliases + colors + last-active + recent briefs.
+[group('crew')]
+[doc("Crew status dashboard")]
+crew:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [[ ! -f docs/inbox/agent-sessions.json ]]; then
+        echo "❌ No docs/inbox/agent-sessions.json found"; exit 1
+    fi
+    python3 - <<'EOF'
+    import json, os, re, glob
+    from pathlib import Path
+    from time import time
+
+    with open("docs/inbox/agent-sessions.json") as f:
+        data = json.load(f)
+    base_dir = os.path.expanduser(data.get("_storage", {}).get("base_dir", "~/.claude/projects"))
+    project_slug = os.getcwd().replace("/", "-")
+    aliases = {k: v for k, v in data.get("aliases", {}).items() if not k.startswith("_")}
+
+    def fmt_age(sec):
+        if sec < 60: return f"{int(sec)}s ago"
+        if sec < 3600: return f"{int(sec/60)}m ago"
+        if sec < 86400: return f"{int(sec/3600)}h ago"
+        return f"{int(sec/86400)}d ago"
+
+    TS = r"\d{4}-\d{2}-\d{2}-\d{4}"
+    all_briefs = [Path(f).name for f in glob.glob("docs/inbox/*.md")]
+    # Regex anchors at alias boundaries so "wayfinder-to-scribe-completion-..."
+    # is NOT credited as sent by scribe.
+
+    print(f"👥 Crew status — {len(aliases)} registered\n")
+    for alias, info in sorted(aliases.items()):
+        uuid = info.get("uuid", "")
+        display = info.get("display_name", alias)
+        color = info.get("color", "?")
+        model = info.get("model", "?")
+        jsonl = Path(base_dir) / project_slug / f"{uuid}.jsonl"
+        age = fmt_age(time() - jsonl.stat().st_mtime) if jsonl.exists() else "no JSONL"
+        a = re.escape(alias)
+        sent_re = re.compile(rf"^{TS}-{a}-(to|completion)-")
+        recv_re = re.compile(rf"^{TS}-[a-z0-9]+(?:-[a-z0-9]+)*-to-{a}-")
+        sent = sorted([n for n in all_briefs if sent_re.match(n)], reverse=True)
+        recv = sorted([n for n in all_briefs if recv_re.match(n)], reverse=True)
+        last_sent = sent[0] if sent else "—"
+        last_recv = recv[0] if recv else "—"
+        print(f"  {display} ({color})")
+        print(f"    model: {model}    last-active: {age}")
+        print(f"    last sent:     {last_sent}")
+        print(f"    last received: {last_recv}\n")
+    EOF
+
+# Health check: one line per seat, detect stalls/errors. Returns non-zero if
+# any seat is in ERROR state. Detects: 🔴 ERROR (synthetic model / API error),
+# 🟡 WAITING (ends in question, >1h old), 🟡 STALE (no append in >Nh),
+# 🟢 OK. (Refined in caring-form per Commodore's review, 2026-07-03.)
+[group('crew')]
+[doc("Health check all seats: detect stalls, errors, blocked states")]
+pulse stale_threshold='6':
+    @python3 scripts/last-message.py --pulse --stale-threshold {{stale_threshold}}
+
+# Block until a new brief addressed to <recipient> lands in docs/inbox/.
+# v4 semantics (caring-form dogfooding): wake condition = mtime > start AND
+# non-empty AND size-stable; surfaces existing pending briefs at startup.
+# Wakes on direct briefs, group-addressed briefs (via groups-lookup.py), and
+# completion briefs answering the recipient's own dispatches.
+#
+# ⚠️ ANTI-PATTERN, documented (Hanlon's razor): the timeout is ARBITRARY
+# housekeeping — a default number, not a signal. Every model that has hit
+# the timeout (or had the wait killed) has read intent into it ("I was cut
+# off, the human must want X"). There is none. A killed or expired wait
+# carries zero information beyond "no brief landed in the window." Re-arm
+# as many times as you like, or end the turn — the recipe's own output
+# repeats this at the moment of timeout, where the misreading actually
+# happens. (Named by Jérémie Lumbroso, 2026-07-05; messaging contributed
+# by the vscode-adrs-for-ai crew.)
+[group('crew')]
+[doc("Wait for a new brief: just wait-for-brief <recipient> [timeout-mins=60] [poll-secs=15] [surface=5]")]
+wait-for-brief recipient timeout_mins='60' poll_secs='15' surface='5':
+    #!/usr/bin/env bash
+    set -euo pipefail
+    recipient="{{recipient}}"
+    timeout_secs=$(( {{timeout_mins}} * 60 ))
+    poll_secs={{poll_secs}}
+    surface_n={{surface}}
+    inbox="docs/inbox"
+    start_time=$(date +%s)
+    pattern_direct="*-to-${recipient}-*.md"
+    recipient_groups=$(python3 scripts/groups-lookup.py --recipient "${recipient}" 2>&1 || echo "")
+
+    find_briefs() {
+        {
+            find "$inbox" -maxdepth 1 -name "$pattern_direct" -type f 2>/dev/null
+            grep -l "${recipient}-to-" "$inbox"/*-completion-*.md 2>/dev/null \
+                | grep -v "/[0-9-]*-${recipient}-" || true
+            for group in $recipient_groups; do
+                find "$inbox" -maxdepth 1 -name "*-to-${group}-*.md" -type f 2>/dev/null
+            done
+        } | LC_ALL=C sort -u
+    }
+    get_mtime() { stat -f %m "$1" 2>/dev/null || stat -c %Y "$1" 2>/dev/null || echo 0; }
+    get_size()  { wc -c < "$1" 2>/dev/null | tr -d ' '; }
+
+    # grep -c prints "0" AND exits 1 on no match, so `|| echo 0` emitted a
+    # second line ("0"$'\n'"0") and crashed the arithmetic below on empty
+    # inboxes (caught live in the ADRs4AI meta repo: Naturalist 5's first
+    # wait died on it, 2026-07-04; the same latent bug was later found and
+    # fixed in a second downstream copy). `|| true` keeps grep's own "0";
+    # ${var:-0} guards the empty-string case.
+    initial_count=$(find_briefs | grep -c . 2>/dev/null || true)
+    initial_count=${initial_count:-0}
+    echo "🛏️  $recipient waiting for new brief"
+    echo "    Snapshot: $initial_count brief(s) addressed to you (will not wake on these unless modified)"
+    echo "    Timeout: {{timeout_mins}} min (polling every ${poll_secs}s)"
+    echo "    Wake condition: file mtime > start AND non-empty AND size-stable"
+    echo "    Note: the timeout is arbitrary housekeeping, not a signal — if this wait"
+    echo "    expires or is killed, no meaning is intended; re-arm freely."
+    if (( surface_n > 0 )) && (( initial_count > 0 )); then
+        echo ""
+        echo "    📋 Most recent ${surface_n} brief(s) already addressed to you:"
+        find_briefs | LC_ALL=C sort -r | head -"${surface_n}" | sed 's|^|       |'
+    fi
+    echo ""
+
+    while true; do
+        candidates=$(find_briefs | while IFS= read -r f; do
+            [[ -z "$f" ]] && continue
+            mtime=$(get_mtime "$f")
+            if (( mtime > start_time )); then echo "$f"; fi
+        done)
+        ready=""
+        if [[ -n "$candidates" ]]; then
+            while IFS= read -r f; do
+                [[ -z "$f" ]] && continue
+                size1=$(get_size "$f")
+                if (( size1 == 0 )); then continue; fi
+                sleep 2
+                size2=$(get_size "$f")
+                if [[ "$size1" == "$size2" ]]; then ready+="$f"$'\n'; fi
+            done <<< "$candidates"
+        fi
+        if [[ -n "$ready" ]]; then
+            echo "📬 New brief(s) for $recipient:"
+            echo -n "$ready" | sed 's|^|    |'
+            exit 0
+        fi
+        now=$(date +%s)
+        if (( now - start_time >= timeout_secs )); then
+            echo ""
+            echo "⏰ Timeout after {{timeout_mins}} min; no brief landed."
+            echo "    This timeout is ARBITRARY (Hanlon's razor: no intent, no hidden message)."
+            echo "    It carries zero information beyond 'no brief in the window.'"
+            echo "    Re-arm freely — as many times as you like:  just wait-for-brief $recipient"
+            echo "    Or end the turn. The choice is operational, not interpretive."
+            exit 1
+        fi
+        sleep "$poll_secs"
+    done
+
+# ─── git — safe commit discipline ────────────────────────────────────────────
+
+# Safely commit specific files: clear staging first, add only named files
+# (literal pathspecs, globbing off), show the diff stat, then commit.
+# Defends against cross-session staging pollution (a parallel seat's
+# `git add` bleeding into your commit) and bracket-glob hazards in paths.
+[group('git')]
+[doc("Safely commit specific files: just safe-commit \"msg\" file1 [file2 ...]")]
+safe-commit message +files:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    set -f
+    git restore --staged . 2>/dev/null || true
+    for f in {{files}}; do
+        if [[ ! -e "$f" ]]; then echo "❌ File not found: $f" >&2; exit 1; fi
+    done
+    GIT_LITERAL_PATHSPECS=1 git add -- {{files}}
+    echo "📝 Staged for commit:"
+    git diff --cached --stat
+    echo ""
+    git commit -m "{{message}}"
 
 # ─── ADRs — Architecture Decision Records ────────────────────────────────────
 #
