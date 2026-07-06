@@ -18,6 +18,7 @@
 - `API:` API calls
 - `FIL:` Files to examine
 - `DOC:` Documentation
+- `NOT:` Notes, remarks, observations
 
 **Find things**:
 ```bash
