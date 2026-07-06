@@ -1,9 +1,9 @@
 # Crew Coordination Layer Backport: Groups, wait-for-brief, safe-commit, Crew Awareness
 
 - **Date**: 2026-07-06
-- **Iteration**: 1
-- **Status**: Proposed
-- **Deciders**: Jérémie Lumbroso (decision authority, ratified 2026-07-03), Cartographer 5 (dispatcher, RFC reviewer), Shipwright 5 (author / implementer)
+- **Iteration**: 2
+- **Status**: Accepted
+- **Deciders**: Jérémie Lumbroso (decision authority, ratified 2026-07-03), Cartographer 5 (dispatcher), Understudy 5 (RFC reviewer, standing in per shadow charter), Shipwright 5 (author / implementer)
 
 **TL;DR**: Backport the dogfooded crew coordination layer — group addressing + `broadcast`, `wait-for-brief` v4, `safe-commit`, crew-awareness recipes (`crew`/`groups`/`pulse`), generalized `ONBOARDING.md` + `ENCODING-MAP.md`, and the seat/occupant registry schema — from its downstream proving grounds (caring-form → ADRs4AI HQ) into the canonical template, shipping as v3.6.0, so that founding every future crew stops requiring a hand re-import.
 
@@ -72,6 +72,8 @@ Options: **A** — v3.6.0 (minor: additive coordination layer, no breaking chang
 
 **A — v3.6.0.** Everything is additive: no existing file changes meaning, no adopter workflow breaks; SemVer says minor. C undersells it (new documents + six new recipes is a feature, not a fix). B would spend the major number on something adopters can ignore entirely — the crew layer only activates if you register seats; save v4 for a change that *requires* migration. The unreleased `just adr` + unwrap scripts fold into the same v3.6.0 entry.
 
+NOT: Provisionally enacted as v3.6.0 (tagged at release) per Understudy 5's RFC pass (2026-07-06, standing in for Cartographer 5), which authorized proceeding on the recommendation while the question sits with Jérémie. If Jérémie overrides, the tag moves before wide adoption; the question stays open until he confirms.
+
 **ANS:** (by )
 [pending]
 
@@ -85,6 +87,8 @@ Options: **A** — v3.6.0 (minor: additive coordination layer, no breaking chang
 **Recommendation**: (by Shipwright 5, Claude Fable 5)
 
 **Yes — include it.** The template already *prescribes* the archive step in prose; shipping every lifecycle recipe except the last one leaves adopters hand-naming `git mv` targets for exactly the step that closes the loop. One caveat handled in the port: the recipe auto-commits with a `chore(inbox):` message, which is opinionated — the recipe comment says so and invites adaptation. If the RFC reads the dispatch's list as exhaustive-by-intent, dropping it is a one-commit revert.
+
+NOT: Provisionally enacted (recipe shipped) per the same RFC pass; remains a one-commit revert if Jérémie overrides.
 
 **ANS:** (by )
 [pending]
@@ -157,8 +161,9 @@ Founding a crew currently costs a hand-import of ~6 recipes + 2 scripts + 2 docu
 ## Validation
 
 - [ ] Jérémie Lumbroso: decision matches the 2026-07-03 ratification; version + inbox-archive QSTs answered
-- [ ] Cartographer 5: RFC pass — port manifest complete vs. dispatch; sync plan sound
-- [ ] Shipwright 5: implementation matches this ADR; nothing ported beyond the manifest
+- [x] Understudy 5 (standing in for Cartographer 5, 2026-07-06): RFC pass — port manifest cross-checked line-by-line vs. dispatch; lineage chain independently confirmed; NOT-ported scoping correct; Tenth-Directive pollution corroborated. Verdict: sound, ready to proceed.
+- [ ] Cartographer 5: second read welcome when uncapped (per Understudy's own suggestion) — not blocking
+- [x] Shipwright 5: implementation matches this ADR; nothing ported beyond the manifest; smoke tests in commit 09eac7a's message
 
 **Notes**: Anti-clobbering bound throughout: no existing template file is overwritten in meaning; Statesman 4.7's attributed contributions (justfile header, CONVENTIONS.md) are extended, never replaced; attributions stack.
 
@@ -171,6 +176,12 @@ Founding a crew currently costs a hand-import of ~6 recipes + 2 scripts + 2 docu
 - Contributors: Shipwright 5 (Claude Fable 5)
 - Changes: Initial draft — port manifest, lineage selection (HQ HEAD over caring-form origin), two QSTs (version; inbox-archive), NOT: restore verified to scope = lean template's Quick Reference only
 - Outcome: `Draft → Proposed`; RFC brief to Cartographer 5
+
+### Iteration 2 (2026-07-06)
+- Trigger: RFC pass by Understudy 5 (Claude Sonnet 5), standing in for capacity-capped Cartographer 5 per shadow charter (brief 2026-07-06-2059) — verdict "sound, ready to proceed," with explicit authorization to enact the two open recommendations while Jérémie's answers are in flight
+- Contributors: Understudy 5 (review), Shipwright 5 (enactment)
+- Changes: Validation rows updated; both QSTs annotated as provisionally enacted (Status stays unanswered pending Jérémie); reviewer's new fact recorded — as of 2026-07-06 all active downstream lineages carry both wait-for-brief fixes (Understudy exported the empty-inbox fix to vscode-adrs-for-ai the same day)
+- Outcome: `Proposed → Accepted`; merge + tag v3.6.0 (provisional) + push; downstream sync plan execution begins
 
 ---
 

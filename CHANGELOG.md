@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+_Nothing yet._
+
+---
+
+## [3.6.0] — 2026-07-06 — crew-coordination-layer
+
+**Through-line — the propagation root carries the proven substrate**: three downstream projects independently grew (and hand-copied, with divergence and one twice-shipped latent bug) the same multi-seat coordination layer on top of this template. This release upstreams that layer from its most-fixed lineage so that founding a crew costs `git clone`, not an archaeology expedition. Scoped and enacted per this repo's ADR-0001; first git-tagged release of this repository (v3.5.0 and earlier exist as CHANGELOG entries only).
+
 ### Added
 
 - **`just adr "<TITLE>"` recipe — auto-numbered ADR creation** (`justfile`)
