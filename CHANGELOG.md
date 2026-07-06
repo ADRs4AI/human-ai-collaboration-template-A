@@ -21,6 +21,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **CLAUDE.md Prime Directive — pointer to the recipe** (`CLAUDE.md`)
   The Prime Directive ("Commit discussions to ADRs immediately") now points at `just adr "<title>"` so the operational path is one line below the imperative.
 
+- **CLAUDE.md Prime Directive — "commit substrate changes immediately" corollary** (`CLAUDE.md`)
+  Makes the Prime Directive's *mechanics* explicit: when a model creates or modifies an ADR/vignette/design-note/brief, it should commit it before moving on — an uncommitted artifact is no different from a decision sitting only in conversation. Two scope notes for multi-participant projects: (1) commit only your own changes, not the human's or another agent's in-progress edits; (2) never `git add -A` — stage explicitly by path.
+  *Philosophy*: the human's attention is the project's scarcest resource (`docs/inbox/CONVENTIONS.md`); having to remind a model to commit its own substrate work is wasted attention. Named after operational experience where the reminder-burden recurred each session. A downstream project (companion-thinking-stream-etude) also ships an *opt-in, advisory, tunable* Stop-hook backstop for this corollary — deliberately **not** upstreamed to the template as a mechanism (it's project-specific tooling), but the corollary it enforces is the general principle and belongs here. The backstop's design note is worth citing as prior art if a future project wants one: it self-checks only files *this session* wrote (never other agents' WIP) and is advisory by default (a reminder, not a gate) — because a coercive "you must commit before you may stop" is the opposite failure of the reminder-burden it removes.
+
 ---
 
 ## [3.5.0] — 2026-06-15 — clarity-and-scaffolding

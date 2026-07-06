@@ -13,6 +13,14 @@
 
 Never let decisions stay only in conversation. Our thinking is valuable - preserve it. Use `just adr "<title>"` to mint the next-numbered ADR from the lean template.
 
+### Corollary: commit substrate changes immediately — *stake* the work
+
+**When you create or modify an ADR, vignette, design note, brief, or any other deliberate artifact, *commit it* before moving on.** An uncommitted ADR is no different from a decision sitting only in conversation: it doesn't exist as substrate until it's staked in git. The Prime Directive is the principle; this is its mechanics. Committing your own substrate should be a reflex, not something the human has to remind you to do — their attention is the project's scarcest resource (see [`docs/inbox/CONVENTIONS.md`](docs/inbox/CONVENTIONS.md)).
+
+*Two scope notes for multi-participant projects*:
+1. **Only your changes.** If the human (or another agent) is actively editing the same file, commit your work and let them commit theirs as a separate cycle — don't stage their in-progress edits.
+2. **Other agents' WIP stays untouched.** Commit only your own files, explicitly by path — never `git add -A` / `git add .`.
+
 ---
 
 ## Secondary Directive
