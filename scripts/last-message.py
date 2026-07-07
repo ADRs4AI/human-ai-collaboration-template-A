@@ -77,10 +77,10 @@ Change Resilience and Drift Detection) in that project, after the framework
 caught a silent classifier reroute mid-task.
 
 Extended in operational use downstream and backported to this template
-2026-07-06 by Shipwright 5 (Claude Fable 5) per ADR-0001: efficient tail-window
+2026-07-06 by Shipwright 5 (Claude Fable 5) per meta-repo ADR-0003: efficient tail-window
 JSONL reading, and `--pulse` (per-seat health check: ERROR / WAITING / STALE /
 OK — refined in caring-form per Commodore's review, imported via the ADRs4AI
-meta repo). Attributions stack; see ADR-0001's origin chain.
+meta repo). Attributions stack; see meta-repo ADR-0003's origin chain.
 """
 
 from __future__ import annotations

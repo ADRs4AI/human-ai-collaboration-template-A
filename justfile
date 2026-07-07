@@ -28,7 +28,7 @@
 #
 # Crew coordination layer (broadcast, inbox-archive, groups, crew, pulse,
 # wait-for-brief, safe-commit; reservation-only brief semantics) backported
-# 2026-07-06 by Shipwright 5 (Claude Fable 5) per ADR-0001, from the layer's
+# 2026-07-06 by Shipwright 5 (Claude Fable 5) per meta-repo ADR-0003, from the layer's
 # operational proving grounds (caring-form crews → ADRs4AI meta repo, with
 # fixes by Naturalist 5 and the vscode-adrs-for-ai crew). Attributions stack.
 
@@ -182,7 +182,7 @@ discover-sessions:
 # (`model`, `model_note`) separately from seat identity (`display_name`).
 # See docs/inbox/ONBOARDING.md for the crew model.
 #
-# Backported per ADR-0001 from operational crews (caring-form → ADRs4AI
+# Backported per meta-repo ADR-0003 from operational crews (caring-form → ADRs4AI
 # meta repo); attributions in each recipe where they are load-bearing.
 
 # List configured groups for group addressing (validates membership).
