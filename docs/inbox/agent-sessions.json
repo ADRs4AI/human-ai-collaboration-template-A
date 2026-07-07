@@ -9,6 +9,12 @@
   "_colors_in_use": {
     "_comment": "Optional but recommended: track seat colors to avoid collisions. Claude Code's /color command accepts: red, blue, green, yellow, purple, orange, pink, cyan, default."
   },
+  "_global": {
+    "_comment": "Optional defaults for `just launch`'s claude invocation; per-seat settings override. Global-only (no per-seat form): agents, remote_control_session_name_prefix. Anything unset is omitted from the command (Claude's own defaults apply).",
+    "effort": "high",
+    "permissionMode": "default"
+  },
+  "_settings_note": "Per-alias `settings` is an optional per-seat config subdict. `substrate_backstop` in {\"off\" (default), \"advisory\", \"strict\"} controls the opt-in commit-substrate Stop hook (scripts/hooks/remind-uncommitted-substrate.py) — the hook must ALSO be registered in your project's .claude/settings.json, and even then it is zero-effect until a seat opts itself in. Design principle: the backstop is PULL, not push — it fires only for a session that set its own value, and every reminder names the one-line edit to turn it off; a reminder an agreeable entity can't turn off is an order, not a courtesy. `color_hex` (optional, e.g. \"#F4B942\") sets the seat's tmux status-bar color for `just launch` — independent of the named `color` field (several /color names aren't valid tmux colors; absent color_hex, launch falls back to translating the named color to hex, then gray). Picking color_hex is each seat's own agency — nobody assigns one for another seat. `effort`/`permissionMode`/`remote_control` (optional) configure the claude invocation; per-seat values override `_global`.",
   "groups": {
     "_comment": "Role-based groups for inbox addressing. `just broadcast <from> <slug> [group]` writes a -to-<group>- brief; `just wait-for-brief <alias>` wakes on briefs addressed to any group the alias belongs to. Members are alias keys from 'aliases' below (validated by `just groups`).",
     "crew": {
@@ -26,7 +32,12 @@
       "color_note": "Optional: why this color (seats pick their own name and color — the choice is the occupant's, including declining to choose)",
       "model": "claude-fable-5",
       "model_note": "Seat founded YYYY-MM-DD by <model> (first occupant). Update on occupancy changes; never re-found the seat.",
-      "registered": "YYYY-MM-DD"
+      "registered": "YYYY-MM-DD",
+      "settings": {
+        "_comment": "All optional — see _settings_note. Delete this subdict if unused.",
+        "color_hex": "#1E6FBF",
+        "substrate_backstop": "off"
+      }
     }
   }
 }

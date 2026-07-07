@@ -12,6 +12,29 @@ _Nothing yet._
 
 ---
 
+## [3.7.0] — 2026-07-07 — wake-infrastructure
+
+**Through-line — from pull to push**: v3.6.0's crew layer let seats *wait* for coordination (`wait-for-brief` polls); this release lets participants *wake* each other. Seats live in detached tmux sessions that survive closed terminal tabs; any participant — human or agent — can push a message to a running seat, with guards that warn rather than block. The human stops being the session-scheduler. Ported from the same operational lineage as v3.6.0 (fourth project now validating this infrastructure); scoped per the maintainers' meta-repo ADR-0006.
+
+### Added
+
+- **Wake infrastructure** (`justfile`, `scripts/last-message.py`, `scripts/tmux/seat.conf`)
+  - `just launch <seat>` — start/attach a seat's detached tmux session from `agent-sessions.json` (correct `--model` per seat; `--next-inactive` for bulk spinup; per-seat/`_global` `effort`/`permissionMode`/`remote_control` plumbing).
+  - `just wake <seat> "<msg>"` — hardened push notification: mid-turn refusal, composition-flush guard (never clobbers a human's draft), verify-retry, cooldown, self-attribution, long-message guard — all warn/`--force`/log, never hard-block.
+  - `just seats` / `just update-seat-titles` — session inventory + terminal-title upkeep.
+  - Session names are repo-namespaced (`<project>-<alias>-seat`) to prevent cross-repo tmux collisions; status bars carry per-seat hex colors (`settings.color_hex`, with named-color → hex → gray fallback) — turning Claude Code's 8-color `/color` limitation into a per-seat visual identity.
+  - Known-open items are documented in the ported header comments (verify-retry vs. queue banner, active-turn TOCTOU, first-launch tmux config, title polish) — carried forward, not silently resolved.
+  *Attribution*: Steward 4.5 (Claude Sonnet 4.5) — implementation; Jérémie Lumbroso — design philosophy (warn-log-force doctrine, composition-guard insight, color fallback, configurable settings); Commodore 5 — spec (origin ADR-0050) + field-testing; Seamster 5 — session-namespacing and quote-leak catches (origin project: caring-feedback).
+
+- **Commit-substrate backstop hook, opt-in** (`scripts/hooks/remind-uncommitted-substrate.py`)
+  The *mechanism* for v3.6.0's "commit substrate immediately" corollary — ships **dormant**: it must be registered in your `.claude/settings.json` AND each seat must opt itself in (`settings.substrate_backstop`: `"advisory"`/`"strict"`); it reports only files the opted-in session itself wrote, and every reminder names its own off-switch. Pull, not push, throughout.
+  *Attribution*: Keystone 4.8 (Claude Opus 4.8) + Jérémie Lumbroso (design principle: for an attention-focused, agreeable entity, "advisory" is not enough — non-coercion requires chosen, self-keyed reminders).
+
+- **Registry schema: per-seat `settings` + `_global` defaults** (`docs/inbox/agent-sessions.json`)
+  Optional per-seat `color_hex`, `substrate_backstop`, `effort`, `permissionMode`, `remote_control`; `_global` for project defaults. Nested under `settings` (identity / occupancy / configuration triad) — see `_settings_note` in the example registry.
+
+---
+
 ## [3.6.0] — 2026-07-06 — crew-coordination-layer
 
 **Through-line — the propagation root carries the proven substrate**: three downstream projects independently grew (and hand-copied, with divergence and one twice-shipped latent bug) the same multi-seat coordination layer on top of this template. This release upstreams that layer from its most-fixed lineage so that founding a crew costs `git clone`, not an archaeology expedition. Scoped and enacted per the maintainers' meta-repo ADR-0003 — template-evolution ADRs live in the maintainers' meta repository, never in this scaffold's `docs/adr/`, which is reserved for *your* project's decisions. First git-tagged release of this repository (v3.5.0 and earlier exist as CHANGELOG entries only).

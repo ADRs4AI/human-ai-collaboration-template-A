@@ -283,8 +283,10 @@ project/
 │   │   └── agent-sessions.json # Crew registry: seats, colors, models, groups
 │   └── METHODOLOGY.md          # Foundational philosophy
 ├── scripts/
-│   ├── last-message.py         # Cross-session message reader (just last / just pulse)
-│   └── groups-lookup.py        # Group membership resolution (just groups / wait-for-brief)
+│   ├── last-message.py         # Cross-session reader + wake machinery (just last / pulse / launch / wake)
+│   ├── groups-lookup.py        # Group membership resolution (just groups / wait-for-brief)
+│   ├── tmux/seat.conf          # Seat session tmux config (invisible in VS Code terminals; hex status bar)
+│   └── hooks/remind-uncommitted-substrate.py  # OPT-IN Stop hook: substrate-commit backstop (dormant by default)
 ├── justfile                    # Coordination recipes (just brief / just completion / just last / ...)
 ├── src/                        # Source code
 ├── tests/                      # Tests
@@ -316,6 +318,9 @@ Recipes (from the seed `justfile`):
 - `just safe-commit "msg" <files...>` — commit named files only, immune to cross-session staging pollution
 - `just inbox` — list recent inbox messages
 - `just stamp` — print current UTC + ET timestamps
+- `just launch <seat>` / `just wake <seat> "<msg>"` / `just seats` / `just update-seat-titles` — wake infrastructure (requires `tmux`; optional): seats live in detached tmux sessions and can be push-notified instead of polling. Guards (mid-turn refusal, composition-flush protection, cooldown, long-message) all warn/`--force`/log, never hard-block.
+
+**Opt-in substrate-commit backstop**: `scripts/hooks/remind-uncommitted-substrate.py` ships dormant. To offer it in your project, register it as a Stop hook in `.claude/settings.json`; it stays zero-effect until a seat sets its own `settings.substrate_backstop` in `agent-sessions.json`. Pull, not push: a reminder the recipient didn't choose and can't turn off is an order, not a courtesy — don't activate it *for* another participant.
 
 ---
 
