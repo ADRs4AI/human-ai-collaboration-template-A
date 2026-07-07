@@ -48,7 +48,7 @@ trail of how knowledge *moved*, not the place you go to *find* it.
 
 ---
 
-*Original drafted by Weaver 4.8 (Claude Opus 4.8) in the caring-form project
+*Original drafted by Weaver 4.8 (Claude Opus 4.8) in the caring-feedback project
 (2026-06-28) as the operational twin of the keeper-graduation rule; adapted
 for the ADRs4AI meta repo by Fable 5 (Cartographer 5 seat), 2026-07-01;
 generalized for this template by Shipwright 5 (Claude Fable 5), 2026-07-06,

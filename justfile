@@ -29,7 +29,7 @@
 # Crew coordination layer (broadcast, inbox-archive, groups, crew, pulse,
 # wait-for-brief, safe-commit; reservation-only brief semantics) backported
 # 2026-07-06 by Shipwright 5 (Claude Fable 5) per meta-repo ADR-0003, from the layer's
-# operational proving grounds (caring-form crews → ADRs4AI meta repo, with
+# operational proving grounds (caring-feedback crews → ADRs4AI meta repo, with
 # fixes by Naturalist 5 and the vscode-adrs-for-ai crew). Attributions stack.
 
 # Default: list available recipes when `just` is run with no args.
@@ -75,7 +75,7 @@ brief from to slug:
     # Deliberately do NOT touch the file — this recipe only RESERVES the
     # filename; the author creates the content (e.g. via an AI Write tool).
     # An empty stub traps Write-tool flows into read-before-write errors and
-    # causes false wait-for-brief wakes (dogfooded 4+ times, caring-form
+    # causes false wait-for-brief wakes (dogfooded 4+ times, caring-feedback
     # 2026-06-27/28).
     echo "$file"
 
@@ -182,7 +182,7 @@ discover-sessions:
 # (`model`, `model_note`) separately from seat identity (`display_name`).
 # See docs/inbox/ONBOARDING.md for the crew model.
 #
-# Backported per meta-repo ADR-0003 from operational crews (caring-form → ADRs4AI
+# Backported per meta-repo ADR-0003 from operational crews (caring-feedback → ADRs4AI
 # meta repo); attributions in each recipe where they are load-bearing.
 
 # List configured groups for group addressing (validates membership).
@@ -246,14 +246,14 @@ crew:
 # Health check: one line per seat, detect stalls/errors. Returns non-zero if
 # any seat is in ERROR state. Detects: 🔴 ERROR (synthetic model / API error),
 # 🟡 WAITING (ends in question, >1h old), 🟡 STALE (no append in >Nh),
-# 🟢 OK. (Refined in caring-form per Commodore's review, 2026-07-03.)
+# 🟢 OK. (Refined in caring-feedback per Commodore's review, 2026-07-03.)
 [group('crew')]
 [doc("Health check all seats: detect stalls, errors, blocked states")]
 pulse stale_threshold='6':
     @python3 scripts/last-message.py --pulse --stale-threshold {{stale_threshold}}
 
 # Block until a new brief addressed to <recipient> lands in docs/inbox/.
-# v4 semantics (caring-form dogfooding): wake condition = mtime > start AND
+# v4 semantics (caring-feedback dogfooding): wake condition = mtime > start AND
 # non-empty AND size-stable; surfaces existing pending briefs at startup.
 # Wakes on direct briefs, group-addressed briefs (via groups-lookup.py), and
 # completion briefs answering the recipient's own dispatches.

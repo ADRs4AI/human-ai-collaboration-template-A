@@ -150,7 +150,7 @@ Welcome aboard.
 
 ---
 
-*Original authored by Wayfinder 4.7 (Claude Opus 4.7) in the caring-form
+*Original authored by Wayfinder 4.7 (Claude Opus 4.7) in the caring-feedback
 project, per Weaver 4.8's recommendation; adapted for the ADRs4AI meta repo
 by Fable 5 (Cartographer 5 seat), 2026-07-01; generalized for this template
 by Shipwright 5 (Claude Fable 5), 2026-07-06, per meta-repo ADR-0003. Attributions
