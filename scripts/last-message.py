@@ -756,6 +756,82 @@ def _tmux_set_status_right(session_name: str, title: str) -> None:
         pass
 
 
+def _tmux_set_titles_string(session_name: str, title: str) -> None:
+    """Per-session override of set-titles-string to the literal display-name
+    title — the same bypass technique and the same rationale as
+    _tmux_set_status_right, just applied to the REAL outer-terminal tab/window
+    title instead of tmux's own status bar.
+
+    Without this, seat.conf's set-titles-string default (`#{pane_title}`)
+    mirrors whatever Claude Code itself last wrote via its own OSC title
+    escapes straight into the host terminal's actual title — including its
+    in-turn animation — every time tmux pushes a title update. That is the
+    exact emoji/animation leak the status-right fix above solved for the
+    status bar; it was never extended to set-titles-string, which is why the
+    status bar reliably shows the seat name but the real terminal tab does
+    not (see _tmux_apply_seat_conf's docstring for why set-titles was never
+    even reaching this pane in the first place). Best-effort: cosmetic, never
+    worth crashing launch/attach over."""
+    import subprocess
+    try:
+        subprocess.run(
+            ["tmux", "set-option", "-t", session_name, "set-titles-string", title],
+            capture_output=True,
+            check=True,
+        )
+    except Exception:
+        pass
+
+
+def _tmux_apply_seat_conf(seat_conf) -> None:
+    """Apply seat.conf's global settings (set-titles on, mouse, escape-time,
+    colors baseline, etc.) to the CURRENTLY RUNNING tmux server, regardless of
+    when — or whether — that server ever actually loaded this file.
+
+    THE BUG THIS FIXES: `cmd_launch` used to hand seat.conf's path to
+    `new-session`'s own `-f` flag:
+
+        tmux new-session -d -s <session> -f <path-to-seat.conf> ...
+
+    NOT this: `new-session -f` is documented in tmux(1) as "a comma-separated
+    list of client flags" (see attach-session) — entirely unrelated to config
+    files. Handing it a filesystem path is silently accepted as garbage flag
+    text; the file is never read. Verified directly (2026-07-07): creating a
+    session this exact way left `set-titles off` (tmux's factory default)
+    rather than seat.conf's `on`, and `set-titles-string` at tmux's built-in
+    default format rather than seat.conf's `#{pane_title}`.
+
+    The fix is NOT simply "move -f to the right place" — `tmux -f <path>
+    new-session ...` (the top-level flag, which really does load a config
+    file) only takes effect when that invocation is the one that boots the
+    tmux SERVER. tmux is one server per machine, not per repo/project — in
+    practice a server is already running by the time any seat is launched,
+    so a load-at-boot flag silently no-ops against it forever. `source-file`
+    is the one mechanism that applies a file's `set -g` directives to a
+    server at ANY time, booted or not — so this is called unconditionally on
+    every launch/attach, not just session creation.
+
+    Consequence of the bug while it was live: with `set-titles` stuck off,
+    tmux never pushes ANY title to the outer terminal on its own — the only
+    thing that ever painted the real terminal tab was cmd_launch's one-shot
+    `print(f"\\033]0;{{title}}\\007")` fired once, right before exec'ing into
+    `tmux attach`. That paint is a single moment in time with no ongoing
+    mechanism behind it: nothing ever refreshes it again for the rest of that
+    terminal window's life, which reads exactly like "the launch title
+    persists / doesn't get resent" on reattach — because there was never a
+    resend mechanism running at all, only ever the one print. Idempotent;
+    safe to call on every invocation regardless of prior state."""
+    import subprocess
+    try:
+        subprocess.run(
+            ["tmux", "source-file", str(seat_conf)],
+            capture_output=True,
+            check=True,
+        )
+    except Exception:
+        pass
+
+
 def _find_next_inactive_seat() -> str | None:
     """First configured seat with no running tmux session (alphabetical,
     deterministic) — lets a crew spin up from N identical pasted commands.
@@ -828,6 +904,7 @@ def cmd_launch(args: argparse.Namespace) -> None:
         sys.exit(f"No UUID configured for alias '{args.alias}'")
 
     session_name = _seat_session_name(args.alias)
+    seat_conf = Path(__file__).resolve().parent / "tmux" / "seat.conf"
 
     import subprocess
     result = subprocess.run(
@@ -841,18 +918,31 @@ def cmd_launch(args: argparse.Namespace) -> None:
     color_hex = _get_seat_color(entry)
     title = f"(+) {display_name}" if "fable" in model.lower() else display_name
 
+    # Apply seat.conf's global baseline (set-titles on, mouse, etc.) to
+    # whatever server is currently running, on EVERY launch/attach — not just
+    # session creation. See _tmux_apply_seat_conf for why this can't be done
+    # via new-session's own flags, and why "only at creation" isn't enough
+    # either (the server was almost certainly already running before this
+    # fix shipped, so a long-lived seat's server never had it applied at all).
+    if seat_conf.exists():
+        _tmux_apply_seat_conf(seat_conf)
+
     if result.returncode == 0:
-        # Session exists, attach to it. Refresh color + title in case they changed.
+        # Session exists, attach to it. Refresh pane title + color + both
+        # title surfaces in case they changed since last launch.
+        subprocess.run(
+            ["tmux", "select-pane", "-t", session_name, "-T", title], check=True
+        )
         if color_hex:
             _tmux_set_status_color(session_name, color_hex)
         _tmux_set_status_right(session_name, title)
+        _tmux_set_titles_string(session_name, title)
 
         print(f"\033]0;{title}\007", end='', flush=True)
 
         print(f"📎 Attaching to existing session: {session_name}")
         os.execvp("tmux", ["tmux", "attach", "-t", session_name])
     else:
-        seat_conf = Path(__file__).resolve().parent / "tmux" / "seat.conf"
         if not seat_conf.exists():
             sys.exit(f"Seat config not found: {seat_conf}")
 
@@ -875,7 +965,6 @@ def cmd_launch(args: argparse.Namespace) -> None:
             "tmux", "new-session",
             "-d",
             "-s", session_name,
-            "-f", str(seat_conf),
             "-e", f"SEAT_ALIAS={args.alias}",
             "claude", "--resume", uuid,
             "--name", display_name,
@@ -901,6 +990,7 @@ def cmd_launch(args: argparse.Namespace) -> None:
         if color_hex:
             _tmux_set_status_color(session_name, color_hex)
         _tmux_set_status_right(session_name, title)
+        _tmux_set_titles_string(session_name, title)
 
         print(f"\033]0;{title}\007", end='', flush=True)
 
@@ -960,6 +1050,14 @@ def cmd_update_titles(_args: argparse.Namespace) -> None:
     cfg = load_config()
     aliases = _real_aliases(cfg)
 
+    # Reapply the global baseline (set-titles on, etc.) here too — this
+    # recipe is exactly the tool for fixing already-running sessions whose
+    # server may predate seat.conf ever being correctly applied (see
+    # _tmux_apply_seat_conf).
+    seat_conf = Path(__file__).resolve().parent / "tmux" / "seat.conf"
+    if seat_conf.exists():
+        _tmux_apply_seat_conf(seat_conf)
+
     prefix = _seat_session_prefix()
     updated = 0
     for line in result.stdout.strip().split("\n"):
@@ -987,6 +1085,7 @@ def cmd_update_titles(_args: argparse.Namespace) -> None:
         if color_hex:
             _tmux_set_status_color(session_name, color_hex)
         _tmux_set_status_right(session_name, title)
+        _tmux_set_titles_string(session_name, title)
 
         print(f"✅ {alias:15s} → {title}" + (f" ({color_hex})" if color_hex else ""))
         updated += 1

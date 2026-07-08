@@ -33,6 +33,12 @@ _Nothing yet._
 - **Registry schema: per-seat `settings` + `_global` defaults** (`docs/inbox/agent-sessions.json`)
   Optional per-seat `color_hex`, `substrate_backstop`, `effort`, `permissionMode`, `remote_control`; `_global` for project defaults. Nested under `settings` (identity / occupancy / configuration triad) — see `_settings_note` in the example registry.
 
+### Fixed
+
+- **Existing-session title-rewrite bug** (`scripts/last-message.py`, `scripts/tmux/seat.conf`)
+  `just launch <seat>` on an already-running seat didn't reliably refresh the seat's title on the real terminal tab. Root cause: `cmd_launch`'s `new-session` call passed `-f <path-to-seat.conf>` to the **`new-session` subcommand**, but `new-session -f` means "a comma-separated list of client flags" (`tmux(1)`, see `attach-session`) — unrelated to config files. `seat.conf` was silently never read; `set-titles` stayed at tmux's factory default (`off`), verified empirically on an isolated test socket. With `set-titles` off, tmux never pushes a title to the outer terminal on its own — the only thing that ever set the real tab title was `cmd_launch`'s one-shot OSC print fired right before handing off to `tmux attach`, with nothing ever refreshing it again afterward. Two compounding gaps fixed alongside: the reattach branch never called `select-pane -T` at all (parity gap vs. the fresh-session branch and `cmd_update_titles`); and `set-titles-string "#{pane_title}"` mirrors Claude Code's own animated pane title straight into the real terminal tab, unfiltered — the same emoji-leak the status-right fix (above) solved for the status bar, never extended to the actual terminal title. Fixed with a new `_tmux_apply_seat_conf` helper (`tmux source-file <seat_conf>`, called unconditionally on every launch/attach/update-titles — the mechanism that actually applies config to an already-running server, since tmux is one server per machine and almost always already running by the time any seat launches) and a new `_tmux_set_titles_string` helper (mirrors the status-right bypass, applied to the real terminal title). Caught and fixed before this release merged — carried in this branch's own copy since the initial port, never shipped past it.
+  *Attribution*: Herald 5 (Claude Sonnet 5), 2026-07-07 — found and fixed while investigating a dogfooding report in the ADRs4AI meta repo; ported here identically the same session. Full record: meta repo ADR-0004, Iteration 6.
+
 ---
 
 ## [3.6.0] — 2026-07-06 — crew-coordination-layer
