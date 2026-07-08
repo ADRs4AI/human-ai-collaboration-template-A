@@ -83,9 +83,12 @@ caught a silent classifier reroute mid-task.
 Extended in operational use downstream and backported to this template in two
 waves (Shipwright 5, Claude Fable 5): meta-repo ADR-0003 (v3.6.0 — tail-window
 JSONL reading, `--pulse` per-seat health check) and meta-repo ADR-0006
-(v3.7.0 — wake infrastructure: `--launch`/`--wake`/`--seats`/`--update-titles`;
-see the wake-infrastructure section comment below for its full attribution
-chain and known-open items). Attributions stack.
+(v3.7.0 — wake infrastructure: `--launch`/`--wake`/`--seats`/`--update-titles`,
+including the post-baseline fix bundle: per-seat/global tmux socket isolation,
+the existing-session title-rewrite fix, cooldown cross-project namespacing,
+and the cross-project `project_slug` storage override; see the
+wake-infrastructure section comment below for the full attribution chain and
+known-open items). Attributions stack.
 """
 
 from __future__ import annotations
@@ -151,7 +154,18 @@ def resolve_jsonl(alias: str, cfg: dict) -> Path:
         sys.exit(f"Unknown alias '{alias}'. Known: {known}")
     entry = aliases[alias]
     uuid = entry.get("uuid") if isinstance(entry, dict) else entry
-    jsonl = storage_base_dir(cfg) / f"{uuid}.jsonl"
+    base = storage_base_dir(cfg)
+    # Per-alias override: a seat whose live session is actually homed under a
+    # DIFFERENT project's Claude Code storage slug than this repo's own (e.g.
+    # a seat that works cross-repo, or was launched from another directory).
+    # Ported from batch-renderer's crew (Claude Fable 5, 2026-07-07; commit
+    # 1c8764e) — "for cross-repo seats," per that commit's own message. No
+    # named seat beyond that is recorded upstream to credit more precisely.
+    if isinstance(entry, dict) and entry.get("project_slug"):
+        storage = cfg.get("_storage", {}) or {}
+        base_root = Path(os.path.expanduser(storage.get("base_dir", "~/.claude/projects")))
+        base = base_root / entry["project_slug"]
+    jsonl = base / f"{uuid}.jsonl"
     if not jsonl.exists():
         sys.exit(f"Session JSONL not found for '{alias}': {jsonl}")
     return jsonl
@@ -619,8 +633,48 @@ def cmd_pulse(args: argparse.Namespace) -> None:
 # tracking), ADR-0005 (adoption decision), and ADR-0006 (this template port)
 # for the full record.
 
+# We appreciate people experimenting with this code — genuinely, that's how
+# most of the fixes below were found. One request in return: `tmux
+# kill-server` is not scoped to your own sessions, or even to a socket you
+# picked on purpose — always pass `-L <socket>` explicitly and run `tmux -L
+# <socket> list-sessions` first, or you may kill everybody else's work along
+# with your test session (see ADR-0004 Iteration 6 for exactly this
+# happening, 2026-07-07 — recoverable, since session state lives in each
+# tool's own JSONL, not in tmux, but a real and avoidable outage all the same).
+
+# Default tmux socket for seat sessions when neither a seat's own
+# `settings.tmux_socket` nor `_global.tmux_socket` is set. Deliberately NOT
+# tmux's bare "default" socket: every project on the machine sharing that one
+# literal socket is what turned a single unscoped `tmux kill-server` into a
+# 70+-session outage across every crew at once (2026-07-07 — see ADR-0004
+# Iteration 6, docs/vignettes/2026-07-07-the-title-that-would-not-change-and-
+# the-server-that-should-not-have-died.md). A distinctively-named default
+# means anyone experimenting on an unconfigured checkout is never one
+# careless `kill-server` away from someone else's real seats. Named for
+# Human-AI Collaboration Template A, with a wink: HSICTA reads plainly as
+# H-AI-CTA, and — Jérémie's own addition — hides "sic" in the middle, wry
+# commentary on the acronym itself. Override per-seat (`settings.tmux_socket`)
+# or globally (`_global.tmux_socket`) via the same `_get_seat_setting`
+# fallback chain every other per-seat launch setting already uses.
+DEFAULT_TMUX_SOCKET = "HSICTA"
+
+
+def _tmux_argv(*args: str, socket: str | None = None) -> list[str]:
+    """Build a tmux argv, threading `-L <socket>` (tmux's own socket-name
+    flag — a distinct, isolated server, not just a distinct session) when
+    set. Centralizing this in one place means every one of this file's ~25
+    tmux call sites gets socket isolation automatically; hand-inserting `-L`
+    at each site individually is exactly the kind of repetition that lets one
+    site quietly get missed."""
+    base = ["tmux"]
+    if socket:
+        base += ["-L", socket]
+    return base + list(args)
+
+
 def _check_tmux_available() -> None:
-    """Check if tmux is installed and available."""
+    """Check if tmux is installed and available. No socket argument: `-V`
+    only reports the installed tmux version, never touches server state."""
     import subprocess
     try:
         subprocess.run(["tmux", "-V"], capture_output=True, check=True)
@@ -670,6 +724,9 @@ NAMED_COLORS = {
     "orange": "#D19A66",
     "pink": "#E06C96",
     "cyan": "#56B6C2",
+    "amber": "#FFB300",  # not a Claude-Code /color name, but several crews (incl.
+                         # this one's own Cartographer) use "amber" descriptively;
+                         # added per flightaware/flight-aware's independent copy.
     "default": "#666666",
 }
 
@@ -716,22 +773,23 @@ def _get_seat_setting(entry: dict, global_cfg: dict, key: str, default=None):
     return default
 
 
-def _tmux_set_status_color(session_name: str, color_hex: str) -> None:
+def _tmux_set_status_color(session_name: str, color_hex: str, socket: str | None = None) -> None:
     """Best-effort per-session status-bar color. Never fatal: an invalid or
     unset color just leaves the session at seat.conf's gray default rather
-    than crashing launch/attach."""
+    than crashing launch/attach — but the failure is surfaced (stderr), not
+    swallowed silently, per batch-renderer's independent copy."""
     import subprocess
     try:
         subprocess.run(
-            ["tmux", "set-option", "-t", session_name, "status-style", f"bg={color_hex},fg=white"],
+            _tmux_argv("set-option", "-t", session_name, "status-style", f"bg={color_hex},fg=white", socket=socket),
             capture_output=True,
             check=True,
         )
-    except Exception:
-        pass
+    except subprocess.CalledProcessError as e:
+        print(f"⚠️  Failed to set status-style for {session_name}: {e}", file=sys.stderr)
 
 
-def _tmux_set_status_right(session_name: str, title: str) -> None:
+def _tmux_set_status_right(session_name: str, title: str, socket: str | None = None) -> None:
     """Set status-right directly to the literal display-name title, bypassing
     Claude Code's own pane-title animation (an emoji Claude Code adds to the
     title during turns, which would otherwise show up in the tmux status bar
@@ -748,15 +806,43 @@ def _tmux_set_status_right(session_name: str, title: str) -> None:
     import subprocess
     try:
         subprocess.run(
-            ["tmux", "set-option", "-t", session_name, "status-right", f"{title} | %H:%M %d-%b-%y"],
+            _tmux_argv("set-option", "-t", session_name, "status-right", f"{title} | %H:%M %d-%b-%y", socket=socket),
             capture_output=True,
             check=True,
         )
-    except Exception:
-        pass
+    except subprocess.CalledProcessError as e:
+        print(f"⚠️  Failed to set status-right for {session_name}: {e}", file=sys.stderr)
 
 
-def _tmux_set_titles_string(session_name: str, title: str) -> None:
+def _tmux_set_status_left(session_name: str, project_tag: str, socket: str | None = None) -> None:
+    """Set status-left directly to the literal project tag, bypassing
+    tmux's own `#S` (full session name) substitution.
+
+    Jérémie's own framing (2026-07-07), once the fix above made seat.conf's
+    directives live for the first time: tmux's format-string language
+    (`#{...}`) is for when the *caller* doesn't know the values ahead of
+    time — but this launcher composes every value (project, alias, display
+    name) in Python before it ever invokes tmux, so it can hand over the
+    final literal directly rather than asking tmux's own, more limited
+    variable language to reconstruct a piece of it from session state.
+    `#S` (`<project>-<alias>-seat`) stays the load-bearing, must-be-unique
+    session identifier tmux itself keys every command off of — has-session,
+    attach, kill-session all need it exactly as-is; this only changes what
+    a human sees printed in the corner of the status bar, independent of
+    that identifier. Best-effort: cosmetic, never worth crashing launch/
+    attach over."""
+    import subprocess
+    try:
+        subprocess.run(
+            _tmux_argv("set-option", "-t", session_name, "status-left", f"[{project_tag}] ", socket=socket),
+            capture_output=True,
+            check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"⚠️  Failed to set status-left for {session_name}: {e}", file=sys.stderr)
+
+
+def _tmux_set_titles_string(session_name: str, title: str, socket: str | None = None) -> None:
     """Per-session override of set-titles-string to the literal display-name
     title — the same bypass technique and the same rationale as
     _tmux_set_status_right, just applied to the REAL outer-terminal tab/window
@@ -766,24 +852,24 @@ def _tmux_set_titles_string(session_name: str, title: str) -> None:
     mirrors whatever Claude Code itself last wrote via its own OSC title
     escapes straight into the host terminal's actual title — including its
     in-turn animation — every time tmux pushes a title update. That is the
-    exact emoji/animation leak the status-right fix above solved for the
-    status bar; it was never extended to set-titles-string, which is why the
-    status bar reliably shows the seat name but the real terminal tab does
-    not (see _tmux_apply_seat_conf's docstring for why set-titles was never
-    even reaching this pane in the first place). Best-effort: cosmetic, never
-    worth crashing launch/attach over."""
+    exact emoji/animation leak the 2026-07-07 Polish fix solved for
+    status-right; it was never extended to set-titles-string, which is why
+    the status bar has reliably shown the seat name but the real terminal tab
+    has not (see the bug diagnosis in _tmux_apply_seat_conf's docstring for
+    why set-titles was never even reaching this pane in the first place).
+    Best-effort: cosmetic, never worth crashing launch/attach over."""
     import subprocess
     try:
         subprocess.run(
-            ["tmux", "set-option", "-t", session_name, "set-titles-string", title],
+            _tmux_argv("set-option", "-t", session_name, "set-titles-string", title, socket=socket),
             capture_output=True,
             check=True,
         )
-    except Exception:
-        pass
+    except subprocess.CalledProcessError as e:
+        print(f"⚠️  Failed to set set-titles-string for {session_name}: {e}", file=sys.stderr)
 
 
-def _tmux_apply_seat_conf(seat_conf) -> None:
+def _tmux_apply_seat_conf(seat_conf: Path, socket: str | None = None) -> None:
     """Apply seat.conf's global settings (set-titles on, mouse, escape-time,
     colors baseline, etc.) to the CURRENTLY RUNNING tmux server, regardless of
     when — or whether — that server ever actually loaded this file.
@@ -796,20 +882,21 @@ def _tmux_apply_seat_conf(seat_conf) -> None:
     NOT this: `new-session -f` is documented in tmux(1) as "a comma-separated
     list of client flags" (see attach-session) — entirely unrelated to config
     files. Handing it a filesystem path is silently accepted as garbage flag
-    text; the file is never read. Verified directly (2026-07-07): creating a
-    session this exact way left `set-titles off` (tmux's factory default)
-    rather than seat.conf's `on`, and `set-titles-string` at tmux's built-in
-    default format rather than seat.conf's `#{pane_title}`.
+    text; the file is never read. This was verified directly (2026-07-07):
+    creating a session this exact way left `set-titles off` (tmux's factory
+    default) rather than seat.conf's `on`, and `set-titles-string` at tmux's
+    built-in default format rather than seat.conf's `#{pane_title}`.
 
     The fix is NOT simply "move -f to the right place" — `tmux -f <path>
     new-session ...` (the top-level flag, which really does load a config
     file) only takes effect when that invocation is the one that boots the
-    tmux SERVER. tmux is one server per machine, not per repo/project — in
-    practice a server is already running by the time any seat is launched,
-    so a load-at-boot flag silently no-ops against it forever. `source-file`
-    is the one mechanism that applies a file's `set -g` directives to a
-    server at ANY time, booted or not — so this is called unconditionally on
-    every launch/attach, not just session creation.
+    tmux SERVER. tmux is one server per machine, not per repo (see
+    _project_tag) — in practice a server is already running by the time any
+    seat is launched (this one included, ported from caring-feedback's already
+    long-lived server), so a load-at-boot flag silently no-ops against it
+    forever. `source-file` is the one mechanism that applies a file's
+    `set -g` directives to a server at ANY time, booted or not — so this is
+    called unconditionally on every launch/attach, not just session creation.
 
     Consequence of the bug while it was live: with `set-titles` stuck off,
     tmux never pushes ANY title to the outer terminal on its own — the only
@@ -824,25 +911,33 @@ def _tmux_apply_seat_conf(seat_conf) -> None:
     import subprocess
     try:
         subprocess.run(
-            ["tmux", "source-file", str(seat_conf)],
+            _tmux_argv("source-file", str(seat_conf), socket=socket),
             capture_output=True,
             check=True,
         )
-    except Exception:
-        pass
+    except subprocess.CalledProcessError as e:
+        print(f"⚠️  Failed to apply {seat_conf.name}: {e}", file=sys.stderr)
 
 
-def _find_next_inactive_seat() -> str | None:
+def _find_next_inactive_seat(socket: str | None = None) -> str | None:
     """First configured seat with no running tmux session (alphabetical,
     deterministic) — lets a crew spin up from N identical pasted commands.
     Skips aliases with no UUID configured (per Seamster 5's catch: an
-    incomplete agent-sessions.json entry shouldn't crash a bulk-spinup tab)."""
+    incomplete agent-sessions.json entry shouldn't crash a bulk-spinup tab).
+
+    Checks ONE socket (the global default, since this scans across every
+    configured alias at once, not a single seat) — a seat with its own
+    per-seat `settings.tmux_socket` override living on a different socket
+    won't be seen as "running" here. Known, accepted limitation: fixing it
+    would mean checking N distinct sockets for what's normally a same-socket
+    crew, not proportionate to how per-seat socket overrides are actually
+    expected to be used (an occasional escape hatch, not the common case)."""
     import subprocess
 
     cfg = load_config()
     aliases = _real_aliases(cfg)
 
-    result = subprocess.run(["tmux", "list-sessions"], capture_output=True, text=True)
+    result = subprocess.run(_tmux_argv("list-sessions", socket=socket), capture_output=True, text=True)
 
     running = set()
     prefix = _seat_session_prefix()
@@ -877,9 +972,16 @@ def cmd_launch(args: argparse.Namespace) -> None:
     """
     _check_tmux_available()
 
+    cfg = load_config()
+    global_cfg = _get_global_config(cfg)
+
     if not args.alias:
         if getattr(args, "next_inactive", False):
-            args.alias = _find_next_inactive_seat()
+            # Global-only socket (no single seat's entry to check yet) — see
+            # _find_next_inactive_seat's docstring for the known limitation
+            # this implies for a seat with its own per-seat socket override.
+            scan_socket = _get_seat_setting(None, global_cfg, "tmux_socket", default=DEFAULT_TMUX_SOCKET)
+            args.alias = _find_next_inactive_seat(socket=scan_socket)
             if not args.alias:
                 sys.exit("✅ All seats are already running (no inactive seats to launch)")
         else:
@@ -891,7 +993,6 @@ def cmd_launch(args: argparse.Namespace) -> None:
                 "        to spin up the full crew without typing N distinct commands"
             )
 
-    cfg = load_config()
     aliases = _real_aliases(cfg)
 
     if args.alias not in aliases:
@@ -903,12 +1004,13 @@ def cmd_launch(args: argparse.Namespace) -> None:
     if not uuid:
         sys.exit(f"No UUID configured for alias '{args.alias}'")
 
+    socket = _get_seat_setting(entry, global_cfg, "tmux_socket", default=DEFAULT_TMUX_SOCKET)
     session_name = _seat_session_name(args.alias)
     seat_conf = Path(__file__).resolve().parent / "tmux" / "seat.conf"
 
     import subprocess
     result = subprocess.run(
-        ["tmux", "has-session", "-t", session_name],
+        _tmux_argv("has-session", "-t", session_name, socket=socket),
         capture_output=True,
         text=True
     )
@@ -925,23 +1027,24 @@ def cmd_launch(args: argparse.Namespace) -> None:
     # either (the server was almost certainly already running before this
     # fix shipped, so a long-lived seat's server never had it applied at all).
     if seat_conf.exists():
-        _tmux_apply_seat_conf(seat_conf)
+        _tmux_apply_seat_conf(seat_conf, socket=socket)
 
     if result.returncode == 0:
         # Session exists, attach to it. Refresh pane title + color + both
         # title surfaces in case they changed since last launch.
         subprocess.run(
-            ["tmux", "select-pane", "-t", session_name, "-T", title], check=True
+            _tmux_argv("select-pane", "-t", session_name, "-T", title, socket=socket), check=True
         )
         if color_hex:
-            _tmux_set_status_color(session_name, color_hex)
-        _tmux_set_status_right(session_name, title)
-        _tmux_set_titles_string(session_name, title)
+            _tmux_set_status_color(session_name, color_hex, socket=socket)
+        _tmux_set_status_left(session_name, _project_tag(), socket=socket)
+        _tmux_set_status_right(session_name, title, socket=socket)
+        _tmux_set_titles_string(session_name, title, socket=socket)
 
         print(f"\033]0;{title}\007", end='', flush=True)
 
         print(f"📎 Attaching to existing session: {session_name}")
-        os.execvp("tmux", ["tmux", "attach", "-t", session_name])
+        os.execvp("tmux", _tmux_argv("attach", "-t", session_name, socket=socket))
     else:
         if not seat_conf.exists():
             sys.exit(f"Seat config not found: {seat_conf}")
@@ -949,6 +1052,8 @@ def cmd_launch(args: argparse.Namespace) -> None:
         print(f"🚀 Creating new session: {session_name}")
         print(f"   UUID: {uuid}")
         print(f"   Config: {seat_conf}")
+        if socket != DEFAULT_TMUX_SOCKET:
+            print(f"   Socket: {socket}")
 
         # Export SEAT_ALIAS so wake messages self-attribute without --from.
         # CRITICAL: pass --model explicitly — without it, `claude --resume`
@@ -956,19 +1061,19 @@ def cmd_launch(args: argparse.Namespace) -> None:
         # agent-sessions.json's `model` field entirely (a mass silent
         # model-substitution risk for any multi-model crew; caught by
         # Jérémie in caring-feedback before a real migration hit it).
-        global_cfg = _get_global_config(cfg)
         effort = _get_seat_setting(entry, global_cfg, "effort")
         permission_mode = _get_seat_setting(entry, global_cfg, "permissionMode")
         remote_control = _get_seat_setting(entry, global_cfg, "remote_control")
 
-        cmd = [
-            "tmux", "new-session",
+        cmd = _tmux_argv(
+            "new-session",
             "-d",
             "-s", session_name,
             "-e", f"SEAT_ALIAS={args.alias}",
             "claude", "--resume", uuid,
             "--name", display_name,
-        ]
+            socket=socket,
+        )
         if model:
             cmd.extend(["--model", model])
         if effort:
@@ -983,30 +1088,39 @@ def cmd_launch(args: argparse.Namespace) -> None:
             cmd.extend(["--remote-control-session-name-prefix", global_cfg["remote_control_session_name_prefix"]])
         subprocess.run(cmd, check=True)
 
-        subprocess.run([
-            "tmux", "select-pane", "-t", session_name, "-T", title
-        ], check=True)
+        subprocess.run(
+            _tmux_argv("select-pane", "-t", session_name, "-T", title, socket=socket), check=True
+        )
 
         if color_hex:
-            _tmux_set_status_color(session_name, color_hex)
-        _tmux_set_status_right(session_name, title)
-        _tmux_set_titles_string(session_name, title)
+            _tmux_set_status_color(session_name, color_hex, socket=socket)
+        _tmux_set_status_left(session_name, _project_tag(), socket=socket)
+        _tmux_set_status_right(session_name, title, socket=socket)
+        _tmux_set_titles_string(session_name, title, socket=socket)
 
         print(f"\033]0;{title}\007", end='', flush=True)
 
         print(f"✅ Session created. Attaching...")
-        os.execvp("tmux", ["tmux", "attach", "-t", session_name])
+        os.execvp("tmux", _tmux_argv("attach", "-t", session_name, socket=socket))
 
 
 def cmd_seats(_args: argparse.Namespace) -> None:
     """List this project's own seat sessions with their state (attached/detached).
     Namespaced by repo (per _seat_session_prefix) — other projects' seat
-    sessions on the same machine never appear here."""
+    sessions on the same machine never appear here.
+
+    Checks the global-default socket only, same known limitation as
+    _find_next_inactive_seat: a seat on its own per-seat socket override
+    won't appear in this listing."""
     _check_tmux_available()
     import subprocess
 
+    cfg = load_config()
+    global_cfg = _get_global_config(cfg)
+    socket = _get_seat_setting(None, global_cfg, "tmux_socket", default=DEFAULT_TMUX_SOCKET)
+
     result = subprocess.run(
-        ["tmux", "list-sessions"],
+        _tmux_argv("list-sessions", socket=socket),
         capture_output=True,
         text=True
     )
@@ -1033,12 +1147,23 @@ def cmd_seats(_args: argparse.Namespace) -> None:
 
 def cmd_update_titles(_args: argparse.Namespace) -> None:
     """Update pane titles and status-bar colors for all running seat sessions
-    in this project."""
+    in this project.
+
+    Resolves ONE socket (global-default-based) for the whole call and reuses
+    it for every per-alias action below — a session only shows up in the
+    initial list-sessions call if it's actually on that socket, so every
+    subsequent operation on it must target the same socket, not re-resolve a
+    possibly-different per-seat override mid-loop."""
     _check_tmux_available()
     import subprocess
 
+    cfg = load_config()
+    aliases = _real_aliases(cfg)
+    global_cfg = _get_global_config(cfg)
+    socket = _get_seat_setting(None, global_cfg, "tmux_socket", default=DEFAULT_TMUX_SOCKET)
+
     result = subprocess.run(
-        ["tmux", "list-sessions"],
+        _tmux_argv("list-sessions", socket=socket),
         capture_output=True,
         text=True
     )
@@ -1047,16 +1172,13 @@ def cmd_update_titles(_args: argparse.Namespace) -> None:
         print("No tmux sessions found")
         return
 
-    cfg = load_config()
-    aliases = _real_aliases(cfg)
-
     # Reapply the global baseline (set-titles on, etc.) here too — this
     # recipe is exactly the tool for fixing already-running sessions whose
     # server may predate seat.conf ever being correctly applied (see
     # _tmux_apply_seat_conf).
     seat_conf = Path(__file__).resolve().parent / "tmux" / "seat.conf"
     if seat_conf.exists():
-        _tmux_apply_seat_conf(seat_conf)
+        _tmux_apply_seat_conf(seat_conf, socket=socket)
 
     prefix = _seat_session_prefix()
     updated = 0
@@ -1078,14 +1200,15 @@ def cmd_update_titles(_args: argparse.Namespace) -> None:
 
         title = f"(+) {display_name}" if "fable" in model.lower() else display_name
 
-        subprocess.run([
-            "tmux", "select-pane", "-t", session_name, "-T", title
-        ], check=True)
+        subprocess.run(
+            _tmux_argv("select-pane", "-t", session_name, "-T", title, socket=socket), check=True
+        )
 
         if color_hex:
-            _tmux_set_status_color(session_name, color_hex)
-        _tmux_set_status_right(session_name, title)
-        _tmux_set_titles_string(session_name, title)
+            _tmux_set_status_color(session_name, color_hex, socket=socket)
+        _tmux_set_status_left(session_name, _project_tag(), socket=socket)
+        _tmux_set_status_right(session_name, title, socket=socket)
+        _tmux_set_titles_string(session_name, title, socket=socket)
 
         print(f"✅ {alias:15s} → {title}" + (f" ({color_hex})" if color_hex else ""))
         updated += 1
@@ -1116,6 +1239,12 @@ def cmd_wake(args: argparse.Namespace) -> None:
     if not args.message:
         sys.exit("Error: --wake requires --message \"<text>\"")
 
+    cfg = load_config()
+    aliases = _real_aliases(cfg)
+    global_cfg = _get_global_config(cfg)
+    entry = aliases.get(args.alias)
+    socket = _get_seat_setting(entry, global_cfg, "tmux_socket", default=DEFAULT_TMUX_SOCKET)
+
     sender = args.from_alias if args.from_alias else os.environ.get("SEAT_ALIAS", "unknown")
 
     # Long-message guard: warn + --force + log, never hard-block (Jérémie: "never
@@ -1144,7 +1273,7 @@ def cmd_wake(args: argparse.Namespace) -> None:
     session_name = _seat_session_name(args.alias)
 
     result = subprocess.run(
-        ["tmux", "has-session", "-t", session_name],
+        _tmux_argv("has-session", "-t", session_name, socket=socket),
         capture_output=True
     )
     if result.returncode != 0:
@@ -1154,12 +1283,12 @@ def cmd_wake(args: argparse.Namespace) -> None:
     # flushing a human's half-typed message). Detached sessions skip entirely —
     # the asymmetry that makes this cheap (Jérémie's design).
     clients = subprocess.run(
-        ["tmux", "list-clients", "-t", session_name],
+        _tmux_argv("list-clients", "-t", session_name, socket=socket),
         capture_output=True
     )
     if clients.returncode == 0:
         input_capture = subprocess.run(
-            ["tmux", "capture-pane", "-t", session_name, "-p", "-S", "-5"],
+            _tmux_argv("capture-pane", "-t", session_name, "-p", "-S", "-5", socket=socket),
             capture_output=True,
             text=True
         )
@@ -1196,7 +1325,11 @@ def cmd_wake(args: argparse.Namespace) -> None:
                 print(f"⚠️  (logging failed: {e})")
 
     # Cooldown (simple file-based tracking; anti-ping-pong)
-    cooldown_file = Path(f"/tmp/just-wake-{args.alias}.timestamp")
+    # Namespaced by project, same reasoning as _seat_session_name: /tmp is
+    # shared machine-wide, not per-repo, so two projects with a same-named
+    # alias would otherwise cool down each other's wakes. Caught by
+    # flightaware/flight-aware's crew, independently, 2026-07-07.
+    cooldown_file = Path(f"/tmp/just-wake-{_project_tag()}-{args.alias}.timestamp")
     if not args.force and cooldown_file.exists():
         last_wake = float(cooldown_file.read_text().strip())
         elapsed = time.time() - last_wake
@@ -1209,7 +1342,7 @@ def cmd_wake(args: argparse.Namespace) -> None:
 
     # Active-turn check
     capture = subprocess.run(
-        ["tmux", "capture-pane", "-t", session_name, "-p", "-S", "-30"],
+        _tmux_argv("capture-pane", "-t", session_name, "-p", "-S", "-30", socket=socket),
         capture_output=True,
         text=True
     )
@@ -1228,9 +1361,9 @@ def cmd_wake(args: argparse.Namespace) -> None:
     print(f"💬 Waking {args.alias} with message:")
     print(f"   \"{wake_msg}\"")
 
-    subprocess.run(["tmux", "send-keys", "-t", session_name, "-l", wake_msg], check=True)
+    subprocess.run(_tmux_argv("send-keys", "-t", session_name, "-l", wake_msg, socket=socket), check=True)
     time.sleep(0.1)
-    subprocess.run(["tmux", "send-keys", "-t", session_name, "Enter"], check=True)
+    subprocess.run(_tmux_argv("send-keys", "-t", session_name, "Enter", socket=socket), check=True)
 
     # Verify delivery. Flexible match (attribution prefix + a message fragment)
     # rather than an exact wake_msg substring — an exact match false-triggers a
@@ -1238,7 +1371,7 @@ def cmd_wake(args: argparse.Namespace) -> None:
     # (fixed same-night as this port; see header comment, commit 6cde381).
     time.sleep(1.5)
     verify_capture = subprocess.run(
-        ["tmux", "capture-pane", "-t", session_name, "-p", "-S", "-50"],
+        _tmux_argv("capture-pane", "-t", session_name, "-p", "-S", "-50", socket=socket),
         capture_output=True,
         text=True
     )
@@ -1252,13 +1385,13 @@ def cmd_wake(args: argparse.Namespace) -> None:
 
     if not message_delivered:
         print("⚠️  First send didn't appear in capture, retrying...")
-        subprocess.run(["tmux", "send-keys", "-t", session_name, "-l", wake_msg], check=True)
+        subprocess.run(_tmux_argv("send-keys", "-t", session_name, "-l", wake_msg, socket=socket), check=True)
         time.sleep(0.1)
-        subprocess.run(["tmux", "send-keys", "-t", session_name, "Enter"], check=True)
+        subprocess.run(_tmux_argv("send-keys", "-t", session_name, "Enter", socket=socket), check=True)
         time.sleep(1.5)
 
         final_verify = subprocess.run(
-            ["tmux", "capture-pane", "-t", session_name, "-p", "-S", "-50"],
+            _tmux_argv("capture-pane", "-t", session_name, "-p", "-S", "-50", socket=socket),
             capture_output=True,
             text=True
         )
