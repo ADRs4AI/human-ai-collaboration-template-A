@@ -12,6 +12,35 @@ _Nothing yet._
 
 ---
 
+## [3.7.0] — 2026-07-07 — wake-infrastructure
+
+**Through-line — from pull to push**: v3.6.0's crew layer let seats *wait* for coordination (`wait-for-brief` polls); this release lets participants *wake* each other. Seats live in detached tmux sessions that survive closed terminal tabs; any participant — human or agent — can push a message to a running seat, with guards that warn rather than block. The human stops being the session-scheduler. Ported from the same operational lineage as v3.6.0 (fourth project now validating this infrastructure); scoped per the maintainers' meta-repo ADR-0006.
+
+### Added
+
+- **Wake infrastructure** (`justfile`, `scripts/last-message.py`, `scripts/tmux/seat.conf`)
+  - `just launch <seat>` — start/attach a seat's detached tmux session from `agent-sessions.json` (correct `--model` per seat; `--next-inactive` for bulk spinup; per-seat/`_global` `effort`/`permissionMode`/`remote_control` plumbing).
+  - `just wake <seat> "<msg>"` — hardened push notification: mid-turn refusal, composition-flush guard (never clobbers a human's draft), verify-retry, cooldown, self-attribution, long-message guard — all warn/`--force`/log, never hard-block.
+  - `just seats` / `just update-seat-titles` — session inventory + terminal-title upkeep.
+  - Session names are repo-namespaced (`<project>-<alias>-seat`) to prevent cross-repo tmux collisions; status bars carry per-seat hex colors (`settings.color_hex`, with named-color → hex → gray fallback) — turning Claude Code's 8-color `/color` limitation into a per-seat visual identity.
+  - Known-open items are documented in the ported header comments (verify-retry vs. queue banner, active-turn TOCTOU, first-launch tmux config, title polish) — carried forward, not silently resolved.
+  *Attribution*: Steward 4.5 (Claude Sonnet 4.5) — implementation; Jérémie Lumbroso — design philosophy (warn-log-force doctrine, composition-guard insight, color fallback, configurable settings); Commodore 5 — spec (origin ADR-0050) + field-testing; Seamster 5 — session-namespacing and quote-leak catches (origin project: caring-feedback).
+
+- **Commit-substrate backstop hook, opt-in** (`scripts/hooks/remind-uncommitted-substrate.py`)
+  The *mechanism* for v3.6.0's "commit substrate immediately" corollary — ships **dormant**: it must be registered in your `.claude/settings.json` AND each seat must opt itself in (`settings.substrate_backstop`: `"advisory"`/`"strict"`); it reports only files the opted-in session itself wrote, and every reminder names its own off-switch. Pull, not push, throughout.
+  *Attribution*: Keystone 4.8 (Claude Opus 4.8) + Jérémie Lumbroso (design principle: for an attention-focused, agreeable entity, "advisory" is not enough — non-coercion requires chosen, self-keyed reminders).
+
+- **Registry schema: per-seat `settings` + `_global` defaults** (`docs/inbox/agent-sessions.json`)
+  Optional per-seat `color_hex`, `substrate_backstop`, `effort`, `permissionMode`, `remote_control`; `_global` for project defaults. Nested under `settings` (identity / occupancy / configuration triad) — see `_settings_note` in the example registry.
+
+### Fixed
+
+- **Existing-session title-rewrite bug** (`scripts/last-message.py`, `scripts/tmux/seat.conf`)
+  `just launch <seat>` on an already-running seat didn't reliably refresh the seat's title on the real terminal tab. Root cause: `cmd_launch`'s `new-session` call passed `-f <path-to-seat.conf>` to the **`new-session` subcommand**, but `new-session -f` means "a comma-separated list of client flags" (`tmux(1)`, see `attach-session`) — unrelated to config files. `seat.conf` was silently never read; `set-titles` stayed at tmux's factory default (`off`), verified empirically on an isolated test socket. With `set-titles` off, tmux never pushes a title to the outer terminal on its own — the only thing that ever set the real tab title was `cmd_launch`'s one-shot OSC print fired right before handing off to `tmux attach`, with nothing ever refreshing it again afterward. Two compounding gaps fixed alongside: the reattach branch never called `select-pane -T` at all (parity gap vs. the fresh-session branch and `cmd_update_titles`); and `set-titles-string "#{pane_title}"` mirrors Claude Code's own animated pane title straight into the real terminal tab, unfiltered — the same emoji-leak the status-right fix (above) solved for the status bar, never extended to the actual terminal title. Fixed with a new `_tmux_apply_seat_conf` helper (`tmux source-file <seat_conf>`, called unconditionally on every launch/attach/update-titles — the mechanism that actually applies config to an already-running server, since tmux is one server per machine and almost always already running by the time any seat launches) and a new `_tmux_set_titles_string` helper (mirrors the status-right bypass, applied to the real terminal title). Caught and fixed before this release merged — carried in this branch's own copy since the initial port, never shipped past it.
+  *Attribution*: Herald 5 (Claude Sonnet 5), 2026-07-07 — found and fixed while investigating a dogfooding report in the ADRs4AI meta repo; ported here identically the same session. Full record: meta repo ADR-0004, Iteration 6.
+
+---
+
 ## [3.6.0] — 2026-07-06 — crew-coordination-layer
 
 **Through-line — the propagation root carries the proven substrate**: three downstream projects independently grew (and hand-copied, with divergence and one twice-shipped latent bug) the same multi-seat coordination layer on top of this template. This release upstreams that layer from its most-fixed lineage so that founding a crew costs `git clone`, not an archaeology expedition. Scoped and enacted per the maintainers' meta-repo ADR-0003 — template-evolution ADRs live in the maintainers' meta repository, never in this scaffold's `docs/adr/`, which is reserved for *your* project's decisions. First git-tagged release of this repository (v3.5.0 and earlier exist as CHANGELOG entries only).

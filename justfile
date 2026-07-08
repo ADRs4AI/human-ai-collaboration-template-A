@@ -252,6 +252,38 @@ crew:
 pulse stale_threshold='6':
     @python3 scripts/last-message.py --pulse --stale-threshold {{stale_threshold}}
 
+# ─── wake infrastructure (ported from caring-feedback, ADR-0050 lineage) ─────
+#
+# Turns the crew's wait-for-brief PULL model into an active PUSH: seats live
+# in detached tmux sessions (survive closing the terminal tab) and can be
+# woken from anywhere with a literal keystroke injection, hardened against
+# mid-turn injection, composition-flushing a human's draft, message-length
+# fragility, and ping-pong spam. See scripts/last-message.py's wake-
+# infrastructure header comment for full attribution and known-open items;
+# maintainers' meta-repo ADR-0006 records this port. Requires `tmux`
+# (brew install tmux / apt install tmux) — without it, everything else in
+# this justfile keeps working; these four recipes fail with an install hint.
+
+[group('crew')]
+[doc("Launch (or attach to) a seat's tmux session. `just launch --next-inactive` spins up the next seat with no running session")]
+launch seat='' *flags='':
+    @python3 scripts/last-message.py --launch {{seat}} {{flags}}
+
+[group('crew')]
+[doc("List all seat-* tmux sessions with state (attached/detached)")]
+seats:
+    @python3 scripts/last-message.py --seats
+
+[group('crew')]
+[doc("Update terminal titles for all running seat sessions")]
+update-seat-titles:
+    @python3 scripts/last-message.py --update-titles
+
+[group('crew')]
+[doc("Wake a seat by sending a message to its tmux session (--force to override guards)")]
+wake seat message *flags='':
+    @python3 scripts/last-message.py --wake {{seat}} --message "{{message}}" {{flags}}
+
 # Block until a new brief addressed to <recipient> lands in docs/inbox/.
 # v4 semantics (caring-feedback dogfooding): wake condition = mtime > start AND
 # non-empty AND size-stable; surfaces existing pending briefs at startup.
