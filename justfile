@@ -269,6 +269,20 @@ pulse stale_threshold='6':
 launch seat='' *flags='':
     @python3 scripts/last-message.py --launch {{seat}} {{flags}}
 
+# Backported from ADRs4AI HQ meta-repo, 2026-07-10 (Herald 5) — see its
+# docs/adr/0008-rapid-relaunch-via-vscode-terminals-manager.md for the full
+# design record. Generates .vscode/terminals.json for the VS Code Terminals
+# Manager extension: one "Terminals: Run" click relaunches the whole crew.
+[group('crew')]
+[doc("Regenerate .vscode/terminals.json — default: top-up (only seats not already open); --all: every seat (recovery, duplicates by design)")]
+refresh-terminals *args:
+    @python3 scripts/refresh-terminals.py {{args}}
+
+[group('crew')]
+[doc("Who touched a file, when, per seat (from session tool records): just blame <pattern> [--reads] [-n 50]")]
+blame pattern *flags:
+    @python3 scripts/blame.py {{pattern}} {{flags}}
+
 [group('crew')]
 [doc("List all seat-* tmux sessions with state (attached/detached)")]
 seats:
