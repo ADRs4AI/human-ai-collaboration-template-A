@@ -316,7 +316,16 @@ def cmd_onboard(args: argparse.Namespace) -> None:
 
 
 def cmd_discover(args: argparse.Namespace) -> None:
-    """List recent JSONLs in the storage dir, with a hint of their content."""
+    """List recent JSONLs in the storage dir, with a hint of their content.
+
+    Two identically-onboarded parallel launches (same pasted incipit, mtimes
+    seconds apart) can't be told apart by this table alone — neither the
+    first-user-message excerpt nor mtime ordering identifies *which row is
+    you*. Fix (Azoth, InboxAlchemy deployment, 2026-07-13, Option A+B; ported
+    by Grafter 5): `$CLAUDE_CODE_SESSION_ID`, when Claude Code sets it, is
+    the authoritative answer — no path-parsing, no inference. Not verified
+    across every Claude Code version/config; degrades gracefully (falls
+    through to the plain table) when unset."""
     cfg = load_config() if ALIAS_FILE.exists() else {"aliases": {}}
     pdir = storage_base_dir(cfg)
     if not pdir.exists():
@@ -328,6 +337,9 @@ def cmd_discover(args: argparse.Namespace) -> None:
     for name, v in _real_aliases(cfg).items():
         uuid = v.get("uuid") if isinstance(v, dict) else v
         known[uuid] = name
+    own_session_id = os.environ.get("CLAUDE_CODE_SESSION_ID")
+    if own_session_id:
+        print(f"Your own session (from $CLAUDE_CODE_SESSION_ID): {own_session_id}")
     print(f"Recent sessions in {pdir}:")
     print(f"{'mtime':25s}  {'uuid':40s}  {'alias':12s}  first-user-message")
     for p in jsonls[: args.limit]:
@@ -348,7 +360,8 @@ def cmd_discover(args: argparse.Namespace) -> None:
         except OSError:
             pass
         first_user = first_user[:60].replace("\n", " ")
-        print(f"{mtime:25s}  {uuid:40s}  {alias:12s}  {first_user}")
+        marker = "  ← this session" if uuid == own_session_id else ""
+        print(f"{mtime:25s}  {uuid:40s}  {alias:12s}  {first_user}{marker}")
 
 
 def read_jsonl_tail(jsonl: Path, max_bytes: int = 65536) -> list[dict]:
