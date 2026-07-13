@@ -166,6 +166,15 @@ last-full alias k='1':
 aliases:
     @python3 scripts/last-message.py --list
 
+# Print a seat's read_order — its onboarding packet as data, not prose.
+# Invented by Notary Opus 4.7 (crossfoot, 2026-07-09); backported by
+# Grafter 5, 2026-07-13 (meta-repo ADR-0004 Iteration 8). Marks each file
+# found/missing on disk.
+[group('inbox')]
+[doc("Print a seat's onboarding read_order, with found/missing markers: just onboard <alias>")]
+onboard alias:
+    @python3 scripts/last-message.py {{alias}} --onboard
+
 # List recent session JSONLs in the storage dir. Use this to find UUIDs for
 # new agents and populate docs/inbox/agent-sessions.json.
 [group('inbox')]

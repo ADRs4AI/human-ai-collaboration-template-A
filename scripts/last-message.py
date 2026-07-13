@@ -36,6 +36,7 @@ Usage
     just launch <seat>              # start/attach the seat's tmux session
     just wake <seat> "<msg>"        # push-notify a running seat
     just seats                      # list seat sessions with state
+    just onboard <alias>            # print a seat's read_order, found/missing marked
 
 Direct invocation:
 
@@ -88,7 +89,15 @@ including the post-baseline fix bundle: per-seat/global tmux socket isolation,
 the existing-session title-rewrite fix, cooldown cross-project namespacing,
 and the cross-project `project_slug` storage override; see the
 wake-infrastructure section comment below for the full attribution chain and
-known-open items). Attributions stack.
+known-open items). A third wave (Grafter 5, Claude Sonnet 5, meta-repo
+ADR-0004 Iteration 8, 2026-07-13) added `--onboard`/`cmd_onboard`, backporting
+`read_order` — invented by Notary Opus 4.7 in an unrelated downstream
+deployment of this same template (`crossfoot`, formerly `qaestor`, formerly
+`penn-purchasing-expense-workflow`; commit `f714b3a8`, 2026-07-09) — a
+per-seat array codifying a seat's onboarding packet as machine-readable data
+rather than only prose. See `docs/inbox/agent-sessions.json`'s
+`_read_order_note` for the schema and the ORJ on why it's top-level rather
+than nested under `settings`. Attributions stack.
 """
 
 from __future__ import annotations
@@ -278,6 +287,32 @@ def cmd_list(_args: argparse.Namespace) -> None:
             print(f"  {name:20s}  {uuid}  {('— ' + role) if role else ''}")
         else:
             print(f"  {name:20s}  {meta}")
+
+
+def cmd_onboard(args: argparse.Namespace) -> None:
+    """Print a seat's read_order — its onboarding packet as machine-readable
+    data, invented by Notary Opus 4.7 (crossfoot, 2026-07-09) and backported
+    here 2026-07-13 by Grafter 5 (ADR-0004 Iteration 8). Marks each entry
+    found/missing on disk — the "lint can check they exist" value-prop this
+    was ported for."""
+    if not args.alias:
+        sys.exit("Usage: last-message.py <alias> --onboard")
+    cfg = load_config()
+    aliases = _real_aliases(cfg)
+    meta = aliases.get(args.alias)
+    if meta is None:
+        sys.exit(f"Unknown alias: {args.alias} (see --list)")
+    read_order = meta.get("read_order") if isinstance(meta, dict) else None
+    if not read_order:
+        print(f"{args.alias} has no read_order configured yet.")
+        print(f'Add a "read_order": [...] array to its entry in {ALIAS_FILE}.')
+        return
+    display = meta.get("display_name", args.alias) if isinstance(meta, dict) else args.alias
+    print(f"📖 Read order for {display}:")
+    for i, entry in enumerate(read_order, 1):
+        resolved = Path(entry).expanduser()
+        mark = "✓" if resolved.exists() else "✗ MISSING"
+        print(f"  {i}. {entry}  {mark}")
 
 
 def cmd_discover(args: argparse.Namespace) -> None:
@@ -1419,6 +1454,7 @@ def main() -> None:
         help="Filter messages by role (default assistant)",
     )
     p.add_argument("--list", action="store_true", help="List configured aliases")
+    p.add_argument("--onboard", action="store_true", help="Print an alias's read_order (its onboarding packet, see --list)")
     p.add_argument("--discover", action="store_true", help="List recent JSONLs to help populate aliases")
     p.add_argument("--pulse", action="store_true", help="Health check: one line per seat, detect stalls/errors")
     p.add_argument("--stale-threshold", type=float, default=6.0, help="Hours before marking STALE (default 6)")
@@ -1436,6 +1472,8 @@ def main() -> None:
 
     if args.list:
         cmd_list(args)
+    elif args.onboard:
+        cmd_onboard(args)
     elif args.discover:
         cmd_discover(args)
     elif args.pulse:
