@@ -1404,7 +1404,16 @@ def cmd_wake(args: argparse.Namespace) -> None:
     if "esc to interrupt" in last_few_lines.lower():
         sys.exit(f"⚠️  {args.alias} is in an active turn (saw 'esc to interrupt')\n   Wait for turn to finish")
 
-    wake_msg = f"[wake from {sender} via just-wake] 📬 {args.message}"
+    # Dedupe: the tool always prefixes its own 📬; a sender who also leads
+    # their payload with one (natural shorthand for "you've got mail") ends
+    # up with a doubled "📬 📬" — observed live, 2026-07-13 (Cartographer 5's
+    # wake to Grafter 5, meta-repo), root-caused and fixed same session.
+    # Strip only a leading 📬 the sender supplied; the tool's own prefix is
+    # unconditional.
+    payload = args.message.lstrip()
+    if payload.startswith("📬"):
+        payload = payload[1:].lstrip()
+    wake_msg = f"[wake from {sender} via just-wake] 📬 {payload}"
 
     print(f"💬 Waking {args.alias} with message:")
     print(f"   \"{wake_msg}\"")
