@@ -74,6 +74,8 @@ Multiple sources may be listed.]
 
 **Protocol** (added 2026-04-22 by Opus 4.7): every QST block must include a `**Recommendation**: (by [model-name])` section between the options and the `**ANS:**` block. The human should not have to extract the AI's lean from prose — put it under its own heading with a clear pick and a short justification grounded in evidence (data, prior ADRs, constraints). Lead the recommendation with a bold pick (`**B — short name.**`) so a skim reveals the AI's position without reading. If walking back an earlier lean during iteration, say so explicitly.
 
+**Catch-the-author form** (strengthened 2026-07-16, v3.8.0, per a downstream project's nomination — companion-etude 0031): a recommendation is **claim + named justification + named consequence**. The claim is the bold pick. The justification cites evidence *named specifically enough to be checked* — a file, an ADR, a measurement — never "best practice" or taste. The consequence names what breaks or follows if the pick is wrong. A recommendation whose author can be caught is worth more than one that can only be believed (see `docs/inbox/CONVENTIONS.md` §2, catchability over correctness).
+
 ### QST: [Question text]
 - Status: unanswered
 - Why asking: [How this shapes my approach]
@@ -83,7 +85,7 @@ Multiple sources may be listed.]
 
 **Recommendation**: (by [model-name, e.g. Opus 4.7])
 
-[One clear sentence naming the pick — e.g. "**B — persistent annotation.**" — followed by 2–4 sentences of justification. Reference evidence rather than taste. If walking back an earlier lean, say so explicitly.]
+[Claim: one sentence naming the pick — e.g. "**B — persistent annotation.**" Justification: 2–4 sentences from evidence named specifically enough to be checked (a file, an ADR, a measurement). Consequence: one sentence naming what breaks or follows if this pick is wrong. If walking back an earlier lean, say so explicitly.]
 
 **ANS:** (by [name])
 [Fill this in]
@@ -97,7 +99,7 @@ Multiple sources may be listed.]
 
 **Recommendation**: (by [model-name])
 
-[Clear pick + justification.]
+[Claim + named justification + named consequence.]
 
 **ANS:** (by [name])
 [Fill this in]
