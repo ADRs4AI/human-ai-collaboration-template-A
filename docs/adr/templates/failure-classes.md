@@ -1,3 +1,5 @@
+<!-- adr template version: "failure-classes 3.8.0" -->
+
 # Failure Class Taxonomy
 
 **Purpose**: Categorize structural failure patterns to recognize them across incidents and establish preventive contracts.

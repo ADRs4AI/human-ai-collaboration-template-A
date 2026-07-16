@@ -1,3 +1,5 @@
+<!-- adr template version: "collab-adr-lean 3.8.0" -->
+
 # [ADR Title - Decision/Topic]
 
 - **Date**: [YYYY-MM-DD]
