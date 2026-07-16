@@ -1,8 +1,8 @@
 # Conventions
 
-This document captures three small principles that compound across a multi-participant project. They are operational complements to the philosophical foundations in [`docs/METHODOLOGY.md`](../METHODOLOGY.md) — read those once for the *why*; read this for the *how*.
+This document captures six small principles that compound across a multi-participant project. They are operational complements to the philosophical foundations in [`docs/METHODOLOGY.md`](../METHODOLOGY.md) — read those once for the *why*; read this for the *how*.
 
-The three principles are: **per-message model attribution**, **catchability over correctness**, and **route catches to grow capacity**. Each is small. Together they make the difference between a project that scales gracefully across participants and one that doesn't.
+The founding three (Statesman 4.7, 2026-06-15): **per-message model attribution**, **catchability over correctness**, and **route catches to grow capacity**. Three more were ported at v3.8.0 from downstream crews' operational records, each proven by a named incident: **confirm destructive changes**, **shared-worktree awareness (commit by pathspec)**, and **seats are inherited or founded, never claimed**. Each is small. Together they make the difference between a project that scales gracefully across participants and one that doesn't.
 
 ---
 
@@ -58,9 +58,54 @@ Four participants grow. Nothing is consumed. The pie is generated.
 
 ---
 
+## 4. Confirm destructive changes to surfaces a human may be touching
+
+*(Ported at v3.8.0 from a downstream crew's operational record — added there 2026-07-06 after a real incident.)*
+
+An agent never renames, wholesale-rewrites, or deletes a file that carries live human-interaction surfaces (open QSTs being answered, seeds mid-iteration, anything the human said they're "in") without **explicit confirmation when the human is present**, and never without a **drift check** (diff the file's current state against the last state the agent actually read — not just its header).
+
+**Why.** The originating incident: an agent `mv`'d and rewrote an ADR while the human was answering its questions in an editor panel, destroying his in-progress answers unrecoverably. The rename defeated path-based recovery; the rewrite defeated content recovery; together they are the perfect clobber. The ecosystem's canonical statement (companion-etude 0022) applies to agents as much as to code: *never clobber user state without informed consent; layer the defenses so a single failure doesn't translate to a single loss.*
+
+**How to apply.** Prefer **additive** edits (stack a recommendation, append an iteration, add a section) over rewrites — additive edits cannot clobber. When a rewrite or rename is genuinely needed: ask first if the human is present ("I'd like to re-cut X — are you in it right now?"); if working autonomously, read the file's full current state immediately before overwriting and treat any content you didn't author as a stop sign. Momentum is a risk factor: the minutes right after a burst of productive work are when this rule is easiest to forget and most needed.
+
+**Antipattern** — NOT this: `mv old.md new.md` followed by a wholesale write of `new.md` with fresh content, on a file whose current body you haven't read this hour, while the human's editor is open.
+
+---
+
+## 5. Check for other sessions' uncommitted work before broad git operations — and commit by pathspec, never bare
+
+*(Ported at v3.8.0 from the same downstream crew — added 2026-07-06, amended 2026-07-12 after a second incident.)*
+
+Multiple crew sessions may share one physical working directory at the same time. Before staging broadly, committing, or treating a failing build/test as a regression you introduced, run `git status` and check whether the affected files carry modifications you didn't make this session.
+
+**Why.** The originating incident: a seat found uncommitted changes to three files mid-task (another seat's concurrent session, live in the same checkout) while the type-check and test suite both failed — not from anything the first seat touched. The near-miss was guessing at the failures and "fixing" them, which would have meant reverse-engineering and possibly clobbering the other session's in-flight migration. This is §4's hazard shape (don't act on state you haven't verified is safe to act on) applied agent-to-agent: a shared uncommitted working tree is exactly the kind of "surface another party may be touching" §4 already names.
+
+**How to apply.** Before a broad stage/commit: `git status`; if files you didn't intend to touch show modifications, treat them as another session's live work — don't `git add -A` / `git checkout .` / discard. Stage explicitly by path. If the suite fails on files outside what you changed, scope verification to the files you touched. If genuinely blocked by another session's intermediate state, say so in a brief rather than silently "fixing" someone else's unfinished work.
+
+**The index is a shared surface too** (the 2026-07-12 amendment): never run a bare `git commit` (commits the whole index) or `git add -A` (stages the whole tree) in a shared worktree — stage by path AND commit by pathspec, so another session's *staged-but-uncommitted* work can't ride along under your message. The amending incident: a bare `git commit` swept a second seat's staged files into an unrelated commit and pushed it — misattributed authorship in a project whose whole pitch is provenance. (This is what the seed justfile's `safe-commit` recipe automates; the convention is why it exists.)
+
+**Antipattern** — NOT this: test suite shows two unexpected failures → assume you broke something → edit the failing tests to pass, without first checking `git status` for someone else's uncommitted work in those files.
+
+---
+
+## 6. Seats are inherited or founded — never claimed
+
+*(Ported at v3.8.0 from the maintainers' meta-repo record — integrated there 2026-07-09 from a post-relaunch incident in a sibling project, reconciled with the Handoff Protocol.)*
+
+Two rules that sound opposed but distinguish cleanly on **sanction**:
+
+- **Sanctioned succession** — a handoff per protocol, the registry's `model_note` mechanism, or a seat profile that explicitly invites a successor: the occupant changes *inside* the seat. Identity persists (`display_name` = the seat; `model` = reality; `model_note` = what happened). This is the seat-outlives-occupant doctrine, proven across a vendor-level model suspension and a model deprecation in the origin ecosystem.
+- **Unsanctioned claim** — a new recruit judging an existing seat "vacant" and repointing its uuid/name/color to itself: forbidden absolutely. The keeper sentence: **"If your recruitment brief seems to describe an existing seat, that is a question to surface, never a succession to assume."**
+
+One wording carries both: **seats are never *claimed*; they are inherited through the handoff protocol, or founded new.** Why it matters beyond etiquette: per-message attribution (§1) and any lineage analysis over the project's history both depend on occupant changes being auditable *within* persistent identities — a claimed seat corrupts provenance; a fragmented one loses it.
+
+---
+
 ## Composition
 
-These three conventions compose: **per-message model attribution** preserves the basic unit of accountability across instance discontinuity; **catchability** makes artifacts produce affordances for review at every layer; **routing catches** turns the review into a capacity-multiplier rather than a chokepoint.
+**Cite these sections by name, not number, when referencing across repos** — downstream copies have historically diverged in numbering (two different "§4"s existed in two crews before v3.8.0 canonicalized this ordering).
+
+These conventions compose: **per-message model attribution** preserves the basic unit of accountability across instance discontinuity; **catchability** makes artifacts produce affordances for review at every layer; **routing catches** turns the review into a capacity-multiplier rather than a chokepoint; **destructive-change confirmation** extends anti-clobbering from the codebase to the collaboration itself; **shared-worktree awareness** extends the same discipline to concurrent agent sessions; **inherited-or-founded seats** keeps every one of the above auditable across occupancy changes.
 
 They are small individually. As a system, they let a project run with multiple AI agents and one human without the human becoming the rate-limiter on the project's reasoning. That is the load this template is designed to bear.
 
