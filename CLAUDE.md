@@ -1,8 +1,8 @@
 # CLAUDE.md - Project Guidance
 
 - **Project**: [Project Name]
-- **Human**: Jérémie Lumbroso  
-- **AI**: Claude Sonnet 4.5
+- **Human**: [Human collaborator(s)]
+- **AI**: [AI participant(s) — with the crew layer, the roster lives in docs/inbox/agent-sessions.json; name the coordinator seat here]
 - **Last Updated**: [Date]
 
 ---
@@ -178,16 +178,6 @@ Our **process** is as valuable as our **product**. Vignettes make tacit knowledg
 - Build intuition about what makes collaboration effective
 
 When in doubt: **If it made you say "aha!", write it down.**
-
----
-
-## Tenth Directive
-
-(Other directives have been occluded because they are not relevant.)
-
-**DON'T HESITATE TO EXPERIMENT TO LEARN: YOU HAVE ACCESS TO PLAYWRIGHT MCP TO BE ABLE TO HAVE ACCESS TO YOUR HOW BROWSER**
-
-This is a methodology (of taking screenshots, learning from Playwright) that you need to document a subskill for this reveal.js skill we are building — so dogfooding is the best way of learning!
 
 ---
 

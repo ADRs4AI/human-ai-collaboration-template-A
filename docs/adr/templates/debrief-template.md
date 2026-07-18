@@ -1,3 +1,5 @@
+<!-- adr template version: "debrief-template 3.8.0" -->
+
 # DEBRIEF-NNN: [Brief Label]
 
 - **Date**: YYYY-MM-DD

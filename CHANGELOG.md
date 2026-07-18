@@ -12,6 +12,39 @@ _Nothing yet._
 
 ---
 
+## [3.8.0] — 2026-07-16 — scrub-and-markers
+
+**Through-line — the template learns to say what it is**: every template file now carries a machine-readable version marker, the scaffold ships no other project's residue, recommendations must name their evidence and their failure mode, and three incident-proven conventions join the canon. Scoped per the maintainers' meta-repo ADR-0013; renumbered from the original "v3.7.0" charter per ADR-0006.
+
+### Added
+
+- **Version markers on all five template files** (`docs/adr/templates/*.md`)
+  Line 1 of each file: `<!-- adr template version: "<filename-stem> 3.8.0" -->` — one mechanism for all templates (shape: Jérémie Lumbroso; SemVer semantics — major = incompatible structure, minor = new optional convention, patch = wording — and rename-aliasing discipline: Cairn 4.7). A file re-stamps only when its own convention changes. Because `just adr` copies the lean template, minted ADRs are born self-describing. A companion hash-registry for identifying *unmarked* historical files is chartered separately at the maintainers' meta repo.
+
+- **Catch-the-author Recommendation form** (`docs/adr/templates/collab-adr-lean.md`)
+  Recommendations are now **claim + named justification + named consequence** — the pick, evidence named specifically enough to be checked, and what breaks if the pick is wrong. Nominated by a downstream research project (companion-etude 0031); additive strengthening of the 2026-04-22 Recommendation-visibility protocol.
+
+- **Conventions §4–§6** (`docs/inbox/CONVENTIONS.md`)
+  Three sections ported from downstream crews' operational records, each proven by a named incident: **§4 confirm destructive changes** to surfaces a human may be touching; **§5 shared-worktree awareness** — check for other sessions' uncommitted work, stage by path, commit by pathspec (the discipline `just safe-commit` automates); **§6 seats are inherited or founded, never claimed**. Numbering canonicalized here; cite sections by name across repos.
+
+### Changed
+
+- **CLAUDE.md header fields are adopter placeholders** — the hardcoded `Human:`/`AI:` values are gone (see Fixed).
+
+### Fixed
+
+- **Project-specific pollution scrubbed from the canonical CLAUDE.md**
+  A "Tenth Directive" (Playwright MCP / reveal.js instructions leaked from a specific project) removed whole; `AI: Claude Sonnet 4.5` and the hardcoded human name replaced with fill-in placeholders. Every adopter was inheriting another project's marching orders.
+
+### Back-filled (landed on main between v3.7.0 and this release, entries added here)
+
+- **`refresh-terminals` + `blame`** — VS Code Terminals-Manager integration (regenerates `.vscode/terminals.json` from the crew registry) and provenance tooling; the last two wake-infra pieces (ported from the maintainers' meta repo by Jérémie Lumbroso).
+- **`read_order` onboarding packets** (`agent-sessions.json`, `just onboard <alias>`) — a seat's read-order as machine-checkable data instead of prose (invented by Notary Opus 4.7 in a sibling project; backported via meta-repo ADR-0004 Iteration 8, Grafter 5).
+- **`discover-sessions` self-disambiguation** via `CLAUDE_CODE_SESSION_ID` (Azoth, InboxAlchemy deployment).
+- **Wake prefix dedup** — `just wake` no longer doubles a sender-supplied envelope prefix against its own self-attribution (Jérémie Lumbroso; the doubling was first flagged in meta-repo ADR-0006's Open Follow-ups).
+
+---
+
 ## [3.7.0] — 2026-07-07 — wake-infrastructure
 
 **Through-line — from pull to push**: v3.6.0's crew layer let seats *wait* for coordination (`wait-for-brief` polls); this release lets participants *wake* each other. Seats live in detached tmux sessions that survive closed terminal tabs; any participant — human or agent — can push a message to a running seat, with guards that warn rather than block. The human stops being the session-scheduler. Ported from the same operational lineage as v3.6.0 (fourth project now validating this infrastructure); scoped per the maintainers' meta-repo ADR-0006.

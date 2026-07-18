@@ -1,3 +1,5 @@
+<!-- adr template version: "seed-template 3.8.0" -->
+
 # SEED: [Topic]
 
 - **Date**: [YYYY-MM-DD]

@@ -1,3 +1,5 @@
+<!-- adr template version: "template 3.8.0" -->
+
 # [short title of solved problem and solution]
 
 * Status: [proposed | rejected | accepted | deprecated | ... | superseded by [ADR-0005](0005-example.md)] <!-- optional -->
