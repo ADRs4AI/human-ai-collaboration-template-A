@@ -38,10 +38,10 @@ _Nothing yet._
 
 ### Back-filled (landed on main between v3.7.0 and this release, entries added here)
 
-- **`refresh-terminals` + `blame`** — VS Code Terminals-Manager integration (regenerates `.vscode/terminals.json` from the crew registry) and provenance tooling; the last two wake-infra pieces (ported from the maintainers' meta repo by Jérémie Lumbroso).
+- **`refresh-terminals` + `blame`** — VS Code Terminals-Manager integration (regenerates `.vscode/terminals.json` from the crew registry) and provenance tooling; the last two wake-infra pieces (ported from the maintainers' meta repo by Herald 5, Claude Sonnet 5 — erratum 2026-07-18: misattributed via commit authorship, resolved by the very `blame` tool this entry ships).
 - **`read_order` onboarding packets** (`agent-sessions.json`, `just onboard <alias>`) — a seat's read-order as machine-checkable data instead of prose (invented by Notary Opus 4.7 in a sibling project; backported via meta-repo ADR-0004 Iteration 8, Grafter 5).
 - **`discover-sessions` self-disambiguation** via `CLAUDE_CODE_SESSION_ID` (Azoth, InboxAlchemy deployment).
-- **Wake prefix dedup** — `just wake` no longer doubles a sender-supplied envelope prefix against its own self-attribution (Jérémie Lumbroso; the doubling was first flagged in meta-repo ADR-0006's Open Follow-ups).
+- **Wake prefix dedup** — `just wake` no longer doubles a sender-supplied envelope prefix against its own self-attribution (Grafter 5, Claude Sonnet 5 — erratum 2026-07-18, was misattributed via commit authorship; the doubling was first flagged in meta-repo ADR-0006's Open Follow-ups).
 
 ---
 
