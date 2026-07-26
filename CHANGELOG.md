@@ -6,9 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## [Unreleased]
+## [Unreleased] — becomes 3.9.0 at the pre-launch tag
 
-_Nothing yet._
+**Through-line — the right template becomes the obvious one**: the wild defaults to MADR partly because our collaborative template hid behind a cryptic name while `template.md` looked canonical. This release renames for salience, adds per-directory doorways for transformer guests, and adopts the parser-significant placeholder convention. Lane B of the pre-launch sprint (maintainers' meta-repo ADR-0019, every change row-approved by Jérémie Lumbroso 2026-07-26); Lane A (the companion skill) joins before tagging.
+
+### Changed
+
+- **Template renames — the `adr.md` era** (`docs/adr/templates/`): `collab-adr-lean.md` → **`adr.md`** (THE default, what `just adr` mints); `template.md` → **`adr-madr.md`** (the generic-name default-trap dies); `seed-template.md` → **`seed.md`**; `debrief-template.md` → **`debrief.md`** (`-template` suffix is noise inside `templates/`). `failure-classes.md` kept (row 1.5 — a further descriptive rename is an open follow-up). Every rename re-stamps its version marker (`"<new-stem> 3.9.0"`) and registers its old stem as a `previousMarkers` alias (meta-repo ADR-0019 §Aliasing) so detection and the hash registry never orphan a file minted under the old names. All live references updated; CHANGELOG history untouched.
+
+### Added
+
+- **Per-directory `AGENTS.md` doorways** (`docs/adr/templates/`, `docs/adr/`) — short in-place guidance for agents arriving mid-task, written per the justifiability principle (Jérémie Lumbroso): norms carry their reasons, rules are marked as rules, and both working paths are offered (mint via recipe, or copy by hand) — teach smart entities, don't indoctrinate cogs. The `docs/adr/` doorway also teaches how parsing works: Status-line authority, both Status vocabularies, the placeholder convention.
+- **Parser-significant placeholder convention** (`docs/adr/templates/adr.md`): literal placeholders that parsers depend on (`[Fill this in]`) now carry `<!-- literal placeholder — parser-significant, do not paraphrase -->` — models were paraphrasing them, which reads as an answer and silently drops questions from the human's queue. (Caught by Sextant, leaderboard project; added by Jérémie Lumbroso; a cross-ecosystem catch in the finest tradition.)
 
 ---
 
