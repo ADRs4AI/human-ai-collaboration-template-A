@@ -1,0 +1,7 @@
+# You are in the ADR directory
+
+ADRs live here as `NNNN-<slug>.md` — mint with `just adr "<title>"` rather than hand-numbering. **Why**: the recipe computes max+1 in base-10; hand-numbering has collided in practice (skipped numbers + octal parsing were this ecosystem's first recorded bug class). Seeds — pre-structure brain-dumps — are `seed-YYYY-MM-DD-<slug>.md` via `just seed`.
+
+**How parsing works, so your formatting choices are informed**: tooling anchors on `### QST:` / `### QST-<ID>:` headings (ID: 1–24 letters/digits, interior hyphens) and each question's own `- Status:` line. **The Status line has authority**: `unanswered` puts a question on the human's answer queue; `answered` retires it. Document-level Status vocabulary: `Draft | Proposed | Accepted | Implemented | Superseded` (`adr-madr.md` keeps MADR's own: `proposed | rejected | accepted | deprecated | superseded`). Placeholders marked `<!-- literal placeholder — parser-significant, do not paraphrase -->` must stay verbatim until genuinely filled — a paraphrased placeholder reads as an answer and silently removes the question from the queue.
+
+Each QST carries an attributed `**Recommendation**:` (claim + named justification + named consequence — so the author can be *caught*, which is worth more than being believed) and an `**ANS:**` block for the human. Append to other participants' attributed text, never rewrite it — attribution is how provenance survives model changes. Decisions land here the moment they're made; an undocumented decision didn't happen.
