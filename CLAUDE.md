@@ -187,7 +187,7 @@ When in doubt: **If it made you say "aha!", write it down.**
 
 1. **Read** the dump (use bash for large files)
 2. **Identify threads** - separate topics/decisions (usually 2-5)
-3. **Create ADRs** - one per thread using `collab-adr-lean.md`
+3. **Create ADRs** - one per thread using `adr.md`
 4. **Seed each** with relevant excerpt from dump
 5. **Add navigation codes** (QST:, ANS:, COD:, etc.)
 6. **Ask clarifying questions** with context
@@ -344,9 +344,9 @@ It's acceptable to conform to bad architecture when discovered mid-implementatio
 
 The templates are in the folder `docs/adr/templates/`.
 
-- **Brain dump**: `docs/adr/templates/seed-template.md` → Simple capture
-- **Collaborative decision**: `docs/adr/templates/collab-adr-lean.md` → Full workflow
-- **Simple decision**: `docs/adr/templates/template.md` → Standard MADR format
+- **Brain dump**: `docs/adr/templates/seed.md` → Simple capture
+- **Collaborative decision**: `docs/adr/templates/adr.md` → Full workflow
+- **Simple decision**: `docs/adr/templates/adr-madr.md` → Standard MADR format
 
 **When to use**:
 - Quick question? → Start in conversation, escalate to ADR if needed

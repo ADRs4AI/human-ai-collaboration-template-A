@@ -1,11 +1,11 @@
-<!-- adr template version: "seed-template 3.8.0" -->
+<!-- adr template version: "seed 3.9.0" -->
 
 # SEED: [Topic]
 
 - **Date**: [YYYY-MM-DD]
 - **From**: [Your name]
 
-<!-- MODEL INSTRUCTIONS: look for "Model Response Request" and engage dialogically and epistemically until chunking the seed into ADRs following `collab-adr-lean.md` + referencing ADRs in "Derived Into" section, see instructions below.
+<!-- MODEL INSTRUCTIONS: look for "Model Response Request" and engage dialogically and epistemically until chunking the seed into ADRs following `adr.md` + referencing ADRs in "Derived Into" section, see instructions below.
 -->
 
 ---

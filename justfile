@@ -431,7 +431,7 @@ safe-commit message +files:
 #
 # ADRs are part of the coordination layer: they record decisions a future
 # participant (human or AI) needs to reconstruct the project's reasoning. The
-# template already ships `docs/adr/` and `docs/adr/templates/collab-adr-lean.md`,
+# template already ships `docs/adr/` and `docs/adr/templates/adr.md`,
 # so this recipe just completes the workflow: pick the next index, sluggify a
 # title, copy the lean template into place.
 #
@@ -469,9 +469,9 @@ adr TITLE:
     SLUG=$(echo "{{TITLE}}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
     FILE="docs/adr/${NEXT}-${SLUG}.md"
     if [[ -e "$FILE" ]]; then echo "Error: $FILE already exists" >&2; exit 1; fi
-    if [[ ! -f docs/adr/templates/collab-adr-lean.md ]]; then
-        echo "Error: docs/adr/templates/collab-adr-lean.md not found" >&2; exit 1
+    if [[ ! -f docs/adr/templates/adr.md ]]; then
+        echo "Error: docs/adr/templates/adr.md not found" >&2; exit 1
     fi
     mkdir -p docs/adr
-    cp docs/adr/templates/collab-adr-lean.md "$FILE"
+    cp docs/adr/templates/adr.md "$FILE"
     echo "$FILE"

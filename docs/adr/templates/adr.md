@@ -1,4 +1,4 @@
-<!-- adr template version: "collab-adr-lean 3.8.0" -->
+<!-- adr template version: "adr 3.9.0" -->
 
 # [ADR Title - Decision/Topic]
 
