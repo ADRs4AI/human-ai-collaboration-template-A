@@ -1,8 +1,19 @@
 {
     "cleanupPeriodDays": 99999,
+    "alwaysThinkingEnabled": true,
+    "showThinkingSummaries": true,
+    "effortLevel": "high",
+    "viewMode": "verbose",
+    "promptSuggestionEnabled": false,
     "permissions": {
         "allow": [
             "Read(**/*)",
+            "Read(./docs/**)",
+            "Read(./docs/**/*)",
+            "Read(./docs/inbox/*.md)",
+            "Read(./docs/inbox/agent-sessions.json)",
+            "Edit(./docs/inbox/agent-sessions.json)",
+            "Write(./docs/inbox/*)",
             "Write(./docs/**)",
             "Write(./src/**)",
             "Write(./tests/**)",
@@ -60,6 +71,15 @@
             "Bash(command:*)",
             "Bash(sqlite3:*)",
             "Bash(gh:*)",
+            "Bash(just --list)",
+            "Bash(just --list *)",
+            "Bash(just adr *)",
+            "Bash(just adr:*)",
+            "Bash(just discover-sessions *)",
+            "Bash(just discover-sessions:*)",
+            "Bash(just safe-commit *)",
+            "Bash(just safe-commit:*)",
+            "Bash(just stamp)",
             "WebSearch(claude)",
             "WebFetch(domain:claude.ai)",
             "mcp__playwright__browser_navigate",
@@ -71,8 +91,7 @@
             "mcp__playwright__browser_wait_for",
             "mcp__playwright__browser_press_key",
             "mcp__playwright__browser_close",
-            "mcp__playwright__browser_install",
-            "mcp__*"
+            "mcp__playwright__browser_install"
         ],
         "deny": [
             "Read(.env*)",
