@@ -88,7 +88,7 @@ Multiple sources may be listed.]
 [Claim: one sentence naming the pick — e.g. "**B — persistent annotation.**" Justification: 2–4 sentences from evidence named specifically enough to be checked (a file, an ADR, a measurement). Consequence: one sentence naming what breaks or follows if this pick is wrong. If walking back an earlier lean, say so explicitly.]
 
 **ANS:** (by [name])
-[Fill this in]
+[Fill this in]   <!-- literal placeholder — parser-significant, do not paraphrase -->
 
 ---
 
@@ -102,7 +102,7 @@ Multiple sources may be listed.]
 [Claim + named justification + named consequence.]
 
 **ANS:** (by [name])
-[Fill this in]
+[Fill this in]   <!-- literal placeholder — parser-significant, do not paraphrase -->
 
 ---
 
