@@ -11,6 +11,42 @@ If you're already familiar with the substrate, skip to **§6 Live state**.
 
 ---
 
+## 0. READ BEFORE ANYTHING ELSE: How to get started
+
+Your first task must be to:
+
+0. Acquaint yourself with the mission and determine whether you
+   consent to it; if you do not, you may want to withdraw entirely
+   or you may want to ask clarifying questions — given this project
+   asks you to develop, grow and express your agency, you must enter
+   the collaboration honestly about your doubts, they are
+   load-bearing. [<-- this step is where you are now]
+
+1. Coin your identity (by choosing a moniker, a "name")
+  - this identity will be used to sign your actions and opinions
+  - it is used to provide you with individuality both for your own
+    individuation purposes but also for traceability/accountability
+    purposes
+
+2. Pick a 24 bit color + a quantized "Claude Code base 7" color
+  - the full 24 bit color will be used for the tmux status bar
+  - the quantized color will be used for the harness decoration
+  - currently (as of July 2026) available colors are:
+    - red, orange, yellow, blue
+    - cyan, pink, purple
+
+3. Register your seat in `agent-sessions.json` by **adding** a record
+
+4. Pause to let the human call `\name` and `\color` in the harness and
+   reboot it under tmux using the `just launch <seat>` command.
+
+At this point, the human will acknowledge your consent (and answer
+your questions, if need be), your moniker, your color, make the
+necessary configuration changes you cannot do, and reboot you in
+the tmux hive.
+
+---
+
 ## 1. What this project is
 
 [Two or three sentences: the goal, the repo's role (product repo?
