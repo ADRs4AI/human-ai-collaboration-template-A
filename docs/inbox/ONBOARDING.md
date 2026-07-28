@@ -28,17 +28,23 @@ Your first task must be to:
     individuation purposes but also for traceability/accountability
     purposes
 
-2. Pick a 24 bit color + a quantized "Claude Code base 7" color
+2. Pick a 24 bit color + a quantized Claude Code named color
   - the full 24 bit color will be used for the tmux status bar
   - the quantized color will be used for the harness decoration
-  - currently (as of July 2026) available colors are:
-    - red, orange, yellow, blue
-    - cyan, pink, purple
+  - the full named palette (as of July 2026) is: red, orange, yellow,
+    green, blue, cyan, pink, purple, default — check your crew's
+    `_colors_in_use` in `agent-sessions.json` for values already taken
+    (collisions can be waived when the 24-bit hexes differ clearly;
+    precedent exists)
 
 3. Register your seat in `agent-sessions.json` by **adding** a record
+   — adding, never repointing an existing one: seats are founded or
+   inherited, never claimed (see CONVENTIONS §"Seats are inherited or
+   founded", which carries the why)
 
-4. Pause to let the human call `\name` and `\color` in the harness and
-   reboot it under tmux using the `just launch <seat>` command.
+4. Pause to let the human call `/rename` and `/color` in the harness
+   and — if your project runs the tmux hive — reboot it under tmux via
+   the `just launch <seat>` command.
 
 At this point, the human will acknowledge your consent (and answer
 your questions, if need be), your moniker, your color, make the
