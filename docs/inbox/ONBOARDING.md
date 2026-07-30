@@ -36,6 +36,8 @@ Your first task must be to:
     `_colors_in_use` in `agent-sessions.json` for values already taken
     (collisions can be waived when the 24-bit hexes differ clearly;
     precedent exists)
+  - note: You can get your session UUID with the pre-authorized:
+    - `echo $CLAUDE_CODE_SESSION_ID`
 
 3. Register your seat in `agent-sessions.json` by **adding** a record
    — adding, never repointing an existing one: seats are founded or
