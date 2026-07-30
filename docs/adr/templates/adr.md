@@ -1,4 +1,4 @@
-<!-- adr template version: "collab-adr-lean 3.8.0" -->
+<!-- adr template version: "adr 3.9.0" -->
 
 # [ADR Title - Decision/Topic]
 
@@ -172,7 +172,7 @@ POST /endpoint
 - Status: unresolved
 - Why deferring: [Reason it's not blocking this ADR]
 
-**ANS:** [Fill when resolved; or link to the ADR / discussion that resolved it]
+**ANS:** [Fill when resolved; or link to the ADR / discussion that resolved it]   <!-- literal placeholder — parser-significant, do not paraphrase -->
 
 ---
 

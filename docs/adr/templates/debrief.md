@@ -1,4 +1,4 @@
-<!-- adr template version: "debrief-template 3.8.0" -->
+<!-- adr template version: "debrief 3.9.0" -->
 
 # DEBRIEF-NNN: [Brief Label]
 

@@ -168,25 +168,25 @@ These make everything grep-able:
 
 ## Template Selection
 
-### seed-template.md
+### seed.md
 **Use when**: You have thoughts but no clear structure yet
 **Result**: Raw dump that becomes multiple ADRs
 
-### collab-adr-lean.md  
+### adr.md  
 **Use when**: Complex decision needing back-and-forth
 **Result**: Structured dialogue with clear outcome
 
-### template.md (standard MADR)
+### adr-madr.md (standard MADR)
 **Use when**: Simple decision, options known
 **Result**: Clean decision record
 
 **Decision tree**:
 ```
 Have thoughts? 
-├─ Unstructured? → seed-template.md
+├─ Unstructured? → seed.md
 └─ Decision to make?
-   ├─ Complex/unclear? → collab-adr-lean.md
-   └─ Simple/clear? → template.md
+   ├─ Complex/unclear? → adr.md
+   └─ Simple/clear? → adr-madr.md
 ```
 
 ---

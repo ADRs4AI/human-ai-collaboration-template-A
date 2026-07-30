@@ -15,8 +15,8 @@ This system preserves valuable conversations by turning them into persistent art
 ## Essential Files (3)
 
 1. **CLAUDE.md** (87 lines) - Claude reads this at session start
-2. **seed-template.md** (12 lines) - For brain dumps
-3. **collab-adr-lean.md** (~120 lines) - For decisions
+2. **seed.md** (12 lines) - For brain dumps
+3. **adr.md** (~120 lines) - For decisions
 
 ---
 
@@ -65,9 +65,9 @@ project/
 
 | Have... | Use... |
 |---------|--------|
-| Messy thoughts | seed-template.md |
-| Complex decision | collab-adr-lean.md |
-| Simple decision | template.md (MADR) |
+| Messy thoughts | seed.md |
+| Complex decision | adr.md |
+| Simple decision | adr-madr.md (MADR) |
 | Quick question | Just ask (escalate if needed) |
 
 ---

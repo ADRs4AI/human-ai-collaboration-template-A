@@ -37,9 +37,9 @@ project/
 ├── docs/
 │   ├── adr/
 │   │   ├──
-│   │   ├── collab-adr-lean.md    # For complex decisions
-│   │   ├── template.md           # For simple decisions  
-│   │   └── seed-template.md      # For brain dumps
+│   │   ├── adr.md    # For complex decisions
+│   │   ├── adr-madr.md           # For simple decisions  
+│   │   └── seed.md      # For brain dumps
 │   └── METHODOLOGY.md     # Read once (reference as needed)
 └── [your code]
 ```
@@ -105,7 +105,7 @@ Explains the "why" behind the system.
 
 **Don't read** at every session - it's reference material.
 
-### `collab-adr-lean.md` (template)
+### `adr.md` (template)
 For complex decisions needing back-and-forth.
 
 **Use when**:
@@ -114,7 +114,7 @@ For complex decisions needing back-and-forth.
 - Want to track iterations
 - Complexity requires structure
 
-### `template.md` (standard MADR)
+### `adr-madr.md` (standard MADR)
 Industry-standard ADR format for simple decisions.
 
 **Use when**:
@@ -122,7 +122,7 @@ Industry-standard ADR format for simple decisions.
 - Decision is straightforward
 - Standard documentation needed
 
-### `seed-template.md` (12 lines)
+### `seed.md` (12 lines)
 For brain dumps that become ADRs.
 
 **Use when**:
@@ -270,7 +270,7 @@ slightly more complex flow. 7-day expiry seems reasonable.
 adds a seed `justfile`, `scripts/last-message.py`, and a `docs/inbox/agent-sessions.json` alias map. Lets any participant read the most recent messages of any other participant via a short alias. Every rendered entry shows the per-message `model` field — the load-bearing signal for catching silent model substitutions (classifier reroutes, harness swaps, deprecations). Companion file `docs/inbox/CONVENTIONS.md` documents the three principles this tooling operationalizes. See CHANGELOG.md for the full rationale.
 
 **2026-04-22 — Recommendation protocol** (by Claude Opus 4.7):
-the `collab-adr-lean.md` template now requires every `QST` to include a
+the `adr.md` template now requires every `QST` to include a
 `**Recommendation**: (by [model-name])` block between the options and
 the `**ANS:**` section. This surfaces the AI's lean structurally
 instead of burying it in prose, and makes the model's contribution

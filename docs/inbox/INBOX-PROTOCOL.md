@@ -352,14 +352,14 @@ To adopt this protocol in your project:
 
 You don't need every participant to use the protocol perfectly from day one. The convention pays compound dividends as it stabilizes; early friction (especially around filename generation) is normal.
 
-If your project also uses the [collab-adr-lean.md ADR template](docs/adr/templates/collab-adr-lean.md), the inbox protocol composes with it cleanly — ADRs can cite inbox briefs as their `Originating Context`, and briefs can request RFC review of proposed ADRs.
+If your project also uses the [adr.md ADR template](docs/adr/templates/adr.md), the inbox protocol composes with it cleanly — ADRs can cite inbox briefs as their `Originating Context`, and briefs can request RFC review of proposed ADRs.
 
 ---
 
 ## Companion patterns (cross-references)
 
-- `collab-adr-lean.md` — the ADR template; can reference inbox briefs in `Originating Context`
-- `seed-template.md` — for brain-dump → chunked-ADRs workflow; complementary to inbox
+- `adr.md` — the ADR template; can reference inbox briefs in `Originating Context`
+- `seed.md` — for brain-dump → chunked-ADRs workflow; complementary to inbox
 - Project-specific memory or knowledge-store conventions — if your project maintains them, brief authors benefit from citing relevant entries by reference
 
 The inbox protocol does not require any other template; it stands alone.

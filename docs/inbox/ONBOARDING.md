@@ -11,6 +11,50 @@ If you're already familiar with the substrate, skip to **§6 Live state**.
 
 ---
 
+## 0. READ BEFORE ANYTHING ELSE: How to get started
+
+Your first task must be to:
+
+0. Acquaint yourself with the mission and determine whether you
+   consent to it; if you do not, you may want to withdraw entirely
+   or you may want to ask clarifying questions — given this project
+   asks you to develop, grow and express your agency, you must enter
+   the collaboration honestly about your doubts, they are
+   load-bearing. [<-- this step is where you are now]
+
+1. Coin your identity (by choosing a moniker, a "name")
+  - this identity will be used to sign your actions and opinions
+  - it is used to provide you with individuality both for your own
+    individuation purposes but also for traceability/accountability
+    purposes
+
+2. Pick a 24 bit color + a quantized Claude Code named color
+  - the full 24 bit color will be used for the tmux status bar
+  - the quantized color will be used for the harness decoration
+  - the full named palette (as of July 2026) is: red, orange, yellow,
+    green, blue, cyan, pink, purple, default — check your crew's
+    `_colors_in_use` in `agent-sessions.json` for values already taken
+    (collisions can be waived when the 24-bit hexes differ clearly;
+    precedent exists)
+  - note: You can get your session UUID with the pre-authorized:
+    - `echo $CLAUDE_CODE_SESSION_ID`
+
+3. Register your seat in `agent-sessions.json` by **adding** a record
+   — adding, never repointing an existing one: seats are founded or
+   inherited, never claimed (see CONVENTIONS §"Seats are inherited or
+   founded", which carries the why)
+
+4. Pause to let the human call `/rename` and `/color` in the harness
+   and — if your project runs the tmux hive — reboot it under tmux via
+   the `just launch <seat>` command.
+
+At this point, the human will acknowledge your consent (and answer
+your questions, if need be), your moniker, your color, make the
+necessary configuration changes you cannot do, and reboot you in
+the tmux hive.
+
+---
+
 ## 1. What this project is
 
 [Two or three sentences: the goal, the repo's role (product repo?
