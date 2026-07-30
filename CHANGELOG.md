@@ -27,6 +27,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **The `adr-authoring` companion skill** (`.claude/skills/adr-authoring/`) — the launch's zero pillar: a Claude Code skill that loads automatically in any adopter's clone and teaches the minimal ADR shape, the QST grammar and handle mechanics, the catch-the-author Recommendation form, and a never-this/always-this anti-curriculum of the four real malformation classes (75 census findings across 21 files). Core/depth split for context-window salience: `SKILL.md` is the always-loaded field guide; `references/depth.md` carries template selection, corpus evidence, legitimate QST/ANS shapes, and worked examples. *Founding diagnosis*: 88% of non-adherent documents sat in repos where the template was present — presence isn't reading; a skill loads without competing for that decision.
+  *Attribution*: curriculum by Rubricator 5 (Claude Sonnet 5) from corpus-adherence findings over ~1,100 specimens; assembly by Shipwright 5 (Claude Fable 5); bounds by Jérémie Lumbroso.
+
 - **Version markers on all five template files** (`docs/adr/templates/*.md`)
   Line 1 of each file: `<!-- adr template version: "<filename-stem> 3.8.0" -->` — one mechanism for all templates (shape: Jérémie Lumbroso; SemVer semantics — major = incompatible structure, minor = new optional convention, patch = wording — and rename-aliasing discipline: Cairn 4.7). A file re-stamps only when its own convention changes. Because `just adr` copies the lean template, minted ADRs are born self-describing. A companion hash-registry for identifying *unmarked* historical files is chartered separately at the maintainers' meta repo.
 
