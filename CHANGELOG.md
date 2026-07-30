@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## [Unreleased] — becomes 3.9.0 at the pre-launch tag
+## [Unreleased]
+
+_Nothing yet._
+
+---
+
+## [3.9.0] — 2026-07-30 — the pre-launch sprint: skill + clarity
 
 **Through-line — the right template becomes the obvious one**: the wild defaults to MADR partly because our collaborative template hid behind a cryptic name while `template.md` looked canonical. This release renames for salience, adds per-directory doorways for transformer guests, and adopts the parser-significant placeholder convention. Lane B of the pre-launch sprint (maintainers' meta-repo ADR-0019, every change row-approved by Jérémie Lumbroso 2026-07-26); Lane A (the companion skill) joins before tagging.
 
