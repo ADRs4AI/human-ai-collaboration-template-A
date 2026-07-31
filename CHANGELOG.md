@@ -12,6 +12,15 @@ _Nothing yet._
 
 ---
 
+## [3.9.1] — 2026-07-31 — doorway teaches the four-token status grid
+
+### Fixed
+
+- **`docs/adr/AGENTS.md` doorway: question-status story updated from binary to the ratified four-token grid** — `unanswered` (human's ball) | `unresolved` (model's ball) | `deferred` (postponed, still open) | `answered` (retired), plus the recall-first rule (unknown tokens always show). The doorway was written 2026-07-25 teaching `unanswered`→queue / `answered`→retired; the grid was ratified three days later (vscode ADR-0036, Jérémie Lumbroso) — a three-day seam between the template lane and the format council, caught during the ADR-0032 review and closed here. Deliberately *not* yet taught, pending their register: the question-level annotation form and any closing tokens beyond `answered`.
+  *Process note*: first release under the rapid-patch cadence (see below) — teaching/wording fixes ship as tagged patches with changelog lines, immediately, rather than pooling until the next landmark minor.
+
+---
+
 ## [3.9.0] — 2026-07-30 — the pre-launch sprint: skill + clarity
 
 **Through-line — the right template becomes the obvious one**: the wild defaults to MADR partly because our collaborative template hid behind a cryptic name while `template.md` looked canonical. This release renames for salience, adds per-directory doorways for transformer guests, and adopts the parser-significant placeholder convention. Lane B of the pre-launch sprint (maintainers' meta-repo ADR-0019, every change row-approved by Jérémie Lumbroso 2026-07-26); Lane A (the companion skill) joins before tagging.
