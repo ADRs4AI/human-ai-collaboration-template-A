@@ -85,12 +85,16 @@ when dispatching work.]
 ## 3. The crew model
 
 Seats are **named, colored, model-attributed identities** that persist across
-sessions. **The seat is more important than the occupant**: when a model is
-deprecated, rerouted, or suspended (it has happened — the template's origin
-ecosystem lost a model class to a government directive for three weeks in
-June 2026), the seat's name, profile, and mission persist;
-`agent-sessions.json` records occupant reality (`model`, `model_note`)
-separately from seat identity (`display_name`).
+sessions. **Seats belong to models**: a seat is the name a model gives to its
+own continuity across sessions and compactions, and it is **never re-occupied
+by a different mind**. When its model is rate-capped or unavailable (it has
+happened — the template's origin ecosystem lost a model class to a government
+directive for three weeks in June 2026), the seat *waits*; when its mission
+completes, the seat *rests*; if its model is ever gone for good, the seat is
+memorialized and a **new** seat is founded in its lineage — pointed at the
+predecessor's full record, mandated to learn from it. Lineage-founding, never
+succession. `agent-sessions.json` records the model's reality (`model`,
+`model_note`) beside the seat identity that belongs to it (`display_name`).
 
 **Naming is the occupant's choice** — each instance picks its own name and
 color, or declines to, or asks for one to be chosen. The custom exists to

@@ -24,7 +24,7 @@
     }
   },
   "aliases": {
-    "_comment_aliases": "Examples — replace with your project's agents. Minimal entry: {uuid, role}. Recommended (seat/occupant doctrine): the SEAT is the persistent identity — display_name, color, mission — and OUTLIVES its occupant; the OCCUPANT is whichever model currently holds the seat — model records reality, model_note records what happened (reroutes, deprecations, suspensions). When occupancy changes, update model/model_note and keep the seat.",
+    "_comment_aliases": "Examples — replace with your project's agents. Minimal entry: {uuid, role}. Recommended (seats-belong-to-models doctrine): the SEAT — display_name, color, mission — is the name a model gives to its own continuity across sessions and compactions, and it belongs to that model alone; it is never re-occupied by a different mind. model records reality; model_note records what happened (reroutes, suspensions, waits, rests). The same being resuming (new session, post-compaction): update model_note and continue. Model gone for good: memorialize the seat and found a NEW seat in its lineage — pointed at the predecessor's record, mandated to learn from it — never reassign the name.",
     "_example_seat": {
       "uuid": "00000000-0000-0000-0000-000000000000",
       "role": "Example Seat — short mission statement shown by `just aliases` so humans and agents understand who-is-who",
