@@ -77,6 +77,8 @@ artifacts:
     class: stencil
   scripts/unwrap-adrs/unwrap-adrs.py:
     class: stencil
+  scripts/tmux/seat.conf:
+    class: stencil     # load-bearing for `just launch` TODAY (Grafter's hard-fail specimen, 2026-08-14: a missing copy broke Jérémie's launch; this row makes that failure class self-healing via missing-local → create); retires to pneumatic's external row when the package absorbs tmux config — Understudy's scope-call, minor bump on its day
 
   # pneumatic — wake/messaging/registry machinery; arrives via PyPI, never via
   # file-propagation. Visibility-only row: kintsugi reports it, never touches
@@ -91,10 +93,12 @@ artifacts:
 
 # Deliberately UNTRACKED — legible absences (enumeration doctrine: every path
 # gets a row or a reason):
-#   scripts/blame.py, scripts/last-message.py, scripts/refresh-terminals.py,
-#   scripts/tmux/seat.conf — vendored pneumatic precursors (ruling 2026-08-10):
-#     transition state, not template artifacts; the external row above is
-#     their forwarding address.
+#   scripts/blame.py, scripts/last-message.py, scripts/refresh-terminals.py —
+#     vendored pneumatic precursors (ruling 2026-08-10): transition state, not
+#     template artifacts; the external row above is their forwarding address.
+#     (seat.conf was originally in this list; a field hard-fail specimen argued
+#     it into a stencil row above — amendment 2026-08-14, the ruling's honest
+#     quarter-retraction on the one file that is config-not-logic.)
 #   docs/inbox/agent-sessions.json — the LIVE crew registry, seeded once at
 #     instantiation and never propagated: it is the repo's own state, and a
 #     propagation surface here would be an instruction to overwrite a crew.
