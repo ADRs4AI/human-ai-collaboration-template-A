@@ -1,4 +1,4 @@
-<!-- adr template version: "seed 3.9.0" -->
+<!-- adr template version: "seed 3.10.0" -->
 
 # SEED: [Topic]
 
@@ -17,6 +17,7 @@
 ---
 
 **Model Response Request:**
+<!-- literal sensor block — parser-significant: tooling reads these exact checkbox labels as the seed's declared lifecycle state; do not reword them -->
 
 - [ ] Chunk this into ADRs (I'm ready to formalize)
 - [ ] Iterate with me (keep exploring)
@@ -27,6 +28,7 @@
 ## Thread
 
 ### [Model Name] - [Date]
+<!-- the date in this heading is load-bearing: tooling derives the seed's currency and iteration count from Thread-heading dates — always fill it, format YYYY-MM-DD -->
 
 [Model's response goes here]
 
@@ -50,7 +52,7 @@
 
 ## Derived Into
 
-*(This seed has not yet been chunked into ADRs)*
+*(This seed has not yet been chunked into ADRs)*   <!-- literal placeholder — parser-significant: its presence means un-chunked; replace the line with the ADR list when chunking, never reword it in place -->
 
 <!-- MODEL INSTRUCTIONS: When this seed is processed, the AI should update this section with:
 - ADR-NNNN: Brief title
