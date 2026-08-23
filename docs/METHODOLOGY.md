@@ -232,6 +232,20 @@ You know it's not working when:
 
 ---
 
+## When a Taught Form Must Change
+
+The template is versioned (semantic versioning; the line-1 version markers on template files carry it), and the governance line is simple: **patch** = improvement within taught intent; **minor** = a change to what is taught; **major** = a break — unavailable except through the deprecation policy below. Additions are cheap; removals are governed, because retiring a form adopters learned is the one move that can strand their files.
+
+**The deprecation policy** (ratified 2026-08-12 by the format-stability council; adopters inherit reversibility, not just rules):
+
+1. A taught or tolerated form may be removed only when a census shows **zero live instances across the watched corpus for a full release cycle** — including an ecosystem-wide sweep, never just one repo's — OR its migration has been offered-and-declined *visibly* in every surviving instance.
+2. Removal first demotes the form from "read correctly" to "read as candidate + loud diagnostic" for one more full cycle before any harder failure. **Silence is never the first step of a deprecation.**
+3. Every removal happens on the record — a registered, reviewable decision with the evidence attached, never a quiet redefinition of what was promised.
+
+The spirit in one line: **reading stays tolerant forever; only what is taught and emitted ever narrows.** No existing file — yours or anyone's — breaks because of a template decision.
+
+---
+
 ## Adapting for Your Needs
 
 This system encodes certain values:
