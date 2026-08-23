@@ -1,10 +1,10 @@
-<!-- adr template version: "adr 3.9.0" -->
+<!-- adr template version: "adr 3.10.0" -->
 
 # [ADR Title - Decision/Topic]
 
 - **Date**: [YYYY-MM-DD]
 - **Iteration**: [N]
-- **Status**: [Draft | Proposed | Accepted | Implemented | Superseded]
+- **Status**: [Draft | Accepted | Partially Implemented | Implemented | Superseded]   <!-- the frozen five (v1 core, ratified 2026-08-12): case-insensitive read, canonical-case write; strict enum at document level — no annotations here -->
 - **Deciders**: [Names / roles of contributors]
 
 **TL;DR**: [One-line summary of the decision, written by the author at point of decision. May go stale as the ADR iterates; treat as the author's intent at write-time, not the canonical current rendering. Mandatory field — if you cannot write this in one line, the ADR is not done yet.]
@@ -24,9 +24,9 @@
 
 **Find things**:
 ```bash
-grep '^### QST:' file.md           # All questions
-grep 'Status: unanswered' file.md  # Unanswered only
-grep '^### COD:' file.md            # Code examples
+grep -E '^### QST(-[A-Za-z0-9-]{1,24})?:' file.md   # All questions, both canonical forms — a bare-QST grep silently misses every handled question
+grep 'Status: unanswered' file.md                   # Awaiting the human (by design, this misses unresolved/deferred — those are not the human's ball)
+grep '^### COD:' file.md                             # Code examples
 ```
 
 ---
@@ -75,6 +75,12 @@ Multiple sources may be listed.]
 **Protocol** (added 2026-04-22 by Opus 4.7): every QST block must include a `**Recommendation**: (by [model-name])` section between the options and the `**ANS:**` block. The human should not have to extract the AI's lean from prose — put it under its own heading with a clear pick and a short justification grounded in evidence (data, prior ADRs, constraints). Lead the recommendation with a bold pick (`**B — short name.**`) so a skim reveals the AI's position without reading. If walking back an earlier lean during iteration, say so explicitly.
 
 **Catch-the-author form** (strengthened 2026-07-16, v3.8.0, per a downstream project's nomination — companion-etude 0031): a recommendation is **claim + named justification + named consequence**. The claim is the bold pick. The justification cites evidence *named specifically enough to be checked* — a file, an ADR, a measurement — never "best practice" or taste. The consequence names what breaks or follows if the pick is wrong. A recommendation whose author can be caught is worth more than one that can only be believed (see `docs/inbox/CONVENTIONS.md` §2, catchability over correctness).
+
+**Status tokens & annotations** (frozen at the v3.10.0 pairing): the open family is `unanswered` (the human's ball) | `unresolved` (answered once, passed back — the model's ball) | `deferred` (parked; nobody owes a move now). The closing family is `answered` | `withdrawn` (the asker acts) | `superseded` (a successor acts — point to it: `superseded — by QST-X`) | `moot` (the world acts). Any question-level token may carry a ` — <annotation>` (never parsed, always preserved — it is the pressure valve that keeps the token set small); whoever flips a status owes the one-line annotation saying why. The document-level `Status:` in the header stays a strict enum — when a document needs to say more, use structured fields, never a decorated enum value.
+
+**Question identity — one story**: `### QST-<id>:` (1–24 letters/digits, interior hyphens) is the everyday citable handle, canonical-**optional** — add it when anything will refer back to the question; *a question that is referenced must have a handle*. The advanced form is an `<!-- @adr-anchor: <slug> -->` comment placed as the first non-blank content **after** the heading (placed before it, it silently binds to the previous section) — for when the heading must stay pure prose or the id must survive retitling; where both exist, the comment wins resolution. HTML comments shaped `<!-- @adr-<action>: <value> -->` are the reserved machine channel (`@adr-anchor`, `<!-- @adr-dismissed: <reason-slug> -->` on a heading line). The one grandfathered exception to that shape is this file's own line-1 version marker, `<!-- adr template version: "<stem> X.Y.Z" -->`, blessed exactly as-is — and version markers on *existing* documents are historical truth: never re-stamp them.
+
+**Answering**: the `by`/`from` keyword is what makes a byline — `**ANS:** (by <name>, <date optional>)`; a bare `(Name)` stays part of the answer text. Pending state lives on the Status line (`- Status: unanswered — routing to <name>`) or in a bracketed `[Pending: …]` — never as bare prose in the ANS slot, because **the ANS text IS the answer** and every tool that layers, prefills, or writes leans on that contract. `[Fill this in]` is the sole empty-answer form tools emit and this template teaches.
 
 ### QST: [Question text]
 - Status: unanswered
