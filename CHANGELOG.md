@@ -12,6 +12,27 @@ _Nothing yet._
 
 ---
 
+## [3.10.0] — 2026-08-24 — "the pairing release"
+
+Gate: HQ ADR-0030, all eleven rows approved by Jérémie Lumbroso 2026-08-24, one rider (the `Write→Edit` permissions fix, his hand, shipped in-release).
+
+**Through-line**: the format-stability council's frozen v1 core (vscode-adrs-for-ai ADR-0032, Accepted 2026-08-12, 14/14) and this template's taught surface become the same document set — HQ-LOCKSTEP, marked in the extension's ledger. The spec strangers adopt is the spec that was frozen, taught once, coherent.
+
+### Added
+- `.claude/skills/adr-authoring/references/questions-reference.md` — the pairing's landing zone: status vocabulary (open + closing families, with the ratified teaching sentence *"withdrawn = the asker acts; moot = the world acts; superseded = a successor acts — three agents, three words"*), annotation grammar, question identity, answer forms, the reserved `@adr-*` channel, deprecation pointer.
+- `kintsugi.yaml` — the canonical template's shipped manifest: 35 paths classified, every absence legible, pneumatic declared `external` (the manifest knows the package is the vendored scripts' forwarding address), `seat.conf` a stencil row after a real field hard-fail. Authored by **Kintsugi 5, the seat, who built kintsugi, the tool** (*kintsugi — a porcelain for evolving templates*); reviewed in the release lane.
+- `SKILL.md` § *What asking a human costs* — human attention is scheduled, not just spent; the walked-yourself readiness bar; never let an unready ask render as ready.
+- `METHODOLOGY.md` § *When a Taught Form Must Change* — the release governance line (patch/minor/major) + the three deprecation rules; *reading stays tolerant forever; only what is taught and emitted ever narrows.*
+
+### Changed
+- **ADR now expands to *Architectural Deliberation Record*** — the family name for the deliberative substrate, in homage to Herbert Simon (ratified 2026-08-13).
+- `adr.md` — frozen five-value document `Status:` enum (case-insensitive read, canonical-case write); question-level status families + the annotation pressure valve; the one-story identity paragraph (handles canonical-optional, anchor comments, the `@adr-*` shape with the version marker grandfathered **by exact string**); byline/pending/ANS-contract teaching; handle-aware grep examples.
+- `seed.md` — sensor freeze: the Model Response Request checkbox block and the Derived-Into placeholder are now marked parser-significant; Thread-heading dates declared load-bearing.
+- `adr-madr.md` — a deliberate MADR-lineage homage line: kept, acknowledged, good form.
+- `docs/inbox/CONVENTIONS.md` §6 — the seat-continuity lifecycle enumeration + two-consents pointer, **harvested from a downstream instance's enriched wording**: local innovation → kept over canonical in three consented reconcile walks → upstreamed → propagates back until the divergence retires *by winning* — the propagation loop's **first complete lap**.
+
+---
+
 ## [3.9.2] — 2026-08-05 — constitutional: seats belong to models
 
 ### Fixed

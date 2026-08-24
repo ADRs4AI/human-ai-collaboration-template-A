@@ -1,4 +1,5 @@
-<!-- adr template version: "adr-madr 3.9.0" -->
+<!-- adr template version: "adr-madr 3.10.0" -->
+<!-- kept in deliberate homage to MADR — Markdown Architectural Decision Records, the lineage this template family descends from. This is the simple-decisions form: use it when a decision needs recording, not discussion. The deliberation-native form is adr.md. (Ruling: QST-MADR-FATE, 2026-08-13 — "keeping the template, acknowledging it, is good form.") -->
 
 # [short title of solved problem and solution]
 
