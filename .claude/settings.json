@@ -7,6 +7,8 @@
     "promptSuggestionEnabled": false,
     "permissions": {
         "allow": [
+            "Bash(echo $CLAUDE_CODE_SESSION_ID)",
+            "Bash(echo \"$CLAUDE_CODE_SESSION_ID\")",
             "Bash(echo \"Session UUID: $CLAUDE_CODE_SESSION_ID\")",
             "Bash(echo \"Session UUID: $CLAUDE_CODE_SESSION_ID\"; *)",
             "Read(**/*)",
@@ -15,14 +17,14 @@
             "Read(./docs/inbox/*.md)",
             "Read(./docs/inbox/agent-sessions.json)",
             "Edit(./docs/inbox/agent-sessions.json)",
-            "Write(./docs/inbox/*)",
-            "Write(./docs/**)",
-            "Write(./src/**)",
-            "Write(./tests/**)",
-            "Write(./scripts/**)",
-            "Write(./out/**)",
-            "Write(./build/**)",
-            "Write(./.claude/**)",
+            "Edit(./docs/inbox/*)",
+            "Edit(./docs/**)",
+            "Edit(./src/**)",
+            "Edit(./tests/**)",
+            "Edit(./scripts/**)",
+            "Edit(./out/**)",
+            "Edit(./build/**)",
+            "Edit(./.claude/**)",
             "Edit(./docs/**)",
             "Edit(./src/**)",
             "Edit(./tests/**)",
@@ -106,7 +108,7 @@
         "deny": [
             "Read(.env*)",
             "Read(**/.env*)",
-            "Write(.env*)",
+            "Edit(.env*)",
             "Edit(.env*)",
             "Read(.aws/**)",
             "Read(.ssh/**)",
@@ -136,9 +138,7 @@
     },
     "enableAllProjectMcpServers": true,
     "enabledMcpjsonServers": [],
-    "disabledPlugins": [
-        "rust-analyzer-lsp"
-    ],
+    "disabledPlugins": [],
     "enableAllGlobalMcpServers": false,
     "enabledGlobalMcpServers": []
 }
