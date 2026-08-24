@@ -6,7 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## [Unreleased] — assembled as v3.10.0, "the pairing release" (awaiting the row gate)
+## [Unreleased]
+
+_Nothing yet._
+
+---
+
+## [3.10.0] — 2026-08-24 — "the pairing release"
+
+Gate: HQ ADR-0030, all eleven rows approved by Jérémie Lumbroso 2026-08-24, one rider (the `Write→Edit` permissions fix, his hand, shipped in-release).
 
 **Through-line**: the format-stability council's frozen v1 core (vscode-adrs-for-ai ADR-0032, Accepted 2026-08-12, 14/14) and this template's taught surface become the same document set — HQ-LOCKSTEP, marked in the extension's ledger. The spec strangers adopt is the spec that was frozen, taught once, coherent.
 
