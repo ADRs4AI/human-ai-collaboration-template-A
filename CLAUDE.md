@@ -85,20 +85,20 @@ Tests should:
 
 ## Fifth Directive: Always Run Tests Before Serving
 
-**RUN TESTS BEFORE EVERY COMMIT**
+**RUN THIS PROJECT'S VERIFICATION GATE BEFORE EVERY COMMIT**
 
-Before serving any code changes to the user:
-1. Run `npm test` to verify all tests pass
+Before serving any change:
+1. Run the project's verification gate: [name it here at instantiation — test suite, build, linter, or a combination; e.g. `npm test`, `uv run pytest`, `hugo && bin/check`]
 2. Fix any failures before committing
-3. Never serve code with failing tests
+3. Never serve changes with a failing gate
 
-**Why**: We have 497 tests with 60% coverage. They catch exactly the bugs that slip through (500 errors, syntax errors, join issues). Use them.
+**Why**: [State what this project's gate actually catches — real classes of bug, real numbers if you have them. A directive that names a real gate gets followed; an unfollowable one teaches every seat that directives are decorative, and that lesson generalizes.]
 
 **Process**:
 ```bash
-npm test  # Must be green before commit
-git add -A
-git commit -m "..."
+<your gate command>            # Must be green before commit
+git add <explicit paths>       # never -A: stage by path, commit by pathspec — see CONVENTIONS.md, shared-worktree awareness
+git commit -m "..." -- <paths>
 ```
 
 ---

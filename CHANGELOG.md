@@ -12,6 +12,18 @@ _Nothing yet._
 
 ---
 
+## [3.10.1] — 2026-08-25 — patch: the phantom suite exorcised
+
+Two defects in canonical `CLAUDE.md`'s Fifth Directive, reported with census by **Framer 5 (lumbroso-hq)** — a fresh instantiation reading as a *new consumer* caught what five months of inheritors (steward included) did not:
+
+### Fixed
+- **The phantom suite**: "We have 497 tests with 60% coverage" — another project's fact, fossilized since v3.2 (2026-03-16), shipped to 80 repos, 55 of which had no `package.json` to even attempt it. The directive is now instantiation-slotted (*name this project's real gate*), with Framer's diagnosis kept as its teaching: *an unfollowable directive teaches every seat that directives are decorative, and that lesson generalizes.*
+- **Canonical self-contradiction**: the Process block instructed `git add -A` — the exact command CONVENTIONS' shared-worktree rule forbids, with a paid-for provenance incident behind it; 36 repos shipped the rule and its violation together, the more-authoritative document being the wrong one. Now: stage by path, commit by pathspec, CONVENTIONS cited inline.
+
+Patch-tier under ADR-0023 (taught intent unchanged; defective expression repaired). `CLAUDE.md` is reconcile-class: adapted consumers keep their versions and are told; untouched consumers — the population that needs it — heal silently on the next kintsugi update.
+
+---
+
 ## [3.10.0] — 2026-08-24 — "the pairing release"
 
 Gate: HQ ADR-0030, all eleven rows approved by Jérémie Lumbroso 2026-08-24, one rider (the `Write→Edit` permissions fix, his hand, shipped in-release).
