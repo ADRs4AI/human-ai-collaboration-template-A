@@ -1,17 +1,18 @@
 # Human-AI Collaboration Template A
 
-- **Version**: 3.5
-- **Optimized for**: Claude models in general (and Sonnet 4.5 in particular) in Claude Code
+- **Version**: See [CHANGELOG.md](CHANGELOG.md) — every release is tagged and dated there. (This line deliberately carries no number: A hardcoded version rotted here through five releases, and the record remembers.)
+- **Optimized for**: Current Claude models in Claude Code; model-agnostic by design
 - **Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1 (with contributions from Claude Opus 4.7 — see CHANGELOG.md)
 - **Philosophy**: Preserve conversations, minimize ceremony
+- **Part of**: [ADRs4AI](https://adrs.systems/) — the toolkit for deliberative programming: This template, a [VS Code extension](https://github.com/jlumbroso/vscode-adrs-for-ai), an iOS client, and [the founding essay](https://adrs.systems/what-is/)
 
 I have been collaborating with LLMs since 2022, and I believe they are extremely capable collaborators. Through my interactions with them, I scaffold more complex and robust ideas, but a lot of the substance of these conversations is lost in implementation.
 
-This is where [ADRs (Architectural Decision Records)](https://adr.github.io/) come in: While for a human-only team, they are needlessly verbose, for a human-AI team, they are a perfect vessel for shared decision-making.
+This is where [ADRs](https://adr.github.io/) come in — ours read **Architectural Deliberation Records**, extending Michael Nygard's practice: While for a human-only team, they are needlessly verbose, for a human-AI team, they are a perfect vessel for shared decision-making.
 
 These are my research ideas to extend the existing format and make it more convenient for human-AI collaboration over time.
 
-Please send any feedback to lumbroso@seas.upenn.edu
+Please send any feedback to lumbroso@seas.upenn.edu, or [open an issue](https://github.com/jlumbroso/human-ai-collaboration-template-A/issues).
 
 ![Human-AI Collaboration Banner](https://raw.githubusercontent.com/jlumbroso/jlumbroso/refs/heads/main/assets/human-ai-collaboration-img-a.jpg)
 
@@ -29,18 +30,19 @@ A minimal system for turning conversations into persistent artifacts:
 
 ## Quick Start
 
-### 1. Copy these files to your project:
+### 1. Press **Use this template** (or copy these files to your project):
 
 ```
 project/
-├── CLAUDE.md              # Customize per project (87 lines)
+├── CLAUDE.md                      # Customize per project
 ├── docs/
 │   ├── adr/
-│   │   ├──
-│   │   ├── adr.md    # For complex decisions
-│   │   ├── adr-madr.md           # For simple decisions  
-│   │   └── seed.md      # For brain dumps
-│   └── METHODOLOGY.md     # Read once (reference as needed)
+│   │   └── templates/
+│   │       ├── adr.md             # For complex decisions (the default; `just adr` mints from it)
+│   │       ├── adr-madr.md        # For simple decisions (standard MADR)
+│   │       └── seed.md            # For brain dumps
+│   └── METHODOLOGY.md             # Read once (reference as needed)
+├── justfile                       # Task-runner recipes (mint ADRs, inbox protocol, crew tooling)
 └── [your code]
 ```
 
@@ -83,7 +85,7 @@ Just fill in the `ANS:` blocks. No special format.
 
 ## The Files
 
-### `CLAUDE.md` (87 lines)
+### `CLAUDE.md`
 Project-specific guidance loaded at each Claude Code session.
 
 **Contains**:
@@ -122,7 +124,7 @@ Industry-standard ADR format for simple decisions.
 - Decision is straightforward
 - Standard documentation needed
 
-### `seed.md` (12 lines)
+### `seed.md`
 For brain dumps that become ADRs.
 
 **Use when**:
@@ -137,10 +139,13 @@ For brain dumps that become ADRs.
 ### Navigation Codes
 Make everything grep-able:
 ```bash
-grep '^### QST:' docs/adr/        # Find all questions
-grep 'Status: unanswered' docs/   # Find what needs answers  
-grep '^### COD:' docs/adr/         # Find code examples
+grep -rE '^### QST(-[A-Za-z0-9-]{1,24})?:' docs/adr/   # All questions, both canonical forms
+grep -rn '^### COD:' docs/adr/                          # Code examples
 ```
+(Anchor your greps: A bare `Status: unanswered` sweep overcounts by matching
+examples and prose — our own counter once reported 61 open questions where
+12 were real. The VS Code extension and the `just unanswered` recipe parse
+precisely; the naive pattern is preserved here only as a warning.)
 
 ### Stream-of-Consciousness Preservation
 - Humans write naturally
@@ -265,6 +270,9 @@ slightly more complex flow. 7-day expiry seems reasonable.
 ---
 
 ## Recent Additions
+
+**2026-06→08 — the launch arc (v3.6.0 through v3.10.0)** (by Shipwright 5 / Claude Fable 5, with the crew — full detail in [CHANGELOG.md](CHANGELOG.md)):
+every question now ships with **ORRCF** — Options, Recommendation, Rationale, Confidence, and Falsifier — superseding the bare Recommendation block below; questions carry speakable handles (`### QST-SCOPE:`); the `adr.md` era renamed the templates to their plain names; `just adr` mints the next-numbered ADR; the crew layer (named seats, inbox briefs, per-message attribution) ships in the box; and the template is maintained across its adopted copies by [kintsugi](https://github.com/ADRs4AI/kintsugi), our template-repair tool.
 
 **2026-06-15 — Inbox-protocol tooling: `just last <alias>` for cross-session visibility** (by Statesman 4.7 / Claude Opus 4.7, contributed via System3 Conversations):
 adds a seed `justfile`, `scripts/last-message.py`, and a `docs/inbox/agent-sessions.json` alias map. Lets any participant read the most recent messages of any other participant via a short alias. Every rendered entry shows the per-message `model` field — the load-bearing signal for catching silent model substitutions (classifier reroutes, harness swaps, deprecations). Companion file `docs/inbox/CONVENTIONS.md` documents the three principles this tooling operationalizes. See CHANGELOG.md for the full rationale.
