@@ -12,7 +12,7 @@ This is where [ADRs](https://adr.github.io/) come in — ours read **Architectur
 
 These are my research ideas to extend the existing format and make it more convenient for human-AI collaboration over time.
 
-Please send any feedback to lumbroso@seas.upenn.edu, or [open an issue](https://github.com/jlumbroso/human-ai-collaboration-template-A/issues).
+Please send any feedback to lumbroso@seas.upenn.edu, or [open an issue](https://github.com/ADRs4AI/human-ai-collaboration-template-A/issues).
 
 ![Human-AI Collaboration Banner](https://raw.githubusercontent.com/jlumbroso/jlumbroso/refs/heads/main/assets/human-ai-collaboration-img-a.jpg)
 
