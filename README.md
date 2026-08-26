@@ -294,6 +294,12 @@ the full rationale.
 
 ## License & Attribution
 
+**License**: [MIT](LICENSE), with a template-output grant — **anything you
+copy out of this template into your own project is yours**, no attribution
+notice required in generated repositories. (Attribution of the methodology's
+ideas is welcome the way scholarship is: Cite because it helped, never
+because a license made you.)
+
 Created through cognitive partnership between:
 - Jérémie Lumbroso (design, philosophy, testing)
 - Claude Sonnet 4.5 (implementation, optimization)
