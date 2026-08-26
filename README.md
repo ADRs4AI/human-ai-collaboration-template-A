@@ -4,7 +4,7 @@
 - **Optimized for**: Current Claude models in Claude Code; model-agnostic by design
 - **Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1 (with contributions from Claude Opus 4.7 — see CHANGELOG.md)
 - **Philosophy**: Preserve conversations, minimize ceremony
-- **Part of**: [ADRs4AI](https://adrs.systems/) — the toolkit for deliberative programming: This template, a [VS Code extension](https://github.com/jlumbroso/vscode-adrs-for-ai), an iOS client, and [the founding essay](https://adrs.systems/what-is/)
+- **Part of**: [ADRs4AI](https://adrs.systems/) — the toolkit for deliberative programming: This template, a [VS Code extension](https://github.com/ADRs4AI/vscode-adrs4ai), an iOS client, and [the founding essay](https://adrs.systems/what-is/)
 
 I have been collaborating with LLMs since 2022, and I believe they are extremely capable collaborators. Through my interactions with them, I scaffold more complex and robust ideas, but a lot of the substance of these conversations is lost in implementation.
 
