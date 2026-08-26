@@ -46,6 +46,10 @@ project/
 └── [your code]
 ```
 
+*(The recipes run on [`just`](https://github.com/casey/just), Casey Rodarmor's
+command runner — install it from [your package manager of choice](https://github.com/casey/just#packages).
+We love this tool.)*
+
 ### 2. When you have thoughts:
 
 Create `seed-[topic].md`:
