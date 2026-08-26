@@ -19,13 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Template-output grant (additional permission): Projects generated from this
-template ("Use this template", forks used as project starters, or manual
-copying of the scaffold into your own repository) may use, modify, and
-redistribute the copied files WITHOUT retaining the above copyright and
-permission notice. Your project is yours. This grant does not apply to
-redistributing this template itself as a template, which remains under the
-MIT terms above.

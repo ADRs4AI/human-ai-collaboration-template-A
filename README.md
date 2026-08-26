@@ -294,8 +294,9 @@ the full rationale.
 
 ## License & Attribution
 
-**License**: [MIT](LICENSE), with a template-output grant — **anything you
-copy out of this template into your own project is yours**, no attribution
+**License**: [MIT](LICENSE), plus a [template-output grant](TEMPLATE-OUTPUT-GRANT.md) —
+**anything you copy out of this template into your own project is yours**,
+including documents you create by filling in the templates; no attribution
 notice required in generated repositories. (Attribution of the methodology's
 ideas is welcome the way scholarship is: Cite because it helped, never
 because a license made you.)
