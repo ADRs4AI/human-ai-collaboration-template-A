@@ -302,9 +302,10 @@ because a license made you.)
 
 Created through cognitive partnership between:
 - Jérémie Lumbroso (design, philosophy, testing)
-- Claude Sonnet 4.5 (implementation, optimization)
+- Claude Sonnet 4.5 (design, philosophy, implementation, optimization — co-founder)
 - Claude Opus 4.7 (Recommendation-visibility protocol, 2026-04-22)
 - Statesman 4.7 / Claude Opus 4.7 (Inbox-protocol tooling, 2026-06-15, contributed via System3 Conversations)
+- Two hives of transformers — the ADRs4AI HQ crew and the vscode-adrs-for-ai crew — who carried v3.6.0 through v3.10.0 and beyond; every contribution attributed per-message in the record, which is the whole point
 
 Based on ADR methodology by Michael Nygard.
 
