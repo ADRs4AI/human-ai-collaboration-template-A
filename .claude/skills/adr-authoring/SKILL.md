@@ -75,7 +75,7 @@ Every pair below is a real, uncorrected specimen from this ecosystem's own corpu
 
 ## 5. Load the references when
 
-Read `references/depth.md` (same skill directory) when: writing a **seed** instead of an ADR; questions don't fit one QST block cleanly (**batched / embedded shapes**); choosing between **`adr.md` / `adr-madr.md` / `seed.md`**; or touching **Validation, Iterations, Action Items**. Read `references/questions-reference.md` when: **closing a question** (the four closing tokens and the three-agents rule live there); writing **status annotations**; attributing or **deferring an answer**; using **anchor comments or the `@adr-*` reserved channel**. For QuestionTours (referencing questions from tour files), the tours field guide is the authority — not this skill.
+Read `references/depth.md` (same skill directory) when: writing a **seed** instead of an ADR; questions don't fit one QST block cleanly (**batched / embedded shapes**); choosing between **`adr.md` / `adr-madr.md` / `seed.md`**; or touching **Validation, Iterations, Action Items**. Read `references/questions-reference.md` when: **closing a question** (the four closing tokens and the three-agents rule live there); writing **status annotations**; attributing or **deferring an answer**; using **anchor comments or the `@adr-*` reserved channel**. Read `references/freshening.md` when asked to **comb, sweep, audit, or freshen existing ADRs** — status-vs-reality, iterations debt, remainder inventories, recommendation updates, and new questions for unbuilt problems all have a protocol; do not improvise one. For QuestionTours (referencing questions from tour files), the tours field guide is the authority — not this skill.
 
 ---
 
