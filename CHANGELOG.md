@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-_Nothing yet._
+- **The freshening pass** (`references/freshening.md` + SKILL load-condition): the professionalized protocol for combing existing ADRs — status-vs-reality with evidence, iterations debt, remainder inventories with dispositions, recommendation stacking, new-QSTs-for-unbuilt-problems — from the founder's 2026-08-30 instruction; every rule carries a named incident. Rides the v3.11 gate formally; usable from main now.
 
 ---
 
