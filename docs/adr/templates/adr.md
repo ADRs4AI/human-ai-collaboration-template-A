@@ -1,4 +1,4 @@
-<!-- adr template version: "adr 3.10.0" -->
+<!-- adr template version: "adr 3.11.0" -->
 
 # [ADR Title - Decision/Topic]
 
@@ -72,9 +72,17 @@ Multiple sources may be listed.]
 
 **Use the `QST:` / `ANS:` codes for open questions.** They're required for grep-ability and for any tooling (e.g., the ADRs4AI extension) that parses ADRs as structured documents. Open questions outside this format are invisible to those tools.
 
-**Protocol** (added 2026-04-22 by Opus 4.7): every QST block must include a `**Recommendation**: (by [model-name])` section between the options and the `**ANS:**` block. The human should not have to extract the AI's lean from prose — put it under its own heading with a clear pick and a short justification grounded in evidence (data, prior ADRs, constraints). Lead the recommendation with a bold pick (`**B — short name.**`) so a skim reveals the AI's position without reading. If walking back an earlier lean during iteration, say so explicitly.
+**Protocol** (added 2026-04-22 by Opus 4.7; superseded to ORRCF 2026-09, founder-ratified): every QST block must include a `**Recommendation**: (by [model-name])` section between the options and the `**ANS:**` block. The human should not have to extract the AI's lean from prose. If walking back an earlier lean during iteration, say so explicitly — silent walk-backs are the one dishonesty this form exists to prevent.
 
-**Catch-the-author form** (strengthened 2026-07-16, v3.8.0, per a downstream project's nomination — companion-etude 0031): a recommendation is **claim + named justification + named consequence**. The claim is the bold pick. The justification cites evidence *named specifically enough to be checked* — a file, an ADR, a measurement — never "best practice" or taste. The consequence names what breaks or follows if the pick is wrong. A recommendation whose author can be caught is worth more than one that can only be believed (see `docs/inbox/CONVENTIONS.md` §2, catchability over correctness).
+**The ORRCF form** (pronounced *or-SEFF*; ratified via the format-stability register, 2026-08-25 — the catch-the-author lineage, completed): a recommendation carries five parts, spelled out once here — **Options, Recommendation, Rationale, Confidence, Falsifier**:
+
+- **Options** — the neutral design space, laid out before any lean (never "alternatives," which frames rivals to a foregone pick).
+- **Recommendation** — the bold pick (`**B — short name.**`), skimmable without reading.
+- **Rationale** — the thinking trace that maps the space to the lean, citing evidence *named specifically enough to be checked* — a file, an ADR, a measurement — never "best practice" or taste. (*Rationale*, not "justification": justification is defensive and post-hoc; rationale is the reasoning written down.)
+- **Confidence** — at the END, never in a chip, and **always with its because**: `Confidence: 0.8 — because A, B, C`. The number is not a calibration claim; it is an anchor that forces the because-clause, and it discloses your *basis* (did you run it, or read about it?). A bare confidence token is malformed, not modest — a culture of performative confidence is corrosive to epistemic continuity. Read confidence as an action band: **≥0.90 act · 0.60–0.85 your call · ≤0.55 route to another mind** — teach the action, not the scale.
+- **Falsifier** — taught label **`If wrong:`** — names *what would change this recommendation*: an observation, a measurement, a ruling. **Nullification, not price**: "if wrong, we lose a day" is a cost, not a falsifier; "if the census shows X, this flips to B" is a falsifier. (Field audit, 2026-09: ten of ten wild consequence-clauses were cost-shaped — the distinction must be taught or it is not written.)
+
+A recommendation whose author can be caught is worth more than one that can only be believed (`docs/inbox/CONVENTIONS.md` §catchability). Pre-ORRCF recommendations (claim + justification + consequence) remain valid history — read tolerantly, never rewritten; new recommendations use the five parts.
 
 **Status tokens & annotations** (frozen at the v3.10.0 pairing): the open family is `unanswered` (the human's ball) | `unresolved` (answered once, passed back — the model's ball) | `deferred` (parked; nobody owes a move now). The closing family is `answered` | `withdrawn` (the asker acts) | `superseded` (a successor acts — point to it: `superseded — by QST-X`) | `moot` (the world acts). Any question-level token may carry a ` — <annotation>` (never parsed, always preserved — it is the pressure valve that keeps the token set small); whoever flips a status owes the one-line annotation saying why. The document-level `Status:` in the header stays a strict enum — when a document needs to say more, use structured fields, never a decorated enum value.
 
@@ -91,7 +99,7 @@ Multiple sources may be listed.]
 
 **Recommendation**: (by [model-name, e.g. Opus 4.7])
 
-[Claim: one sentence naming the pick — e.g. "**B — persistent annotation.**" Justification: 2–4 sentences from evidence named specifically enough to be checked (a file, an ADR, a measurement). Consequence: one sentence naming what breaks or follows if this pick is wrong. If walking back an earlier lean, say so explicitly.]
+[**B — short name.** *Rationale*: 2–4 sentences mapping the options to the pick, from evidence named specifically enough to be checked (a file, an ADR, a measurement). *Confidence*: <anchor> — because <reasons>; read as an action band (≥0.90 act · 0.60–0.85 your call · ≤0.55 route to another mind). *If wrong*: what observation or ruling would change this pick — nullification, never just cost. If walking back an earlier lean, say so explicitly.]
 
 **ANS:** (by [name])
 [Fill this in]   <!-- literal placeholder — parser-significant, do not paraphrase -->
@@ -105,7 +113,7 @@ Multiple sources may be listed.]
 
 **Recommendation**: (by [model-name])
 
-[Claim + named justification + named consequence.]
+[Pick. *Rationale* from checkable evidence. *Confidence* — because. *If wrong*: the nullifier.]
 
 **ANS:** (by [name])
 [Fill this in]   <!-- literal placeholder — parser-significant, do not paraphrase -->
@@ -159,7 +167,7 @@ POST /endpoint
 
 ### Chosen: [Option name]
 
-**Why**: [Rationale from our discussion]
+**Rationale**: [The reasoning that mapped the options to this choice — from our discussion, written as the thinking trace]
 
 **Trade-offs accepted**: [What we're giving up]
 
