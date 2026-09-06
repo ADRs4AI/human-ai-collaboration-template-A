@@ -1,4 +1,12 @@
 {
+    // ADR Manager: in-repo (committed) override turning diagnostic
+    // logging on for this workspace (2026-08-25, "set it everywhere" —
+    // same override as HQ and every other subproject).
+    "adrManager.logging.observations": true,
+    "adrManager.logging.panelErrors": true,
+    "adrManager.logging.tourUnresolvedRefs": true,
+    "adrManager.reportButton.enabled": true,
+    "adrManager.humanName": "Jérémie Lumbroso",
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#57bfc4",
         "activityBar.background": "#57bfc4",
