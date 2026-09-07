@@ -6,9 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## [Unreleased] — assembled as v3.11.0, "the coherence release" (awaiting the row gate)
+## [3.11.0] — 2026-09-07 — "the coherence release"
 
-**Through-line**: the canonical's README began claiming ORRCF before the templates taught it, and a downstream crew's adoption hit the gap live (elenchus, 2026-09-02). This release makes the claim true — the founder-ratified ORRCF form lands in every teaching surface in one pass — and folds two specimen-driven teachings the field just paid for.
+**Through-line**: the canonical's README began claiming ORRCF before the templates taught it, and a downstream crew's adoption hit the gap live (elenchus, 2026-09-02). This release makes the claim true — the founder-ratified ORRCF form lands in every teaching surface in one pass — and folds two specimen-driven teachings the field just paid for. Row gate answered GO 2026-09-07 (HQ ADR-0037, `adr://v1/repo/ADRs4AI/initial-meta-repository/adr/0037#qst-v3110-gate`).
 
 - **ORRCF** (Options · Recommendation · Rationale · Confidence · Falsifier, "or-SEFF"): `adr.md`'s protocol paragraph, both QST skeletons, and the Chosen section's rationale field; SKILL §2's minimal shape. Confidence at the end with its mandatory *because* (the number is an anchor that forces reasons and discloses basis, never a calibration claim), read as **action bands** — ≥0.90 act · 0.60–0.85 your call · ≤0.55 route to another mind (elenchus's field formulation). Falsifier taught as **`If wrong:` — nullification, never price** (field audit: 10/10 wild consequence-clauses were cost-shaped; the distinction must be taught or it is not written). Pre-ORRCF recommendations stay valid history, read tolerantly.
 - **The absent-question malformation** (SKILL §3's fifth class + depth.md D1 correction, from Sherd 5's debrief): an ADR with zero open questions is a *claim that nothing is open* — the decision's status and the record's completeness are independent; *the seed asks the human what happened, the ADR asks the reader what should happen*; deliberate emptiness says so (`NOT:`), never by omission.
