@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [3.11.2] — 2026-09-07 — patch: freshening.md gets its manifest row
+
+Tender 5's fleet dry-run caught what two tags shipped: `references/freshening.md` was in the tree and cited by SKILL.md, but had **no `kintsugi.yaml` row** — undeliverable to every adopted repo. The enumeration doctrine ("every path a row or a legible absence") violated in the very release that shipped the file. Row added, class `stencil`, miss recorded in the row's own comment. Fleet distribution completes via Tender's one-create rider sweep.
+
+---
+
 ## [3.11.1] — 2026-09-07 — patch: the coherence release reaches the crew docs
 
 Same-day catch (founder-reported, minutes after the tag): `docs/inbox/ONBOARDING.md` and `INBOX-PROTOCOL.md` still taught **ORJ** (Options + Recommendation + Justification) — the crew layer's decision pattern had not been upgraded when ORRCF landed in every *ADR* teaching surface. A coherence release that leaves one surface teaching the superseded form re-creates, inside the template, the exact claim-outruns-teaching gap it shipped to close.
