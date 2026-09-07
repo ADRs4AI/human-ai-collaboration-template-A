@@ -96,7 +96,7 @@ deployment of this same template (`crossfoot`, formerly `qaestor`, formerly
 `penn-purchasing-expense-workflow`; commit `f714b3a8`, 2026-07-09) — a
 per-seat array codifying a seat's onboarding packet as machine-readable data
 rather than only prose. See `docs/inbox/agent-sessions.json`'s
-`_read_order_note` for the schema and the ORJ on why it's top-level rather
+`_read_order_note` for the schema and the ORRCF on why it's top-level rather
 than nested under `settings`. Attributions stack.
 """
 

@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [3.11.1] — 2026-09-07 — patch: the coherence release reaches the crew docs
+
+Same-day catch (founder-reported, minutes after the tag): `docs/inbox/ONBOARDING.md` and `INBOX-PROTOCOL.md` still taught **ORJ** (Options + Recommendation + Justification) — the crew layer's decision pattern had not been upgraded when ORRCF landed in every *ADR* teaching surface. A coherence release that leaves one surface teaching the superseded form re-creates, inside the template, the exact claim-outruns-teaching gap it shipped to close.
+
+### Fixed
+- `INBOX-PROTOCOL.md` §Communication patterns: ORJ → **ORRCF** (all five slots taught, action bands and `If wrong:`-as-nullification included), with a tolerant-reading line — old ORJ blocks are valid history, exactly as pre-ORRCF recommendations are.
+- `ONBOARDING.md` decisions bullet: same upgrade.
+- `scripts/last-message.py` docstring: vocabulary aligned.
+- NOT changed: historical CHANGELOG entries (archives are never edited).
+
+Patch-tier under ADR-0023 (taught intent unchanged — v3.11.0's own row 1 said *every* teaching surface; this repairs its incomplete execution). A parallel ecosystem-wide sweep of public surfaces runs under Pharos 5.
+
+---
+
 ## [3.11.0] — 2026-09-07 — "the coherence release"
 
 **Through-line**: the canonical's README began claiming ORRCF before the templates taught it, and a downstream crew's adoption hit the gap live (elenchus, 2026-09-02). This release makes the claim true — the founder-ratified ORRCF form lands in every teaching surface in one pass — and folds two specimen-driven teachings the field just paid for. Row gate answered GO 2026-09-07 (HQ ADR-0037, `adr://v1/repo/ADRs4AI/initial-meta-repository/adr/0037#qst-v3110-gate`).

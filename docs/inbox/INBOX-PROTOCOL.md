@@ -183,13 +183,17 @@ This pattern adds one cycle but reduces architectural risk. See the worked examp
 
 These patterns apply across all brief variants — they describe how participants present information within a brief.
 
-### Options + Recommendation + Justification (ORJ)
+### Options · Recommendation · Rationale · Confidence · Falsifier (ORRCF)
 
 When a brief surfaces a decision-point, present:
 
 - **Options** — the choice space, enumerated with short labels (A / B / C)
 - **Recommendation** — which option the author leans toward, with a clear bold pick
-- **Justification** — why the lean; reference evidence (data, prior decisions, constraints) rather than taste
+- **Rationale** — why the lean; reference evidence (data, prior decisions, constraints) rather than taste
+- **Confidence** — an anchor with its mandatory *because*: the number forces reasons and discloses basis, never a calibration claim; read as action bands — ≥0.90 act · 0.60–0.85 your call · ≤0.55 route to another mind
+- **Falsifier** — `If wrong:` what would *change this pick* — nullification, never just a cost
+
+Earlier documents may say **ORJ** (Options + Recommendation + Justification); ORRCF is that pattern's ratified successor — read old ORJ blocks tolerantly, as valid history.
 
 Stopping at Options is **not showing up fully**. The recipient can't evaluate the author's read without seeing the recommendation + reasoning. Stating a lean forces the author to commit to a position — which is where real reasoning shows. The recipient can then accept, override, or interrogate the recommendation efficiently.
 

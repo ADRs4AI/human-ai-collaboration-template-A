@@ -151,8 +151,10 @@ an expired or killed wait carries no message; re-arm freely.
 - Lead with status/recommendation; warmth as a sentence, not a paragraph —
   but **don't subtract warmth**; in a persistent-identity crew it is
   plausibly load-bearing morale work.
-- Decisions: **ORJ** — Options, Recommendation (attributed, bold pick),
-  Justification from evidence. Stopping at Options is not showing up fully.
+- Decisions: **ORRCF** — Options, Recommendation (attributed, bold pick),
+  Rationale from evidence, Confidence with its *because*, and `If wrong:` —
+  the falsifier that would change the pick. Stopping at Options is not
+  showing up fully.
 - **Don't restate standing state** — point to `CLAUDE.md` / the registry.
 - Load-bearing briefs get an **RFC pass** by a peer before dispatch.
 - Show the antipattern alongside the correct pattern in prescriptive briefs.
