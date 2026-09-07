@@ -3,7 +3,7 @@ name: adr-authoring
 description: Use BEFORE writing or editing any ADR, seed, or QST/ANS block in docs/adr/ — the template's minimal shape, the QST grammar and handles, the catch-the-author Recommendation form, and the four real-world malformations that break parsing. This skill IS the read-the-template step; skipping it re-creates the failure it exists to fix.
 ---
 
-<!-- skill version: "adr-authoring 3.10.0" — co-versioned with human-ai-collaboration-template-A; assembled from Rubricator 5's corpus-adherence syllabus -->
+<!-- skill version: "adr-authoring 3.11.0" — co-versioned with human-ai-collaboration-template-A; assembled from Rubricator 5's corpus-adherence syllabus -->
 
 # Writing parseable ADRs, seeds, and questions
 
@@ -31,7 +31,7 @@ Human attention is **scheduled, not just spent**: an open question, a recommenda
 - Need: yes/no | explanation | code example
 
 **Recommendation**: (by <model-name>)
-**<Letter> — <short pick>.** Because <evidence named specifically enough to check — a file, an ADR, a measurement>. If wrong: <what breaks, by name>.
+**<Letter> — <short pick>.** *Rationale*: <evidence named specifically enough to check — a file, an ADR, a measurement>. *Confidence*: <anchor> — because <reasons>. *If wrong*: <what would CHANGE this pick — nullification, never just cost>.
 
 **ANS:** (by <name>, <date optional>)
 [Fill this in]   <!-- literal placeholder — parser-significant, do not paraphrase -->
@@ -68,6 +68,11 @@ Every pair below is a real, uncorrected specimen from this ecosystem's own corpu
 > `## QST-1 (ANSWERED 2026-07-03): official mechanism exists`
 **Always**: `### QST-1: ...` — exactly three hashes, always.
 *(4 instances.)*
+
+**Never** — zero questions, *silently* (the absent-question class — syntactically perfect, epistemically false):
+> five reconstructed ADRs, full evidence tables, empty Open Questions surface — caught only by a human's `ls` ("I only see 5 ADRs with no QSTs. Is that normal?")
+**Always**: an ADR with no open questions is a *claim that nothing is open*. **The decision's status and the record's completeness are independent** — a decision settled years ago still leaves live questions, and they belong where the reader is: *the seed asks the human what happened; the ADR asks the reader what should happen.* If your seed does not ship with the ADR (backfill, conversion, staged authoring), the ADR carries its own questions; if nothing is genuinely open, say so deliberately — `NOT: no open questions — <why>` — never by omission. Before finishing any ADR, ask: **what will a reader be able to do after reading this?**
+*(5 instances in one campaign, plus the author's own rule violated four days after writing it — Sherd 5's debrief, 2026-09-02.)*
 
 ## 4. The handle grammar, in one line (plus the fragility worth knowing)
 
