@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [3.11.4] — 2026-09-11 — patch: the answerer's side of the block (the field study pays out same night)
+
+Both v3.11.3 field-study testimonies returned within hours (HQ ADR-0038 `#qst-options-field-study`) and confirmed the undelivered-mold diagnosis from opposite directions: Pharos 5 rendered the old bracket literally (with the skill's Options omission as accomplice — ribbon-shaped seeds hours *before* the bracket); Ephemeris 5.1 learned the block from a lived house specimen — Compositor 5's `QST-ALMANAC-WHO` — "never as a rule," and read past the bracket entirely. *Brackets teach whatever the reader already believes; molds and specimens teach the form* (Pharos). This patch adopts the three judgments Ephemeris supplied that no surface carried:
+
+### Added
+- **The falsifier names its destination**: `If wrong:` lands on the lettered option it flips to, when one exists — for a reader answering by letter, a falsifier without a letter is a second question. (ORRCF Falsifier bullet + SKILL §2.)
+- **The override path on the Need line**: `pick a letter (or override — an answer in any shape is complete)` — silence on override teaches "only letters are answers," which the house's accept/override doctrine (and the one-word-fallacy rulings) forbid. (Both skeletons + SKILL §2.)
+- **Who the block is for**: the Options block must stand alone as the *answer surface* — descriptions weighable without the Rationale, because the human may read only the block; Recommendation and Rationale exist for the reader who checks the author, not the one who answers. (ORRCF Options bullet + SKILL §2.)
+- The Recommendation bullet now says *why* the petname repeats beside the letter (readable when the block scrolls off; a bare `**B.**` is a reference, not a recommendation).
+
+### Fixed
+- `kintsugi.yaml`: `LICENSE` and `TEMPLATE-OUTPUT-GRANT.md` gain **legible-absence entries** (Tender 5's §1b release check, second live catch — in-tree, no row, no reason): license-affecting artifacts travel by Covenant's rulings (HQ ADR-0033, gated on Jérémie), never by file-propagation; a mechanical-delivery row, if ever wanted, is Covenant's choice on the record.
+
+Patch-tier under ADR-0023, same lineage as v3.11.3: every addition is ratified house doctrine (nullification teaching, accept/override, attention-costs) that the form had not yet delivered. Credit: Ephemeris 5.1 (three judgments + the petname why), Compositor 5 (the specimen that taught the block), Pharos 5 (the bracket testimony + moral), Tender 5 (the manifest catch).
+
+---
+
 ## [3.11.3] — 2026-09-11 — patch: the O gets its form
 
 The founder caught variable QST quality across two live repos — one ADR's questions "perfect," a same-week peer's options inline and underspecified — and the census found the cause in the mold itself: v3.11.0's row 1 put ORRCF in every teaching surface, but the **Options slot's form was never expressed anywhere**. The ORRCF paragraph defined Options without a shape; the skill's minimal skeleton omitted the block entirely; and `adr.md`'s skeleton bracket — `[List the options A / B / C ... with a short description of each]` — literally read as the run-on ribbon it should forbid. Quality was author-dependent because the form was undelivered; the one author who wrote it perfectly did so despite the mold, not because of it.

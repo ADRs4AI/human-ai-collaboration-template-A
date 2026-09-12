@@ -109,6 +109,14 @@ artifacts:
 #     ADR-0005); tracking them as stencils today would flag-or-clobber
 #     permission grants. Absence is the safe truth until the gates exist.
 #   docs/adr/.gitkeep — directory keeper; rides instantiation, not updates.
+#   LICENSE, TEMPLATE-OUTPUT-GRANT.md — license-affecting artifacts: a row
+#     here would make template updates the vector for licensing changes
+#     across the fleet, whose per-repo license posture is exactly the open
+#     census in HQ ADR-0033 (Covenant's lane, gated on Jérémie). License
+#     artifacts travel by Covenant's rulings, never by file-propagation;
+#     if a ruling wants the grant delivered mechanically, that becomes a
+#     row with a class chosen in their lane, on the record. (Gap found by
+#     Tender 5's §1b release check, 2026-09-11 — entries added v3.11.4.)
 
 renames:                    # canonical facts, verbatim (checklist #4); re-extract before each tag
   "3.9.0":

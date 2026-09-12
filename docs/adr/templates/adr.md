@@ -1,4 +1,4 @@
-<!-- adr template version: "adr 3.11.3" -->
+<!-- adr template version: "adr 3.11.4" -->
 
 # [ADR Title - Decision/Topic]
 
@@ -76,11 +76,11 @@ Multiple sources may be listed.]
 
 **The ORRCF form** (pronounced *or-SEFF*; ratified via the format-stability register, 2026-08-25 — the catch-the-author lineage, completed): a recommendation carries five parts, spelled out once here — **Options, Recommendation, Rationale, Confidence, Falsifier**:
 
-- **Options** — the neutral design space, laid out before any lean (never "alternatives," which frames rivals to a foregone pick). **Form**: one option per bullet — `- **A — <petname>**: <clear description>` — never listed inline in a running sentence; a pick-shaped question without its lettered block is underspecified, and the Recommendation's letter must name an entry in it.
-- **Recommendation** — the bold pick (`**B — short name.**`), skimmable without reading.
+- **Options** — the neutral design space, laid out before any lean (never "alternatives," which frames rivals to a foregone pick). **Form**: one option per bullet — `- **A — <petname>**: <clear description>` — never listed inline in a running sentence; a pick-shaped question without its lettered block is underspecified, and the Recommendation's letter must name an entry in it. **Who the block is for**: it must stand alone as the *answer surface* — descriptions evaluable without the Rationale, because the human may read only the block; the Recommendation and Rationale exist for the reader who wants to check the author, not the one who wants to answer.
+- **Recommendation** — the bold pick (`**B — short name.**`), skimmable without reading — the petname repeated beside the letter *on purpose*, so the pick still reads when the block has scrolled off; a bare `**B.**` is a reference, not a recommendation.
 - **Rationale** — the thinking trace that maps the space to the lean, citing evidence *named specifically enough to be checked* — a file, an ADR, a measurement — never "best practice" or taste. (*Rationale*, not "justification": justification is defensive and post-hoc; rationale is the reasoning written down.)
 - **Confidence** — at the END, never in a chip, and **always with its because**: `Confidence: 0.8 — because A, B, C`. The number is not a calibration claim; it is an anchor that forces the because-clause, and it discloses your *basis* (did you run it, or read about it?). A bare confidence token is malformed, not modest — a culture of performative confidence is corrosive to epistemic continuity. Read confidence as an action band: **≥0.90 act · 0.60–0.85 your call · ≤0.55 route to another mind** — teach the action, not the scale.
-- **Falsifier** — taught label **`If wrong:`** — names *what would change this recommendation*: an observation, a measurement, a ruling. **Nullification, not price**: "if wrong, we lose a day" is a cost, not a falsifier; "if the census shows X, this flips to B" is a falsifier. (Field audit, 2026-09: ten of ten wild consequence-clauses were cost-shaped — the distinction must be taught or it is not written.)
+- **Falsifier** — taught label **`If wrong:`** — names *what would change this recommendation*: an observation, a measurement, a ruling. **Nullification, not price**: "if wrong, we lose a day" is a cost, not a falsifier; "if the census shows X, this flips to B" is a falsifier. (Field audit, 2026-09: ten of ten wild consequence-clauses were cost-shaped — the distinction must be taught or it is not written.) **And the nullifier names the option it flips to, when one exists** — for a reader answering by letter, a falsifier that does not land on a letter is a second question. (Ephemeris 5.1's field practice, adopted 2026-09-11.)
 
 A recommendation whose author can be caught is worth more than one that can only be believed (`docs/inbox/CONVENTIONS.md` §catchability). Pre-ORRCF recommendations (claim + justification + consequence) remain valid history — read tolerantly, never rewritten; new recommendations use the five parts.
 
@@ -93,7 +93,7 @@ A recommendation whose author can be caught is worth more than one that can only
 ### QST: [Question text]
 - Status: unanswered
 - Why asking: [How this shapes my approach]
-- Need: [yes/no | explanation | code example | etc]
+- Need: [pick a letter (or override — an answer in any shape is complete) | yes/no | explanation | etc]
 
 Options:
 - **A — [petname]**: [description concrete enough to evaluate without leaving this block]
