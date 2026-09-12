@@ -3,7 +3,7 @@ name: adr-authoring
 description: Use BEFORE writing or editing any ADR, seed, or QST/ANS block in docs/adr/ — the template's minimal shape, the QST grammar and handles, the catch-the-author Recommendation form, and the four real-world malformations that break parsing. This skill IS the read-the-template step; skipping it re-creates the failure it exists to fix.
 ---
 
-<!-- skill version: "adr-authoring 3.11.4" — co-versioned with human-ai-collaboration-template-A; assembled from Rubricator 5's corpus-adherence syllabus -->
+<!-- skill version: "adr-authoring 3.11.5" — co-versioned with human-ai-collaboration-template-A; assembled from Rubricator 5's corpus-adherence syllabus -->
 
 # Writing parseable ADRs, seeds, and questions
 
@@ -44,6 +44,8 @@ Options:
 The document `Status:` enum above is the **frozen five** (case-insensitive read, canonical-case write) — annotations decorate *question*-level status only, never the document line. The ANS byline needs the `by`/`from` keyword — `**ANS:** (Jérémie)` is answer *content*, not an attribution; a pending note goes on the Status line (`- Status: unanswered — routing to <name>`) or in a `[Pending: …]` bracket, never as bare prose in the ANS slot: **the ANS text IS the answer**, and every tool leans on that contract.
 
 That trailing comment on `[Fill this in]` is real, current template text (v3.9.0) — tooling checks for the literal placeholder to detect unanswered blocks; "helpfully" rewording it as filler prose breaks that check silently. Leave it exactly as-is until there's a real answer to put there.
+
+**The closing `---` is load-bearing**: a QST block ends at the next `###` heading or a bare `---`, and the answer layer collects *everything* after the ANS marker until then. Commentary *about* the question — a `NOT:` filing note ("chunk into an ADR post-deadline"), a routing remark — goes **after a `---`**, never bare below the ANS slot, or the parser reads it as the answer. (Contract verified in the extension's parser, born from the founder's 2026-07 parse-accuracy reports; taught since 3.11.5.)
 
 The Options block is part of the shape, not decoration: **one option per bullet**, letter + bold petname + a description evaluable in place — the Recommendation's letter must name an entry in it. A question with no enumerable options (pure elicitation) says `Options: none (elicitation)` and the Need line bounds the answer's expected shape; full specification is never optional. **The block is the answer surface**: write each description to be weighable without the Rationale, because the human may read only the block — the Recommendation and Rationale are for the reader who wants to check the author, not the one who wants to answer. And the letters are an offer, never a fence: `(or override — any shape answers)` is part of the taught Need line because a fragment, a "warmer/colder," or a fourth option is a complete answer.
 

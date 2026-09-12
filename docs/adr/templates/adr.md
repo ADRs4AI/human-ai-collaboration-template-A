@@ -1,4 +1,4 @@
-<!-- adr template version: "adr 3.11.4" -->
+<!-- adr template version: "adr 3.11.5" -->
 
 # [ADR Title - Decision/Topic]
 
@@ -88,7 +88,7 @@ A recommendation whose author can be caught is worth more than one that can only
 
 **Question identity — one story**: `### QST-<id>:` (1–24 letters/digits, interior hyphens) is the everyday citable handle, canonical-**optional** — add it when anything will refer back to the question; *a question that is referenced must have a handle*. The advanced form is an `<!-- @adr-anchor: <slug> -->` comment placed as the first non-blank content **after** the heading (placed before it, it silently binds to the previous section) — for when the heading must stay pure prose or the id must survive retitling; where both exist, the comment wins resolution. HTML comments shaped `<!-- @adr-<action>: <value> -->` are the reserved machine channel (`@adr-anchor`, `<!-- @adr-dismissed: <reason-slug> -->` on a heading line). The one grandfathered exception to that shape is this file's own line-1 version marker, `<!-- adr template version: "<stem> X.Y.Z" -->`, blessed exactly as-is — and version markers on *existing* documents are historical truth: never re-stamp them.
 
-**Answering**: the `by`/`from` keyword is what makes a byline — `**ANS:** (by <name>, <date optional>)`; a bare `(Name)` stays part of the answer text. Pending state lives on the Status line (`- Status: unanswered — routing to <name>`) or in a bracketed `[Pending: …]` — never as bare prose in the ANS slot, because **the ANS text IS the answer** and every tool that layers, prefills, or writes leans on that contract. `[Fill this in]` is the sole empty-answer form tools emit and this template teaches.
+**Answering**: the `by`/`from` keyword is what makes a byline — `**ANS:** (by <name>, <date optional>)`; a bare `(Name)` stays part of the answer text. Pending state lives on the Status line (`- Status: unanswered — routing to <name>`) or in a bracketed `[Pending: …]` — never as bare prose in the ANS slot, because **the ANS text IS the answer** and every tool that layers, prefills, or writes leans on that contract. `[Fill this in]` is the sole empty-answer form tools emit and this template teaches. **And the block's closing `---` is load-bearing, not typography**: a QST block ends at the next `###` heading or bare `---`, and the answer layer collects everything until then — so trailing commentary (a `NOT:` filing note, a routing remark) goes **after a `---`**, never bare below the ANS slot, or it is read as answer content.
 
 ### QST: [Question text]
 - Status: unanswered
@@ -113,6 +113,9 @@ Options:
 [Fill this in]   <!-- literal placeholder — parser-significant, do not paraphrase -->
 
 ---
+<!-- this --- ends the QST block (parser boundary, not typography): any comment
+     ABOUT the question — a NOT: filing note, a routing remark — goes below a
+     --- like this one; placed bare after the ANS slot it becomes the answer -->
 
 ### QST: [Another question]
 - Status: unanswered  

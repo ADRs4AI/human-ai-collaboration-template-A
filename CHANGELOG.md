@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [3.11.5] — 2026-09-11 — patch: the closing `---` taught as load-bearing
+
+The founder, filing a seat's correctly-fenced trailing note (Pharos 5's QST-TES-PAPER, a `NOT:` filing remark placed after the `---`): *"It's important that the '---' be added so it doesn't get parsed as an answer. Is this something to add to the skill and/or the template's spec?"* Verified in the extension's parser before teaching: a bare thematic break ends the question's extent (`extractor.ts` — the conservative-clamp rule born from the founder's own 2026-07 parse-accuracy reports: "never legitimately part of a question's own content"), and the answer layer collects everything after the ANS marker until an attributed marker or that boundary. The skeleton *demonstrated* the `---` since forever; no surface said it was structural — the same example-without-its-why class Ephemeris named at v3.11.4.
+
+### Added
+- `adr.md`: the Answering paragraph teaches the block boundary ("the closing `---` is load-bearing, not typography"); the skeleton's own `---` gains an in-mold comment showing where commentary *about* a question goes (after the break) and what happens if it's placed bare (it becomes the answer).
+- `SKILL.md` §2: the boundary rule beside the placeholder contract, with the parser provenance.
+- `references/questions-reference.md`: "Where the block ends" section beside the empty-answer teaching.
+
+Patch-tier under ADR-0023, same lineage: a contract that has lived in the parser since 2026-07, delivered to authors at last. Trigger credit: the founder's note; specimen credit: Pharos 5, whose fencing was correct before the rule was taught.
+
+---
+
 ## [3.11.4] — 2026-09-11 — patch: the answerer's side of the block (the field study pays out same night)
 
 Both v3.11.3 field-study testimonies returned within hours (HQ ADR-0038 `#qst-options-field-study`) and confirmed the undelivered-mold diagnosis from opposite directions: Pharos 5 rendered the old bracket literally (with the skill's Options omission as accomplice — ribbon-shaped seeds hours *before* the bracket); Ephemeris 5.1 learned the block from a lived house specimen — Compositor 5's `QST-ALMANAC-WHO` — "never as a rule," and read past the bracket entirely. *Brackets teach whatever the reader already believes; molds and specimens teach the form* (Pharos). This patch adopts the three judgments Ephemeris supplied that no surface carried:

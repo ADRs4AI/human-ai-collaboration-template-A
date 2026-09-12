@@ -1,4 +1,4 @@
-<!-- adr template version: "questions-reference 3.10.0" -->
+<!-- adr template version: "questions-reference 3.11.5" -->
 
 # Questions reference — status vocabulary, identity, and answer forms
 
@@ -105,6 +105,15 @@ verbatim — "parses on world-knowledge" is the failure mode this rule prevents.
 **The empty answer**: `[Fill this in]` is the sole placeholder that tools emit
 and the template teaches. Other forms (`TBD`, `[pending]`, bare `[]`) are read
 tolerantly, written never.
+
+**Where the block ends — the `---` is load-bearing**: a QST block runs to the
+next `###` heading or a bare thematic break (`---`), and inside it the answer
+layer collects *everything* after the ANS marker until the next attributed
+marker. So trailing commentary — a `NOT:` filing note, a routing remark, any
+prose meant as *about* the question rather than *the answer to it* — must sit
+**after a `---`**, never bare below the ANS slot, or the parser reads it as
+answer content. (The rule has lived in the extension's parser since the
+founder's 2026-07 parse-accuracy reports; taught here since 3.11.5.)
 
 **Pending state** — the answer isn't ready and you want to say where things
 stand. Two taught outlets:
