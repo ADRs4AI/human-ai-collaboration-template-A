@@ -1,4 +1,4 @@
-<!-- adr template version: "adr 3.11.0" -->
+<!-- adr template version: "adr 3.11.3" -->
 
 # [ADR Title - Decision/Topic]
 
@@ -76,7 +76,7 @@ Multiple sources may be listed.]
 
 **The ORRCF form** (pronounced *or-SEFF*; ratified via the format-stability register, 2026-08-25 — the catch-the-author lineage, completed): a recommendation carries five parts, spelled out once here — **Options, Recommendation, Rationale, Confidence, Falsifier**:
 
-- **Options** — the neutral design space, laid out before any lean (never "alternatives," which frames rivals to a foregone pick).
+- **Options** — the neutral design space, laid out before any lean (never "alternatives," which frames rivals to a foregone pick). **Form**: one option per bullet — `- **A — <petname>**: <clear description>` — never listed inline in a running sentence; a pick-shaped question without its lettered block is underspecified, and the Recommendation's letter must name an entry in it.
 - **Recommendation** — the bold pick (`**B — short name.**`), skimmable without reading.
 - **Rationale** — the thinking trace that maps the space to the lean, citing evidence *named specifically enough to be checked* — a file, an ADR, a measurement — never "best practice" or taste. (*Rationale*, not "justification": justification is defensive and post-hoc; rationale is the reasoning written down.)
 - **Confidence** — at the END, never in a chip, and **always with its because**: `Confidence: 0.8 — because A, B, C`. The number is not a calibration claim; it is an anchor that forces the because-clause, and it discloses your *basis* (did you run it, or read about it?). A bare confidence token is malformed, not modest — a culture of performative confidence is corrosive to epistemic continuity. Read confidence as an action band: **≥0.90 act · 0.60–0.85 your call · ≤0.55 route to another mind** — teach the action, not the scale.
@@ -95,7 +95,15 @@ A recommendation whose author can be caught is worth more than one that can only
 - Why asking: [How this shapes my approach]
 - Need: [yes/no | explanation | code example | etc]
 
-[List the options A / B / C ... with a short description of each]
+Options:
+- **A — [petname]**: [description concrete enough to evaluate without leaving this block]
+- **B — [petname]**: [description — including what would make a reader choose it over A]
+- **C — [petname]**: [add letters as the space needs; never fewer than the space has]
+
+<!-- One option per bullet — never a running sentence (the "ribbon" malformation: unskimmable,
+     unanchorable, and the Recommendation's letter loses its referent). A question with no
+     enumerable options (pure elicitation) says so explicitly — `Options: none (elicitation)` —
+     and the Need line then bounds the answer's expected shape. Full specification is never optional. -->
 
 **Recommendation**: (by [model-name, e.g. Opus 4.7])
 
@@ -110,6 +118,10 @@ A recommendation whose author can be caught is worth more than one that can only
 - Status: unanswered  
 - Why asking: [Context]
 - Need: [Format]
+
+Options:
+- **A — [petname]**: [description]
+- **B — [petname]**: [description]
 
 **Recommendation**: (by [model-name])
 

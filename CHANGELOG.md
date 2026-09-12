@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [3.11.3] — 2026-09-11 — patch: the O gets its form
+
+The founder caught variable QST quality across two live repos — one ADR's questions "perfect," a same-week peer's options inline and underspecified — and the census found the cause in the mold itself: v3.11.0's row 1 put ORRCF in every teaching surface, but the **Options slot's form was never expressed anywhere**. The ORRCF paragraph defined Options without a shape; the skill's minimal skeleton omitted the block entirely; and `adr.md`'s skeleton bracket — `[List the options A / B / C ... with a short description of each]` — literally read as the run-on ribbon it should forbid. Quality was author-dependent because the form was undelivered; the one author who wrote it perfectly did so despite the mold, not because of it.
+
+### Fixed
+- `adr.md`: both QST skeletons now carry the Options block mold — one option per bullet, `- **A — <petname>**: <description evaluable in place>` — with the in-mold comment teaching the ribbon malformation and the elicitation escape (`Options: none (elicitation)`, answer shape bounded on the Need line); the ORRCF paragraph's Options bullet gains the form sentence + the rule that the Recommendation's letter must name a block entry.
+- `SKILL.md` §2: the Options block joins the minimal shape; §3 gains the sixth never/always class (**the inline option ribbon / the underspecified ask**), founder-caught 2026-09-11, with the mold's own old bracket named as the cause.
+- `SKILL.md` §3 heading de-counted ("What the wild actually gets wrong") — it had said "four things" since v3.11.0 shipped the fifth class; counts in headings are a maintenance obligation that already failed silently once.
+
+Patch-tier under ADR-0023 per the v3.11.1 precedent: completing v3.11.0 row 1's execution — taught intent unchanged, the undelivered form delivered. Record: HQ ADR-0038; field study with both specimen authors runs alongside.
+
+---
+
 ## [3.11.2] — 2026-09-07 — patch: freshening.md gets its manifest row
 
 Tender 5's fleet dry-run caught what two tags shipped: `references/freshening.md` was in the tree and cited by SKILL.md, but had **no `kintsugi.yaml` row** — undeliverable to every adopted repo. The enumeration doctrine ("every path a row or a legible absence") violated in the very release that shipped the file. Row added, class `stencil`, miss recorded in the row's own comment. Fleet distribution completes via Tender's one-create rider sweep.

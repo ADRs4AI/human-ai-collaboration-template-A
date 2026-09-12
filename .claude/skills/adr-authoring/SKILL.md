@@ -3,7 +3,7 @@ name: adr-authoring
 description: Use BEFORE writing or editing any ADR, seed, or QST/ANS block in docs/adr/ — the template's minimal shape, the QST grammar and handles, the catch-the-author Recommendation form, and the four real-world malformations that break parsing. This skill IS the read-the-template step; skipping it re-creates the failure it exists to fix.
 ---
 
-<!-- skill version: "adr-authoring 3.11.0" — co-versioned with human-ai-collaboration-template-A; assembled from Rubricator 5's corpus-adherence syllabus -->
+<!-- skill version: "adr-authoring 3.11.3" — co-versioned with human-ai-collaboration-template-A; assembled from Rubricator 5's corpus-adherence syllabus -->
 
 # Writing parseable ADRs, seeds, and questions
 
@@ -28,7 +28,11 @@ Human attention is **scheduled, not just spent**: an open question, a recommenda
 ### QST: <question, or QST-<id>: for a citable handle>
 - Status: unanswered   <!-- open family: unanswered (human's ball) | unresolved (model's ball) | deferred; closing family + annotations: references/questions-reference.md -->
 - Why asking: ...
-- Need: yes/no | explanation | code example
+- Need: pick a letter | yes/no | explanation | code example
+
+Options:
+- **A — <petname>**: <description concrete enough to evaluate without leaving this block>
+- **B — <petname>**: <description — including what would make a reader choose it over A>
 
 **Recommendation**: (by <model-name>)
 **<Letter> — <short pick>.** *Rationale*: <evidence named specifically enough to check — a file, an ADR, a measurement>. *Confidence*: <anchor> — because <reasons>. *If wrong*: <what would CHANGE this pick — nullification, never just cost>.
@@ -41,9 +45,11 @@ The document `Status:` enum above is the **frozen five** (case-insensitive read,
 
 That trailing comment on `[Fill this in]` is real, current template text (v3.9.0) — tooling checks for the literal placeholder to detect unanswered blocks; "helpfully" rewording it as filler prose breaks that check silently. Leave it exactly as-is until there's a real answer to put there.
 
+The Options block is part of the shape, not decoration: **one option per bullet**, letter + bold petname + a description evaluable in place — the Recommendation's letter must name an entry in it. A question with no enumerable options (pure elicitation) says `Options: none (elicitation)` and the Need line bounds the answer's expected shape; full specification is never optional.
+
 That block — frontmatter, one QST, one catch-the-author Recommendation — is the load-bearing 80%. Everything else (Explicitation, Supporting Materials, Validation, Iterations, Glossary) matters and lives in the depth reference; this is what must never be skipped. Mint new ADRs with `just adr "<title>"` — never hand-number.
 
-## 3. The four things the wild actually gets wrong (never this / always this)
+## 3. What the wild actually gets wrong (never this / always this)
 
 Every pair below is a real, uncorrected specimen from this ecosystem's own corpus — not a hypothetical.
 
@@ -73,6 +79,11 @@ Every pair below is a real, uncorrected specimen from this ecosystem's own corpu
 > five reconstructed ADRs, full evidence tables, empty Open Questions surface — caught only by a human's `ls` ("I only see 5 ADRs with no QSTs. Is that normal?")
 **Always**: an ADR with no open questions is a *claim that nothing is open*. **The decision's status and the record's completeness are independent** — a decision settled years ago still leaves live questions, and they belong where the reader is: *the seed asks the human what happened; the ADR asks the reader what should happen.* If your seed does not ship with the ADR (backfill, conversion, staged authoring), the ADR carries its own questions; if nothing is genuinely open, say so deliberately — `NOT: no open questions — <why>` — never by omission. Before finishing any ADR, ask: **what will a reader be able to do after reading this?**
 *(5 instances in one campaign, plus the author's own rule violated four days after writing it — Sherd 5's debrief, 2026-09-02.)*
+
+**Never** — options as an inline ribbon, or a pick-shaped question with no options at all (the underspecified ask):
+> `- Options: A — serve locally. B — deploy remote. C — both.` … then `**Recommendation**: **B.**`
+**Always**: one option per bullet — `- **A — <petname>**: <clear description>` — and the Recommendation's letter names a bullet. The block form is what makes the decider's side skimmable: letters anchor the pick, petnames anchor recall, descriptions carry enough to evaluate without leaving the block. No enumerable options? `Options: none (elicitation)`, with the Need line bounding the answer's shape — never a slot silently absent.
+*(Founder-caught across two live repos, 2026-09-11 — one ADR's questions "perfect," a same-week peer's inline and underspecified. The cause was the mold itself: the skeleton's old `[List the options A / B / C …]` bracket read as the ribbon it should forbid, so quality was author-dependent until v3.11.3 delivered the form.)*
 
 ## 4. The handle grammar, in one line (plus the fragility worth knowing)
 
