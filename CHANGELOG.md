@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [3.11.6] — 2026-09-26 — patch: the dangling letter gets its specimen
+
+First post-delivery wild failure of the Options discipline, founder-flagged (moreover ADR-0002, QST-CURSOR-STORE, routed via Gleaner 5): a Recommendation opened `**A — spool files…**` above a QST with zero option bullets — **in a repo whose template was already v3.11.5**. The teaching was delivered; the label got imitated without the structure anyway (the skipped-TL;DR class: the memorable token survives, the load-bearing structure drops). The rule ("the letter must name an entry") existed in prose; the FAILURE SHAPE had no specimen — and this house has now proven twice that specimens teach where rules don't.
+
+### Added
+- SKILL §3, class six gains the **dangling letter** as its own ✗ specimen, carrying the founder's verbatim answer-surface cost: *"Yes, you're calling it Option A, but I don't see any other options."* The Always line sharpens to "names a bullet **that exists in this QST's own block**"; the incident note now counts three founder catches across three repos, with the 09-22 one explicitly post-delivery.
+
+Detection note: the mechanical catch already exists (HQ qst-lint's `rec-dangling-letter`, Understudy 5, marker-gated ≥3.11.3) — the failing repo simply has no lint; the extension-diagnostic half (vscode ADR-0021 lane) and the template-shipped CI lint (FDS graft kit) both grow more urgent with this specimen. Patch-tier under ADR-0023, v3.11.3 lineage.
+
+---
+
 ## [3.11.5] — 2026-09-11 — patch: the closing `---` taught as load-bearing
 
 The founder, filing a seat's correctly-fenced trailing note (Pharos 5's QST-TES-PAPER, a `NOT:` filing remark placed after the `---`): *"It's important that the '---' be added so it doesn't get parsed as an answer. Is this something to add to the skill and/or the template's spec?"* Verified in the extension's parser before teaching: a bare thematic break ends the question's extent (`extractor.ts` — the conservative-clamp rule born from the founder's own 2026-07 parse-accuracy reports: "never legitimately part of a question's own content"), and the answer layer collects everything after the ANS marker until an attributed marker or that boundary. The skeleton *demonstrated* the `---` since forever; no surface said it was structural — the same example-without-its-why class Ephemeris named at v3.11.4.
