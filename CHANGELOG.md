@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [Unreleased] — assembling as v3.12.0 (the crate; awaiting its row gate)
+
+- **NEW: the `adrs4ai-tooling` skill** (`.claude/skills/adrs4ai-tooling/SKILL.md`, HQ ADR-0040) — the toolchain teaches itself: every integration as **detect → explain → offer → verify** (VS Code, the ADR Manager extension, the MCP server as a pending-entry until `@adrs4ai/mcp` publishes, Terminals, Peacock, pneumatic, kintsugi, CI lint), register calibrated to the human's demonstrated fluency before any shell (programming vs non-programming user, read from evidence), the offer ladder (seat-does-it > one-tap GO > walkthrough), and a **spore mode**: outside any template instance the skill alone carries the methodology's address and adoption paths. Commissioned by the founder from the census that found the template wires integrations without introducing them; the Terminals + Peacock entries write down what was oral tradition. Usable from main now; rides the v3.12 gate formally.
+- *(Other crate slots pending assembly: ADR-0036 (d) seed-justfile crew layer; the `.mcp.json` stanza post-publish; marker family-form grammar; tours skill; `just seed`; parseability contract; citation teaching; questions-reference re-key.)*
+
+---
+
 ## [3.11.6] — 2026-09-26 — patch: the dangling letter gets its specimen
 
 First post-delivery wild failure of the Options discipline, founder-flagged (moreover ADR-0002, QST-CURSOR-STORE, routed via Gleaner 5): a Recommendation opened `**A — spool files…**` above a QST with zero option bullets — **in a repo whose template was already v3.11.5**. The teaching was delivered; the label got imitated without the structure anyway (the skipped-TL;DR class: the memorable token survives, the load-bearing structure drops). The rule ("the letter must name an entry") existed in prose; the FAILURE SHAPE had no specimen — and this house has now proven twice that specimens teach where rules don't.
