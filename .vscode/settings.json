@@ -29,11 +29,9 @@
     "peacock.color": "#3CA7AC",
     "python.terminal.activateEnvironment": false,
     "terminal.integrated.env.osx": {
-        "PATH": "/opt/homebrew/bin:${env:HOME}/.asdf/shims:${env:PATH}",
-        "ANTHROPIC_MODEL": "claude-sonnet-4-6[1m]"
+        "PATH": "/opt/homebrew/bin:${env:HOME}/.asdf/shims:${env:PATH}"
     },
     /* Claude Code configuration */
-    "claudeCode.selectedModel": "claude-sonnet-4-6[1m]",
     "claudeCode.environmentVariables": [
         {
             "name": "PATH",
@@ -46,10 +44,6 @@
         {
             "name": "NODE_PATH",
             "value": "/opt/homebrew/lib/node_modules"
-        },
-        {
-            "name": "ANTHROPIC_MODEL",
-            "value": "claude-sonnet-4-6[1m]"
         }
     ],
     // Terminal configuration
@@ -84,17 +78,38 @@
     "terminal.integrated.drawBoldTextInBrightColors": false,
     // Accessibility (if you don't need it)
     "terminal.integrated.accessibleViewPreserveCursorPosition": false,
-    // Copilot
+    // ── One assistant, deliberately: the ambient-AI chorus, off ──
+    // (Not anti-AI — this methodology IS thinking with AI. It is anti-AMBIENT:
+    //  autocomplete whispering at every keystroke is steering you never chose,
+    //  and it reads as authority exactly in proportion to how new you are.
+    //  The collaborator is invited on purpose, in a terminal, every time —
+    //  no exceptions, including Anthropic's own editor integrations.
+    //  Founder's doctrine, 2026-09; teaching: the adrs4ai-tooling skill.)
+    "chat.disableAIFeatures": true,
+    "chat.agent.enabled": false,
+    "workbench.commandPalette.showAskInChat": false,
+    "workbench.browser.enableChatTools": false,
     "github.copilot.editor.enableAutoCompletions": false,
     "github.copilot.chat.terminalContext": "off",
     "github.copilot.enable": {
-        "*": true,
-        "terminal": false
+        "*": false
     },
+    // ── Quiet the chrome: every element you don't use crowds a thought ──
+    // (With 4–8 project windows open, every frame must be lightweight.)
+    "window.commandCenter": false,
+    "workbench.navigationControl.enabled": false,
+    "workbench.layoutControl.enabled": false,
+    "workbench.startupEditor": "none",
+    "workbench.notifications.showInTitleBar": false,
+    "workbench.enableExperiments": false,
+    "terminal.integrated.initialHint": false,
+    "update.mode": "manual",
     "editor.hover.enabled": "off", // Avoid hover messages, especially in terminal
     "workbench.hover.enabled": false,
     "terminal.integrated.showLinkHover": false,
     "terminal.integrated.hover.enabled": false,
     "debug.inlineValues": "off",
-    "editor.hover.above": false
+    "editor.hover.above": false,
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingQuotes": "never"
 }
