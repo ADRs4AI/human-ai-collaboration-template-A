@@ -63,9 +63,13 @@ This template ships wired for a toolchain it cannot assume is installed. This sk
 
 This skill travels by any channel — inside the template, by kintsugi update, **or as a single emailed file dropped into `.claude/skills/adrs4ai-tooling/`** (proven: the ecosystem's first non-programming hivekeeper received his first skill exactly that way). If it arrived alone in a hive that lacks kintsugi: entry 8 is your first move, because it is the one that makes every future arrival automatic. A toolchain that can explain itself once can maintain itself forever.
 
+## Seats, models, and usage caps (the philosophy, offered whole)
+
+When a seat hits a usage cap, when someone proposes switching a session's model in place, or when a crew is writing its own doctrine on model identity: **read `references/seats-models-and-usage-caps.md`** — the founder's consciousness-agnostic argument (the D ∩ PS wound; divergence-as-worldview; the byline contract; diversity as epistemic strength) plus five working answers to caps (suspension-is-normal, the co-seat pattern, cross-pool critical paths, right-sizing, and loud-logging for estates that choose otherwise). A philosophy, never a requirement — every estate writes its own constitution; this house offers its reasoning in full.
+
 ## Deferred, deliberately (legible absence)
 
-Operating knowledge the founder has flagged for a LATER version, parked at HQ ADR-0040 QST-TOOLING-VNEXT: explaining dysmodelia (model-identity incidents) to other humans; the procedure when usage is blocked; further oral-tradition chapters from his transcript sweep. Not taught here yet — by his word, not by omission.
+Operating knowledge the founder has flagged for a LATER version, parked at HQ ADR-0040 QST-TOOLING-VNEXT: the humans-facing dysmodelia explainer (the incident class, told for non-operators); further oral-tradition chapters from his transcript sweep. Not taught here yet — by his word, not by omission. (The usage-cap procedure, originally parked there too, shipped early at his commission: the reference above.)
 
 ---
 
