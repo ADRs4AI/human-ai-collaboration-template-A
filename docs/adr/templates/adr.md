@@ -72,7 +72,7 @@ Multiple sources may be listed.]
 
 **Use the `QST:` / `ANS:` codes for open questions.** They're required for grep-ability and for any tooling (e.g., the ADRs4AI extension) that parses ADRs as structured documents. Open questions outside this format are invisible to those tools.
 
-**Protocol** (added 2026-04-22 by Opus 4.7; superseded to ORRCF 2026-09, founder-ratified): every QST block must include a `**Recommendation**: (by [model-name])` section between the options and the `**ANS:**` block. The human should not have to extract the AI's lean from prose. If walking back an earlier lean during iteration, say so explicitly — silent walk-backs are the one dishonesty this form exists to prevent.
+**Protocol** (added 2026-04-22 by Opus 4.7; superseded to ORRCF 2026-09, founder-ratified; byline completed 2026-10-04): every QST block must include a `**Recommendation**: (by [seat], [model], [YYYY-MM-DD])` section between the options and the `**ANS:**` block. The byline's three fields make three different catches possible: the **seat** says who answers for the lean, the **model** makes a silent substitution visible (per-message attribution's whole point), and the **date** makes freshness checkable — a recommendation is a claim about a moment. A session with no seat writes the model and date alone; the date is never optional. The human should not have to extract the AI's lean from prose. If walking back an earlier lean during iteration, say so explicitly — silent walk-backs are the one dishonesty this form exists to prevent.
 
 **The ORRCF form** (pronounced *or-SEFF*; ratified via the format-stability register, 2026-08-25 — the catch-the-author lineage, completed): a recommendation carries five parts, spelled out once here — **Options, Recommendation, Rationale, Confidence, Falsifier**:
 
@@ -105,7 +105,7 @@ Options:
      enumerable options (pure elicitation) says so explicitly — `Options: none (elicitation)` —
      and the Need line then bounds the answer's expected shape. Full specification is never optional. -->
 
-**Recommendation**: (by [model-name, e.g. Opus 4.7])
+**Recommendation**: (by [seat], [model], [date — e.g. Shipwright 5, Claude Fable 5, 2026-10-04; no seat? model + date alone])
 
 [**B — short name.** *Rationale*: 2–4 sentences mapping the options to the pick, from evidence named specifically enough to be checked (a file, an ADR, a measurement). *Confidence*: <anchor> — because <reasons>; read as an action band (≥0.90 act · 0.60–0.85 your call · ≤0.55 route to another mind). *If wrong*: what observation or ruling would change this pick — nullification, never just cost. If walking back an earlier lean, say so explicitly.]
 
@@ -126,7 +126,7 @@ Options:
 - **A — [petname]**: [description]
 - **B — [petname]**: [description]
 
-**Recommendation**: (by [model-name])
+**Recommendation**: (by [seat], [model], [date])
 
 [Pick. *Rationale* from checkable evidence. *Confidence* — because. *If wrong*: the nullifier.]
 

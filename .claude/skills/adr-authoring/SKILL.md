@@ -34,7 +34,7 @@ Options:
 - **A — <petname>**: <description concrete enough to evaluate without leaving this block>
 - **B — <petname>**: <description — including what would make a reader choose it over A>
 
-**Recommendation**: (by <model-name>)
+**Recommendation**: (by <seat>, <model>, <YYYY-MM-DD>)   <!-- three fields, three catches: seat = who answers for it; model = substitutions visible; date = freshness checkable. No seat? model + date alone — the date is never optional --> 
 **<Letter> — <short pick>.** *Rationale*: <evidence named specifically enough to check — a file, an ADR, a measurement>. *Confidence*: <anchor> — because <reasons>. *If wrong*: <what would CHANGE this pick — nullification, never just cost — naming the option it flips to, when one exists>.
 
 **ANS:** (by <name>, <date optional>)
