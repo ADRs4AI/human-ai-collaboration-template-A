@@ -1,4 +1,9 @@
 <!-- adr template version: "adr 3.11.5" -->
+<!-- Reading this file as your example? The example is not the teaching: imitation yields the
+     shapes (headings, bold ANS) and silently drops the whys (Why-asking, Need, Options,
+     the Recommendation's five parts). The grammar is taught by the adr-authoring skill —
+     load it BEFORE writing. This comment travels into every minted ADR on purpose, so the
+     file most likely to be imitated is the one that says imitation is not enough. -->
 
 # [ADR Title - Decision/Topic]
 
