@@ -187,7 +187,7 @@ When in doubt: **If it made you say "aha!", write it down.**
 
 1. **Read** the dump (use bash for large files)
 2. **Identify threads** - separate topics/decisions (usually 2-5)
-3. **Create ADRs** - one per thread using `adr.md`
+3. **Create ADRs** — **load the `adr-authoring` skill first** (available ≠ loaded; the skill IS the read-the-template step, and a skeleton filled without it ships unstructured QSTs), then one per thread via `just adr "<title>"`
 4. **Seed each** with relevant excerpt from dump
 5. **Add navigation codes** (QST:, ANS:, COD:, etc.)
 6. **Ask clarifying questions** with context

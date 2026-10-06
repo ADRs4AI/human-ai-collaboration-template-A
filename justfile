@@ -475,3 +475,5 @@ adr TITLE:
     mkdir -p docs/adr
     cp docs/adr/templates/adr.md "$FILE"
     echo "$FILE"
+    echo "↪ BEFORE writing: load the adr-authoring skill (Skill tool) — it IS the read-the-template step." >&2
+    echo "  Available is not loaded: a skeleton filled without the skill is how QSTs ship unstructured." >&2
