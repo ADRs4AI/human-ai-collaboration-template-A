@@ -177,6 +177,7 @@ current-focus section, a `just status` recipe) instead of duplicating it.]
 - Never `--no-verify`; never amend published commits
 - Granular commits, `type: subject` format
 - Ephemeral scripts → `scripts/ephemeral/` with `YYYY-MM-DD-` prefix
+- Once per clone: `just git-defaults` (pull-rebase + autostash) — origin-side commits (a mobile answer, any API-writing mouth) then replay cleanly under unpushed local work instead of refusing to pull; push promptly, since rebasing rewrites unpushed SHAs
 
 ---
 

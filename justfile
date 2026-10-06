@@ -427,6 +427,19 @@ safe-commit message +files:
     echo ""
     git commit -m "{{message}}"
 
+# One-time repo setup: pull-rebase + autostash, so origin-side commits
+# (a mobile ANS, any API-writing mouth) replay cleanly under local seat work
+# instead of refusing to pull or forcing merge forests. .git/config doesn't
+# travel with clones — this recipe IS the delivery. Trade, named: rebasing
+# rewrites UNPUSHED local SHAs; house practice (push promptly, cite pins)
+# makes that near-zero. (Portolan 5's divergence class, 2026-10-06.)
+[group('git')]
+[doc("One-time: set pull.rebase + rebase.autoStash for this repo")]
+git-defaults:
+    git config --local pull.rebase true
+    git config --local rebase.autoStash true
+    @echo "✓ pull.rebase + rebase.autoStash set (local). Origin-side commits now rebase cleanly under unpushed work."
+
 # ─── ADRs — Architecture Decision Records ────────────────────────────────────
 #
 # ADRs are part of the coordination layer: they record decisions a future
