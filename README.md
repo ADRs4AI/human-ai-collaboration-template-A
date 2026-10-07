@@ -1,3 +1,11 @@
+<!-- TEMPLATE README — replace me with YOUR project's README. This file is about
+     the template, not about your project; leaving it in place puts template
+     marketing on your project's front page. Full replacement is the intended
+     move (keep a lineage link if you like), and TEMPLATE-OUTPUT-GRANT.md settles
+     the legal half: these files are yours, attribution waivable. The hesitation
+     you may be feeling at deleting well-crafted prose was reported by a real
+     instantiator (muster, 2026-10-06) — this comment exists so the next one
+     spends zero minutes on it. -->
 # Human-AI Collaboration Template A
 
 - **Version**: See [CHANGELOG.md](CHANGELOG.md) — every release is tagged and dated there. (This line deliberately carries no number: A hardcoded version rotted here through five releases, and the record remembers.)
