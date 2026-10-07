@@ -95,6 +95,8 @@ A recommendation whose author can be caught is worth more than one that can only
 
 **Answering**: the `by`/`from` keyword is what makes a byline — `**ANS:** (by <name>, <date optional>)`; a bare `(Name)` stays part of the answer text. Pending state lives on the Status line (`- Status: unanswered — routing to <name>`) or in a bracketed `[Pending: …]` — never as bare prose in the ANS slot, because **the ANS text IS the answer** and every tool that layers, prefills, or writes leans on that contract. `[Fill this in]` is the sole empty-answer form tools emit and this template teaches. **And the block's closing `---` is load-bearing, not typography**: a QST block ends at the next `###` heading or bare `---`, and the answer layer collects everything until then — so trailing commentary (a `NOT:` filing note, a routing remark) goes **after a `---`**, never bare below the ANS slot, or it is read as answer content.
 
+**No open questions?** Say it with `NOT: no open questions — <why>` directly under `## Questions` — **never with a `### QST:` heading**. A QST heading *mints* a live question unconditionally (no `- Status:` line defaults to *unanswered*), so a `### QST: none open` lands in the human's open-questions count asserting the opposite of itself (field specimen: a real repo's ADR-0008, 2026-10-07, parser-verified). To suppress a heading that merely *looks* like a question without being one, the machine channel is `<!-- @adr-dismissed: <reason-slug> -->` on the heading line (depth: the questions reference).
+
 ### QST: [Question text]
 - Status: unanswered
 - Why asking: [How this shapes my approach]
