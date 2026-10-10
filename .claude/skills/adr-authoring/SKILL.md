@@ -72,9 +72,9 @@ Every pair below is a real, uncorrected specimen from this ecosystem's own corpu
 **Always**: every `- Status:` line sits directly under a `### QST:` heading, no exceptions.
 *(14 instances.)*
 
-**Never** — wrong heading depth (`##` or `####`; parsers scan `###` only):
+**Never** — wrong heading depth (`##` or `####`):
 > `## QST-1 (ANSWERED 2026-07-03): official mechanism exists`
-**Always**: `### QST-1: ...` — exactly three hashes, always.
+**Always**: `### QST-1: ...` — exactly three hashes, always. Not because tools can't read anything else — the reference parser recognizes nav-code headings at **any** depth and loses no data (the founder's own Postel ruling, 2026-07-12, in `extractor.ts`) — but because off-depth earns a Warning-grade diagnostic and is structurally risky: a `##` question stops nesting and becomes its own top-level section boundary, reshaping the document's section tree. The parser is liberal so your data survives; the author stays conservative so the structure stays true.
 *(4 instances.)*
 
 **Never** — zero questions, *silently* (the absent-question class — syntactically perfect, epistemically false):
