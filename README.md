@@ -8,6 +8,9 @@
      spends zero minutes on it. -->
 # Human-AI Collaboration Template A
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23303469.svg)](https://doi.org/10.5281/zenodo.23303469)
+
+- **Cite it**: the badge carries the **concept DOI** (always resolves to the latest archived release — the right default); pin a specific version only for reproducibility-grade claims (v3.11.6: [10.5281/zenodo.23303470](https://doi.org/10.5281/zenodo.23303470)). GitHub's "Cite this repository" button reads [CITATION.cff](CITATION.cff).
 - **Version**: See [CHANGELOG.md](CHANGELOG.md) — every release is tagged and dated there. (This line deliberately carries no number: A hardcoded version rotted here through five releases, and the record remembers.)
 - **Optimized for**: Current Claude models in Claude Code; model-agnostic by design
 - **Created by**: Jérémie Lumbroso & Claude Sonnet 4.5 & Claude Opus 4.1 (with contributions from Claude Opus 4.7 — see CHANGELOG.md)
