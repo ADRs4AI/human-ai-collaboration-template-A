@@ -13,7 +13,7 @@ message: >-
   using the metadata below. The concept DOI (10.5281/zenodo.23303469)
   always resolves to the latest archived release; cite a version DOI to
   pin the exact release you used.
-title: "ADRs4AI: Human-AI Collaboration Template A"
+title: "ADRs for AI: Human-AI Collaboration Template A"
 abstract: >-
   The canonical template of ADRs4AI — git-native tooling for deliberative
   programming: human-AI collaboration in which decisions are first-class,
