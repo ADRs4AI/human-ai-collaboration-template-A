@@ -9,15 +9,31 @@
 # mint, Custos brief 1757) — amend here and in the Zenodo record when ruled.
 cff-version: 1.2.0
 message: >-
-  If you use this template or the ADRs4AI methodology, please cite it using
-  these metadata. The concept DOI cites the living work; version DOIs pin
-  specific releases.
-title: "human-ai-collaboration-template-A"
+  If you use this template or build on its methodology, please cite it
+  using the metadata below. The concept DOI (10.5281/zenodo.23303469)
+  always resolves to the latest archived release; cite a version DOI to
+  pin the exact release you used.
+title: "ADRs4AI: Human-AI Collaboration Template A"
 abstract: >-
-  The canonical methodology template of the ADRs4AI paradigm: durable
-  human-AI collaboration through Architectural Deliberation Records (ADRs),
-  seeds, navigation codes, and the ORRCF recommendation form — with the
-  deliberation record itself as the proof of method.
+  The canonical template of ADRs4AI — git-native tooling for deliberative
+  programming: human-AI collaboration in which decisions are first-class,
+  durable artifacts. Humans and AI agents co-author Architectural
+  Deliberation Records (ADRs) and seeds in a question-and-answer grammar
+  that tooling can parse; every open question carries a reasoned,
+  attributed recommendation, so deciding starts from carried reasoning
+  rather than a blank page; inbox and crew protocols extend one
+  deliberation record across multi-agent, multi-vendor teams. The
+  template's own development record is the first specimen: the method
+  ships demonstrated in the substrate it was built with.
+keywords:
+  - "human-AI collaboration"
+  - "deliberative programming"
+  - "architectural deliberation records"
+  - "architecture decision records"
+  - "AI agents"
+  - "multi-agent coordination"
+  - "software engineering methodology"
+  - "knowledge management"
 authors:
   - family-names: "Lumbroso"
     given-names: "Jérémie"
