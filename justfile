@@ -470,6 +470,37 @@ git-defaults:
 # → "-", repeated dashes collapsed, no leading/trailing dash.
 #
 # Example: just adr "URL routing and shareable deep links"
+# Is this instance fully instantiated? Greps for remaining ⟦SIGIL⟧ placeholders
+# (the closed registry: docs/adr/templates/placeholders.yaml) and warns on
+# adopted-but-unlocked kintsugi state. Exits nonzero while anything remains —
+# completeness is computable, not re-read-and-hope. (QST-INSTANTIATION-SIGIL, 2026-10-11)
+[group('adr')]
+[doc("Report remaining ⟦SIGIL⟧ instantiation placeholders; nonzero until none remain")]
+instantiate-check:
+    #!/usr/bin/env bash
+    set -uo pipefail
+    REG="docs/adr/templates/placeholders.yaml"
+    if [[ ! -f "$REG" ]]; then echo "⚠️  no placeholder registry at $REG — nothing to check"; exit 0; fi
+    TOKENS=$(grep -E '^  [A-Z][A-Z-]*:' "$REG" | sed 's/^  //; s/://' | paste -sd'|' -)
+    if [[ -z "$TOKENS" ]]; then echo "⚠️  registry has no tokens"; exit 0; fi
+    HITS=$(grep -rnoE "⟦($TOKENS)⟧" . --include='*.md' --exclude-dir=.git --exclude-dir=node_modules 2>/dev/null)
+    LOCKWARN=""
+    # The lock-warn exempts the canonical template itself (its manifest IS the
+    # source, marked by the `canonical:` key); every true instance gets it.
+    if [[ -f kintsugi.yaml && ! -f kintsugi.lock ]] && ! grep -q '^canonical:' kintsugi.yaml; then
+        LOCKWARN="⚠️  kintsugi.yaml present with NO kintsugi.lock — this instance is adopted-but-never-wired: no template fix will ever reach it. Run: kintsugi adopt"
+    fi
+    if [[ -z "$HITS" ]]; then
+        echo "✅ instantiation complete — no ⟦SIGIL⟧ placeholders remain"
+        [[ -n "$LOCKWARN" ]] && echo "$LOCKWARN" && exit 2
+        exit 0
+    fi
+    echo "⟦SIGILS⟧ remaining — fill-and-delete each (file:line:⟦TOKEN⟧):"
+    echo "$HITS"
+    echo "— $(echo "$HITS" | wc -l | tr -d ' ') occurrence(s). The registry explains each token: $REG"
+    [[ -n "$LOCKWARN" ]] && echo "$LOCKWARN"
+    exit 1
+
 [group('adr')]
 [doc("Create new ADR with next sequential number: just adr <TITLE>")]
 adr TITLE:

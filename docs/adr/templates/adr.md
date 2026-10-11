@@ -16,26 +16,6 @@ adr teaching map: the example is not the teaching — these are the up-links fro
 
 ---
 
-## Quick Reference
-
-**Navigation codes** (for grep):
-- `QST:` Questions  
-- `ANS:` Answers
-- `COD:` Code examples
-- `API:` API calls
-- `FIL:` Files to examine
-- `DOC:` Documentation
-- `NOT:` Notes, remarks, observations
-
-**Find things**:
-```bash
-grep -E '^### QST(-[A-Za-z0-9-]{1,24})?:' file.md   # All questions, both canonical forms — a bare-QST grep silently misses every handled question
-grep 'Status: unanswered' file.md                   # Awaiting the human (by design, this misses unresolved/deferred — those are not the human's ball)
-grep '^### COD:' file.md                             # Code examples
-```
-
----
-
 ## Originating Context
 
 **Source**: [Type and link to where this ADR originated, e.g.:

@@ -1,7 +1,7 @@
 # Crew Onboarding — read this first if you've been recruited
 
-Welcome to **[Project Name]** — [one line: what this project is and who the
-human collaborator(s) are].
+Welcome to **⟦PROJECT-NAME⟧** — ⟦PROJECT-ONE-LINER⟧ <!-- one line: what this
+project is and who the human collaborator(s) are -->.
 
 This document captures **80% of what every seat needs to know** so per-recruit
 briefs can be short deltas (name, color, mission). Fill the bracketed
@@ -57,8 +57,8 @@ the tmux hive.
 
 ## 1. What this project is
 
-[Two or three sentences: the goal, the repo's role (product repo?
-coordination layer?), where implementation happens.]
+⟦PROJECT-GOAL⟧ <!-- two or three sentences: the goal, the repo's role (product
+repo? coordination layer?), where implementation happens -->
 
 **Read first**, in order:
 1. `CLAUDE.md` — directives, project context, workflow
@@ -77,8 +77,8 @@ coordination layer?), where implementation happens.]
   meaningful; run tests before commit
 - **Sixth**: Document metacognitive gems as vignettes
 
-[Adjust to your project's directive set; cite directives by canonical number
-when dispatching work.]
+<!-- adjust to your project's directive set; cite directives by canonical
+number when dispatching work -->
 
 ---
 
@@ -166,8 +166,8 @@ an expired or killed wait carries no message; re-arm freely.
 
 ## 6. Live state
 
-[Keep this section current — or better, point at living state (`CLAUDE.md`
-current-focus section, a `just status` recipe) instead of duplicating it.]
+<!-- keep this section current — or better, point at living state (CLAUDE.md's
+current-focus section, a `just status` recipe) instead of duplicating it -->
 
 ---
 
@@ -183,9 +183,9 @@ current-focus section, a `just status` recipe) instead of duplicating it.]
 
 ## 8. Memory / continuity
 
-[If your AI tooling has a persistent memory system, name it here and the
+<!-- if your AI tooling has a persistent memory system, name it here and the
 discipline for it. Recurring lessons graduate out of briefs into durable
-homes — see `ENCODING-MAP.md`.]
+homes — see ENCODING-MAP.md -->
 
 ---
 
