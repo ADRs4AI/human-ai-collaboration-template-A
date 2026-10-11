@@ -15,7 +15,7 @@ message: >-
   pin the exact release you used.
 title: "ADRs for AI: Human-AI Collaboration Template A"
 abstract: >-
-  The canonical template of ADRs4AI — git-native tooling for deliberative
+  The canonical template of ADRs for AI (ADRs4AI) — git-native tooling for deliberative
   programming: human-AI collaboration in which decisions are first-class,
   durable artifacts. Humans and AI agents co-author Architectural
   Deliberation Records (ADRs) and seeds in a question-and-answer grammar
