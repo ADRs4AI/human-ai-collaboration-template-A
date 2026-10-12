@@ -122,6 +122,7 @@ Replace these sections:
 - **README.md** - Full documentation
 - **METHODOLOGY.md** - The "why"
 - **docs/inbox/ONBOARDING.md** - The crew layer (seats, briefs, recipes), when more than one participant works the repo
+- **QuestionTours** - when many questions await one human sitting, bundle them (the `question-tours` skill is the authority) — O(N) open questions become O(1) focused attention
 
 ---
 

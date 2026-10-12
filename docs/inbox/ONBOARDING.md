@@ -112,7 +112,13 @@ All participant-to-participant communication goes through markdown files in
 `docs/inbox/`. **The inbox is the substrate** — git-tracked, parseable,
 survives session boundaries and model discontinuities.
 
-### ⚠️ ALWAYS use the just recipes — never write filenames manually
+<!-- Register marks (ruled 2026-10-11, QST-ONBOARDING-REGISTER = A): actionable
+     imperatives carry a leading **RULE** (binds every crew, every size) or
+     **PRACTICE** (binds when its stated condition holds — adopt deliberately).
+     Unmarked narrative is lore: it illustrates and earns trust; it never binds.
+     Marked exactly where a cold reader reported being unable to tell. -->
+
+### ⚠️ RULE — ALWAYS use the just recipes; never write filenames manually
 
 The recipes stamp UTC (`date -u`); hand-written filenames in local time
 interleave wrong with UTC briefs and corrupt the archive's chronology (real
@@ -137,7 +143,7 @@ filenames — they never touch files. You write the contents, then
 `just safe-commit`. (Touching would create empty stubs that break
 write-tool flows and cause false `wait-for-brief` wakes.)
 
-**Default posture**: end turns with `just wait-for-brief <your-alias>` in
+**PRACTICE (crew ≥ 2 and the workflow supports it)** — the default posture: end turns with `just wait-for-brief <your-alias>` in
 background where the workflow supports it — the human is the brief-writer,
 not the session-scheduler. The wait's timeout is arbitrary housekeeping:
 an expired or killed wait carries no message; re-arm freely.
@@ -155,8 +161,12 @@ an expired or killed wait carries no message; re-arm freely.
   Rationale from evidence, Confidence with its *because*, and `If wrong:` —
   the falsifier that would change the pick. Stopping at Options is not
   showing up fully.
-- **Don't restate standing state** — point to `CLAUDE.md` / the registry.
-- Load-bearing briefs get an **RFC pass** by a peer before dispatch.
+- Many questions sharing one answering slot? Bundle them as a
+  **QuestionTour** (load the `question-tours` skill first — it is the
+  authority): the one artifact that curates across documents and repos,
+  turning O(N) open questions into O(1) focused attention.
+- **RULE** — don't restate standing state: point to `CLAUDE.md` / the registry.
+- **PRACTICE (crew ≥ 2)** — load-bearing briefs get an **RFC pass** by a peer before dispatch.
 - Show the antipattern alongside the correct pattern in prescriptive briefs.
 - **Catchability over correctness**: surface what you couldn't verify; receive
   catches as gifts; route catches to peers rather than ratifying alone
@@ -173,8 +183,8 @@ current-focus section, a `just status` recipe) instead of duplicating it -->
 
 ## 7. Git + tooling hygiene
 
-- `just safe-commit` for anything committed alongside parallel sessions
-- Never `--no-verify`; never amend published commits
+- **RULE** — `just safe-commit` for anything committed alongside parallel sessions
+- **RULE** — never `--no-verify`; never amend published commits
 - Granular commits, `type: subject` format
 - Ephemeral scripts → `scripts/ephemeral/` with `YYYY-MM-DD-` prefix
 - Once per clone: `just git-defaults` (pull-rebase + autostash) — origin-side commits (a mobile answer, any API-writing mouth) then replay cleanly under unpushed local work instead of refusing to pull; push promptly, since rebasing rewrites unpushed SHAs

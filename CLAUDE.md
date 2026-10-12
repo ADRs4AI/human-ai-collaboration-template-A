@@ -198,6 +198,10 @@ When in doubt: **If it made you say "aha!", write it down.**
 5. **Add navigation codes** (QST:, ANS:, COD:, etc.)
 6. **Ask clarifying questions** with context
 
+### When many questions await the human: assemble a QuestionTour
+
+Open questions accumulate O(N); human attention is scheduled, not just spent. A **QuestionTour** bundles a curated, ordered subset — one atomic workload with an argument for why-these-why-now — and it is the only artifact whose selection cuts across documents and repos: *the surface shaped like the work instead of like the filesystem*. When two or more questions would share one answering slot (especially across ADRs), load the **question-tours skill BEFORE bundling** (it is the authority: refs only from `list-open`, walk after every addition, a cold walker before it schedules anyone's attention, `mint` means OFFER, retire when done — available ≠ loaded applies to tours too). Wakes and mail are doorbells; **the tour is the door**.
+
 ### When you receive answers:
 
 1. **Process** the answers
