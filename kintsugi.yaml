@@ -57,6 +57,8 @@ artifacts:
     class: stencil
   docs/inbox/INBOX-PROTOCOL.md:
     class: stencil
+  .claude/skills/question-tours/SKILL.md:
+    class: stencil     # GRADUATED at v3.12 (Docent 5's blessing at vscode d90cf6a — HEAD not snapshot; §8 states capabilities-not-venues BECAUSE it graduates: "if a bullet names something you cannot invoke, that is the answer, not a bug"). Docent remains author/maintainer; updates flow their pen → canonical release → fleet. Own version stem pending Mint.
   .claude/skills/adr-authoring/SKILL.md:
     class: stencil     # the v3.9.x taught surface
   .claude/skills/adr-authoring/references/depth.md:
