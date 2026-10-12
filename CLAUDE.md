@@ -1,10 +1,14 @@
 # CLAUDE.md - Project Guidance
 
-<!-- Instantiation placeholders look like ⟦THIS⟧ — fill-and-delete each one
-     (they are grep-proof on purpose; `just instantiate-check` reports which
-     remain and passes only when none do). Square-bracket text elsewhere is
-     either per-document mold slots (filled at each mint, not at birth) or
-     the frozen dialogue placeholder `[Fill this in]` — never convert those. -->
+> **Instantiating this template?** Placeholders look like ⟦THIS⟧ — fill-and-delete
+> each one (grep-proof on purpose; `just instantiate-check` reports which remain
+> and passes only when none do). Square-bracket text elsewhere is either a
+> per-document mold slot (filled at each mint, not at birth) or the frozen
+> dialogue placeholder `[Fill this in]` — never convert those. *(This note is
+> visible text, not an HTML comment, because the harness strips block comments
+> from the CLAUDE.md it serves at session start — a cold instantiator proved the
+> instructions were sitting exactly where their audience could not see them.
+> Delete this block when instantiation is done.)*
 
 - **Project**: ⟦PROJECT-NAME⟧
 - **Human**: ⟦HUMANS⟧
@@ -252,13 +256,13 @@ If the script was successfully used, append as comments how, and what the outcom
 ## Project Context
 
 ### What we're building:
-⟦PROJECT-GOAL⟧ <!-- 1-2 sentences -->
+⟦PROJECT-GOAL⟧ <!-- 1-3 sentences; same token as ONBOARDING's — one text serves both -->
 
 ### Current focus:
 ⟦CURRENT-FOCUS⟧
 
 ### Key decisions made:
-<!-- list ADRs here as they land, e.g. `- Auth approach — see docs/adr/0001-*.md`; empty at birth is healthy -->
+*(List ADRs here as they land, e.g. `- Auth approach — see docs/adr/0001-*.md`. Empty at birth is healthy.)*
 
 ### Open questions:
 ```bash
@@ -396,7 +400,7 @@ If context window fills mid-work, create `docs/HANDOFF-datetime.md`:
 
 ## Project-Specific Notes
 
-<!-- anything specific to this project that doesn't fit above; empty at birth is healthy -->
+*(Anything specific to this project that doesn't fit above. Empty at birth is healthy. One standing note: the Prime Directive's corollary means **direct commits to `main` are expected** here — substrate commits never wait for a branch or a prompt, which deliberately overrides harness defaults that say otherwise.)*
 
 - It's possible the user uses `asdf` for Node.js and Python and the runtime of most languages. You can `source .claude/agent.env` before calling the runtimes, like `python` or `node` to access them through `asdf`'s shims. See: https://asdf-vm.com/manage/configuration.html
 

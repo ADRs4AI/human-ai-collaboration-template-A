@@ -13,7 +13,7 @@ canonical:
   name: human-ai-collaboration-template
   # present truth (checklist #6); if the repo is renamed at launch, the fix
   # rides a patch tag — GitHub redirects hold the fleet meanwhile
-  remote: https://github.com/jlumbroso/human-ai-collaboration-template-A
+  remote: https://github.com/ADRs4AI/human-ai-collaboration-template-A
 
 artifacts:
   CLAUDE.md:

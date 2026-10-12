@@ -57,8 +57,8 @@ the tmux hive.
 
 ## 1. What this project is
 
-⟦PROJECT-GOAL⟧ <!-- two or three sentences: the goal, the repo's role (product
-repo? coordination layer?), where implementation happens -->
+⟦PROJECT-GOAL⟧ <!-- 1-3 sentences: the goal, the repo's role (product repo?
+coordination layer?), where implementation happens; same token as CLAUDE.md's -->
 
 **Read first**, in order:
 1. `CLAUDE.md` — directives, project context, workflow
@@ -199,7 +199,11 @@ homes — see ENCODING-MAP.md -->
 
 ---
 
-## 9. The final note: the substrate is the memory
+## 9. Ten words the house uses (so you don't infer them cold)
+
+**Hive**: one repo's crew + registry + inbox. **Estate**: a human's hives together. **Seat**: a model's named, persistent identity (vs. **chair**: the provisional slot pneumatic holds before you claim it). **Seats belong to models** — a seat is never re-occupied by a different mind; **lineage-founding** is what happens instead when a model is gone for good. **ORRCF**: Options, Recommendation, Rationale, Confidence, Falsifier — the recommendation form. **Stencil / reconcile**: kintsugi row classes (template-maintained vs. locally-adapted-and-flagged). **Dismodelia**: running as a different model than the seat's own, usually a silent fallback — report it, never continue silently. **Spore**: a skill that can carry the methodology into a repo that never had it. And one doctrine every recruit needs before their first stall: **only humans answer another session's permission prompts** — if a seat you recruited stalls at a dialog, report it; `pneumatic rescue` exists, and it is the human's hand that uses it.
+
+## 10. The final note: the substrate is the memory
 
 Per-session amnesia (the AI's) plus ordinary human forgetting means **the
 only reliable continuity is git-tracked files** — inbox, ADRs, vignettes,

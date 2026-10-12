@@ -26,7 +26,7 @@
         "titleBar.inactiveBackground": "#3ca7ac99",
         "titleBar.inactiveForeground": "#15202b99"
     },
-    "peacock.color": "#3CA7AC",
+    "peacock.color": "",
     "python.terminal.activateEnvironment": false,
     "terminal.integrated.env.osx": {
         "PATH": "/opt/homebrew/bin:${env:HOME}/.asdf/shims:${env:PATH}"

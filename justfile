@@ -427,9 +427,11 @@ safe-commit message +files:
     set -f
     git restore --staged . 2>/dev/null || true
     for f in {{files}}; do
-        if [[ ! -e "$f" ]]; then echo "❌ File not found: $f" >&2; exit 1; fi
+        if [[ ! -e "$f" ]] && ! git ls-files --deleted --error-unmatch "$f" >/dev/null 2>&1 && ! git diff --cached --name-only --diff-filter=D | grep -qxF "$f"; then echo "❌ File not found (and not a git-known deletion): $f" >&2; exit 1; fi
     done
     GIT_LITERAL_PATHSPECS=1 git add -- {{files}}
+    # Deletions are committable too (porthole item 31): a path absent on disk
+    # but known-deleted to git passes the existence check.
     echo "📝 Staged for commit:"
     git diff --cached --stat
     echo ""
@@ -483,6 +485,35 @@ git-defaults:
 # → "-", repeated dashes collapsed, no leading/trailing dash.
 #
 # Example: just adr "URL routing and shareable deep links"
+# Mint a dated seed for a brain dump (named-but-unshipped until porthole item 23).
+[group('adr')]
+[doc("Create a dated seed from the template: just seed <topic-slug>")]
+seed SLUG:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    SLUG=$(echo {{quote(SLUG)}} | tr -d "'" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
+    FILE="docs/adr/seed-$(date +%Y-%m-%d)-${SLUG}.md"
+    if [[ -e "$FILE" ]]; then echo "Error: $FILE already exists" >&2; exit 1; fi
+    cp docs/adr/templates/seed.md "$FILE" && echo "$FILE"
+
+# What needs the human's answers (named in README since forever; shipped at porthole item 23).
+[group('adr')]
+[doc("Open questions awaiting answers, template skeletons excluded")]
+unanswered:
+    @grep -rn 'Status: unanswered' docs/adr/ --exclude-dir=templates || echo "No open questions."
+
+# The day-one verification gate (porthole item 16): real checks that exist at
+# birth, plus a marked slot for the project's own gate once it has one.
+[group('status')]
+[doc("Day-one gate: instantiate-check + registry validation (+ your project gate — edit me)")]
+gate:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    just instantiate-check
+    python3 scripts/groups-lookup.py --validate
+    # ADD YOUR PROJECT'S OWN GATE HERE when it exists (test suite, build, linter)
+    echo "✅ gate green (day-one checks; project gate slot above)"
+
 # Is this instance fully instantiated? Greps for remaining ⟦SIGIL⟧ placeholders
 # (the closed registry: docs/adr/templates/placeholders.yaml) and warns on
 # adopted-but-unlocked kintsugi state. Exits nonzero while anything remains —
@@ -496,12 +527,31 @@ instantiate-check:
     if [[ ! -f "$REG" ]]; then echo "⚠️  no placeholder registry at $REG — nothing to check"; exit 0; fi
     TOKENS=$(grep -E '^  [A-Z][A-Z-]*:' "$REG" | sed 's/^  //; s/://' | paste -sd'|' -)
     if [[ -z "$TOKENS" ]]; then echo "⚠️  registry has no tokens"; exit 0; fi
-    HITS=$(grep -rnoE "⟦($TOKENS)⟧" . --include='*.md' --exclude-dir=.git --exclude-dir=node_modules 2>/dev/null)
+    # Scope the scan to the files the registry itself names (field catch,
+    # porthole item 15: scanning every *.md made any document that DISCUSSES
+    # the tokens fail the check — the registry's files: lists were always the
+    # intended scope). Files listed but absent are skipped silently.
+    FILES=$(grep -oE '^\s+files: \[.*\]' "$REG" | tr -d '[]' | sed 's/.*files: //; s/,/ /g' | tr ' ' '\n' | sort -u | tr '\n' ' ')
+    HITS=""
+    for f in $FILES; do
+        [[ -f "$f" ]] || continue
+        H=$(grep -noE "⟦($TOKENS)⟧" "$f" 2>/dev/null | sed "s|^|$f:|") || true
+        [[ -n "$H" ]] && HITS="${HITS}${HITS:+$'\n'}${H}"
+    done
     LOCKWARN=""
-    # The lock-warn exempts the canonical template itself (its manifest IS the
-    # source, marked by the `canonical:` key); every true instance gets it.
-    if [[ -f kintsugi.yaml && ! -f kintsugi.lock ]] && ! grep -q '^canonical:' kintsugi.yaml; then
-        LOCKWARN="⚠️  kintsugi.yaml present with NO kintsugi.lock — this instance is adopted-but-never-wired: no template fix will ever reach it. Run: kintsugi adopt"
+    # The lock-warn exempts the canonical template itself — detected by
+    # comparing THIS repo's origin to the manifest's own canonical remote
+    # (field catch, porthole item 17: instances copy the manifest verbatim,
+    # `canonical:` key included, so a key-presence test could never fire).
+    if [[ -f kintsugi.yaml && ! -f kintsugi.lock ]]; then
+        CANON=$(grep -m1 '^  remote:' kintsugi.yaml | sed 's/^  remote: *//')
+        # Normalize the pre-transfer org spelling (jlumbroso/ -> ADRs4AI/) so
+        # canonical clones with stale remotes don't false-warn; instances have
+        # entirely different repo names either way.
+        ORIGIN=$(git config --get remote.origin.url 2>/dev/null | sed 's/\.git$//; s|github.com/jlumbroso/human-ai-collaboration-template-A|github.com/ADRs4AI/human-ai-collaboration-template-A|')
+        if [[ -z "$ORIGIN" || "$ORIGIN" != "$CANON" ]]; then
+            LOCKWARN="⚠️  kintsugi.yaml present with NO kintsugi.lock — this instance is adopted-but-never-wired: no template fix will ever reach it. Run: kintsugi adopt"
+        fi
     fi
     if [[ -z "$HITS" ]]; then
         echo "✅ instantiation complete — no ⟦SIGIL⟧ placeholders remain"
@@ -523,7 +573,7 @@ adr TITLE:
     # (grep exits 1 on no-match → first invocation of an empty project would die).
     LAST=$(ls docs/adr/ 2>/dev/null | { grep -E '^[0-9]{4}-' || true; } | sed 's/-.*//' | sort -n | tail -1)
     NEXT=$(printf "%04d" $(( 10#${LAST:-0} + 1 )))
-    SLUG=$(echo {{quote(TITLE)}} | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
+    SLUG=$(echo {{quote(TITLE)}} | tr -d "'" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
     FILE="docs/adr/${NEXT}-${SLUG}.md"
     if [[ -e "$FILE" ]]; then echo "Error: $FILE already exists" >&2; exit 1; fi
     if [[ ! -f docs/adr/templates/adr.md ]]; then
