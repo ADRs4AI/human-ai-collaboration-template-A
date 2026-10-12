@@ -68,8 +68,14 @@ brief from to slug:
     #!/usr/bin/env bash
     set -euo pipefail
     ts=$(date -u +"%Y-%m-%d-%H%M")
-    slug=$(echo "{{slug}}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
-    file="docs/inbox/${ts}-{{from}}-to-{{to}}-${slug}.md"
+    # quote(): every recipe parameter is DATA — interpolated bare inside shell
+    # quotes, `backticks`/$(…) inside it EXECUTE (field incident, porthole
+    # 2026-10-12: a commit message naming `just gate` ran the gate; fix by
+    # Jérémie + Opus 5.5, ported fleet-wide same day; class audited across
+    # this file — every user-string now passes through quote()).
+    FROM={{quote(from)}}; TO={{quote(to)}}
+    slug=$(echo {{quote(slug)}} | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
+    file="docs/inbox/${ts}-${FROM}-to-${TO}-${slug}.md"
     if [[ -e "$file" ]]; then echo "Error: $file already exists" >&2; exit 1; fi
     mkdir -p docs/inbox
     # Deliberately do NOT touch the file — this recipe only RESERVES the
@@ -91,8 +97,9 @@ completion from slug:
     #!/usr/bin/env bash
     set -euo pipefail
     ts=$(date -u +"%Y-%m-%d-%H%M")
-    slug=$(echo "{{slug}}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
-    file="docs/inbox/${ts}-{{from}}-completion-${slug}.md"
+    FROM={{quote(from)}}
+    slug=$(echo {{quote(slug)}} | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
+    file="docs/inbox/${ts}-${FROM}-completion-${slug}.md"
     if [[ -e "$file" ]]; then echo "Error: $file already exists" >&2; exit 1; fi
     mkdir -p docs/inbox
     # Reservation only — see `brief` recipe note.
@@ -109,8 +116,9 @@ broadcast from slug group='crew':
     #!/usr/bin/env bash
     set -euo pipefail
     ts=$(date -u +"%Y-%m-%d-%H%M")
-    slug=$(echo "{{slug}}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
-    file="docs/inbox/${ts}-{{from}}-to-{{group}}-${slug}.md"
+    FROM={{quote(from)}}; GROUP={{quote(group)}}
+    slug=$(echo {{quote(slug)}} | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
+    file="docs/inbox/${ts}-${FROM}-to-${GROUP}-${slug}.md"
     if [[ -e "$file" ]]; then echo "Error: $file already exists" >&2; exit 1; fi
     mkdir -p docs/inbox
     # Reservation only — see `brief` recipe note.
@@ -305,7 +313,7 @@ update-seat-titles:
 [group('crew')]
 [doc("Wake a seat by sending a message to its tmux session (--force to override guards)")]
 wake seat message *flags='':
-    @python3 scripts/last-message.py --wake {{seat}} --message "{{message}}" {{flags}}
+    @python3 scripts/last-message.py --wake {{quote(seat)}} --message {{quote(message)}} {{flags}}
 
 # Block until a new brief addressed to <recipient> lands in docs/inbox/.
 # v4 semantics (caring-feedback dogfooding): wake condition = mtime > start AND
@@ -425,7 +433,12 @@ safe-commit message +files:
     echo "📝 Staged for commit:"
     git diff --cached --stat
     echo ""
-    git commit -m "{{message}}"
+    # quote(): the message is data. Interpolated bare inside "…", a message
+    # containing `backticks` or $(…) was EXECUTED by the shell and its output
+    # pasted into the commit (field incident, porthole 2026-10-12: a message
+    # naming `just gate` ran the gate and committed its output as prose;
+    # fix by Jérémie + Claude Opus 5.5, ported to canonical same day).
+    git commit -m {{quote(message)}}
 
 # One-time repo setup: pull-rebase + autostash, so origin-side commits
 # (a mobile ANS, any API-writing mouth) replay cleanly under local seat work
@@ -510,7 +523,7 @@ adr TITLE:
     # (grep exits 1 on no-match → first invocation of an empty project would die).
     LAST=$(ls docs/adr/ 2>/dev/null | { grep -E '^[0-9]{4}-' || true; } | sed 's/-.*//' | sort -n | tail -1)
     NEXT=$(printf "%04d" $(( 10#${LAST:-0} + 1 )))
-    SLUG=$(echo "{{TITLE}}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
+    SLUG=$(echo {{quote(TITLE)}} | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
     FILE="docs/adr/${NEXT}-${SLUG}.md"
     if [[ -e "$FILE" ]]; then echo "Error: $FILE already exists" >&2; exit 1; fi
     if [[ ! -f docs/adr/templates/adr.md ]]; then
