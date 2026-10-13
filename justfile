@@ -284,7 +284,19 @@ pulse stale_threshold='6':
 [group('crew')]
 [doc("Launch (or attach to) a seat's tmux session. `just launch --next-inactive` spins up the next seat with no running session")]
 launch seat='' *flags='':
-    @python3 scripts/last-message.py --launch {{seat}} {{flags}}
+    #!/usr/bin/env bash
+    # Delegated to pneumatic (HQ ADR-0044): the bundled last-message.py is
+    # harness-UNAWARE — it builds `claude --resume` for every seat, which
+    # exits instantly for codex/other-vendor seats (field: Lector 6 of
+    # moreover, Sounder 6 of porthole — correct harness blocks, never read).
+    # pneumatic launch reads the registry's harness.launch_cmd.
+    if ! command -v pneumatic >/dev/null 2>&1; then
+        echo "❌ just launch delegates to pneumatic (harness-aware launches: claude AND codex seats)."
+        echo "   Install once:  pip install adrs4ai-pneumatic    — docs: https://adrs.systems/pneumatic"
+        echo "   (every other recipe in this justfile keeps working without it)"
+        exit 1
+    fi
+    pneumatic launch {{seat}} {{flags}}
 
 # Backported from ADRs4AI HQ meta-repo, 2026-07-10 (Herald 5) — see its
 # docs/adr/0008-rapid-relaunch-via-vscode-terminals-manager.md for the full
