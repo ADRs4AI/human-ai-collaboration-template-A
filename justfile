@@ -565,8 +565,8 @@ instantiate-check:
     exit 1
 
 [group('adr')]
-[doc("Create new ADR with next sequential number: just adr <TITLE>")]
-adr TITLE:
+[doc("Create new ADR with next sequential number: just adr <TITLE> [MOLD] — MOLD: adr (default, deliberation) | madr (simple already-made decision) | any docs/adr/templates/<MOLD>.md")]
+adr TITLE MOLD='adr':
     #!/usr/bin/env bash
     set -euo pipefail
     # `(grep || true)` so an empty docs/adr/ doesn't abort under pipefail
@@ -576,11 +576,20 @@ adr TITLE:
     SLUG=$(echo {{quote(TITLE)}} | tr -d "'" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//')
     FILE="docs/adr/${NEXT}-${SLUG}.md"
     if [[ -e "$FILE" ]]; then echo "Error: $FILE already exists" >&2; exit 1; fi
-    if [[ ! -f docs/adr/templates/adr.md ]]; then
-        echo "Error: docs/adr/templates/adr.md not found" >&2; exit 1
+    # MOLD selects the template: 'adr' (deliberation), 'madr' → adr-madr (simple
+    # decisions), or any mold shipped in docs/adr/templates/. Field-asked by a
+    # founding seat that minted six deliberation skeletons only to overwrite each
+    # with the simple form by hand (porthole TEMPLATE-FEEDBACK item 46).
+    MOLD=$(echo {{quote(MOLD)}} | tr '[:upper:]' '[:lower:]')
+    [[ "$MOLD" == "madr" ]] && MOLD="adr-madr"
+    SRC="docs/adr/templates/${MOLD}.md"
+    if [[ ! -f "$SRC" ]]; then
+        echo "Error: $SRC not found — molds available:" >&2
+        ls docs/adr/templates/*.md 2>/dev/null | sed 's|.*/|  |; s|\.md$||' >&2
+        exit 1
     fi
     mkdir -p docs/adr
-    cp docs/adr/templates/adr.md "$FILE"
+    cp "$SRC" "$FILE"
     echo "$FILE"
     echo "↪ BEFORE writing: load the adr-authoring skill (Skill tool) — it IS the read-the-template step." >&2
     echo "  Available is not loaded: a skeleton filled without the skill is how QSTs ship unstructured." >&2

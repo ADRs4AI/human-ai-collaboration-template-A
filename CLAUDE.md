@@ -235,7 +235,7 @@ grep '^### COD:' -r docs/adr/                             # Code examples
 
 ---
 
-## Temporary Scripts / Ephemeray Scripts / One-Off Diagnostic Scripts
+## Temporary Scripts / Ephemeral Scripts / One-Off Diagnostic Scripts — and Tool-Use Rules
 
 Please create all temporary scripts in:
 
@@ -245,7 +245,7 @@ with a filename that has the `yyyy-mm-dd` timestamp in the beginning, like: `202
 
 and commit them separately with `chore: script for ...` and qualify the purpose. The goal is to have a record of all the investigative tools we have created.
 
-- Don't use `cat` and or the interpreter `python` + heredoc; instead use `Read()` + `Write()` (even though `cat` might seem more efficient to you, the permission model allows user to give you broad access for Read/Write but not for vague bash constructs)
+- Don't use `cat` or interpreter heredocs (`python`/`node` + `<<EOF`) — use `Read()` + `Write()` instead. **This rule covers every file edit, not just scripts in this section**: the permission model lets the human grant broad Read/Write access but not vague bash constructs, so a heredoc stalls or over-asks regardless of what it edits. (Scoped loudly because a founding seat read it as scripts-only and broke it twice — a multi-part edit of one file *feels* like one action; it still goes through the editing tools.)
 - Don't use `/tmp` instead use `scripts/ephemeral`
 - Document context of tool briefly in tool header: This will help with legibility.
 
@@ -366,7 +366,8 @@ The templates are in the folder `docs/adr/templates/`.
 
 **When to use**:
 - Quick question? → Start in conversation, escalate to ADR if needed
-- Complex decision? → Create ADR immediately
+- Complex decision? → Create ADR immediately (`just adr "<title>"`)
+- Simple, already-made decision that needs recording, not discussion? → `just adr "<title>" madr`
 - Multiple threads? → Create separate ADRs, link them
 
 ---

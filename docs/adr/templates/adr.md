@@ -1,4 +1,4 @@
-<!-- adr template version: "adr 3.11.5" -->
+<!-- adr template version: "adr 3.12.0" -->
 <!--
 adr teaching map: the example is not the teaching — these are the up-links from this file to what teaches its form; load them rather than winging it. (Sibling: the template-version marker dates the mold this file was minted from.)
   skill: adr-authoring
@@ -79,7 +79,7 @@ A recommendation whose author can be caught is worth more than one that can only
 
 ### QST: [Question text]
 - Status: unanswered
-- Why asking: [How this shapes my approach]
+- Why asking: [How this shapes my approach — restate any context the question leans on HERE: the answerer may read only this block, and "see the procedure above" cost a real answerer several dozen round-trips (the Options rule, applied to the question line)]
 - Need: [pick a letter (or override — an answer in any shape is complete) | yes/no | explanation | etc]
 
 Options:
