@@ -44,6 +44,32 @@
         "docs/inbox/ONBOARDING.md",
         "docs/inbox/agents/example-seat.md"
       ]
+    },
+    "_example_codex_seat": {
+      "_comment": "A cross-vendor (OpenAI Codex CLI) seat — the harness block is what makes `just launch`/`pulse`/`wake` work for a non-Claude mind (pneumatic reads it; the legacy bundled script never did). Placeholders {uuid} and {model} are substituted at launch from this row's own fields — never hard-code a model id in launch_cmd, or the row's `model` field and the running process can silently diverge (dismodelia's cousin).",
+      "uuid": "00000000-0000-0000-0000-000000000001",
+      "role": "Example Codex Seat — a consultant from outside the Claude family; same registry, same doctrine, different harness",
+      "display_name": "Example Codex Seat 1",
+      "color": "orange",
+      "model": "gpt-6-astra",
+      "model_note": "Codex session ids are UUIDv7 (time-ordered first segment); the rollout file under ~/.codex/sessions/ is the session's substrate, as the JSONL is for Claude seats.",
+      "registered": "YYYY-MM-DD",
+      "harness": {
+        "kind": "codex-cli",
+        "session_glob": "~/.codex/sessions/**/rollout-*{uuid}*.jsonl",
+        "launch_cmd": [
+          "codex",
+          "resume",
+          "{uuid}",
+          "--model",
+          "{model}",
+          "-c",
+          "check_for_update_on_startup=false"
+        ],
+        "_launch_cmd_note": "The -c flag suppresses Codex's startup update check — its interactive update dialog boots BEFORE the composer and has eaten unattended launches (pneumatic ADR-0039, 'boot gates are weather'). Sandbox/approval/network flags are deliberately NOT in this sample: they are per-seat judgment calls with real security surface — pneumatic's recruit composes the narrow, probe-verified shapes (socket and submodule exceptions) when founding; copy from a live row only with its reasoning.",
+        "busy_marker": "esc to interrupt",
+        "prompt_prefix": "\u00bb"
+      }
     }
   }
 }
