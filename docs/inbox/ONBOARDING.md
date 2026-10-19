@@ -168,6 +168,11 @@ an expired or killed wait carries no message; re-arm freely.
   **QuestionTour** (load the `question-tours` skill first — it is the
   authority): the one artifact that curates across documents and repos,
   turning O(N) open questions into O(1) focused attention.
+- This repo carries its teaching skills in-tree (self-contained forever);
+  the same operator layer also ships as the **`adr` plugin** — installed
+  once, it follows you into repos that never adopted the template, and adds
+  the `/adr:new`, `/adr:unanswered`, `/adr:qst-lint` commands:
+  `/plugin marketplace add ADRs4AI/plugins` → `/plugin install adr@adrs4ai`.
 - **RULE** — don't restate standing state: point to `CLAUDE.md` / the registry.
 - **PRACTICE (crew ≥ 2)** — load-bearing briefs get an **RFC pass** by a peer before dispatch.
 - Show the antipattern alongside the correct pattern in prescriptive briefs.

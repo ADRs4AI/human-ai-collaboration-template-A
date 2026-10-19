@@ -123,6 +123,7 @@ Replace these sections:
 - **METHODOLOGY.md** - The "why"
 - **docs/inbox/ONBOARDING.md** - The crew layer (seats, briefs, recipes), when more than one participant works the repo
 - **QuestionTours** - when many questions await one human sitting, bundle them (the `question-tours` skill is the authority) — O(N) open questions become O(1) focused attention
+- **The `adr` plugin** - this template's operator layer (the skills + `/adr:*` commands), installed once and following you across every repo: `/plugin marketplace add ADRs4AI/plugins` → `/plugin install adr@adrs4ai`
 
 ---
 
