@@ -39,4 +39,4 @@ authors:
     given-names: "Jérémie"
 doi: 10.5281/zenodo.23303469
 repository-code: "https://github.com/ADRs4AI/human-ai-collaboration-template-A"
-license: MIT
+license: Apache-2.0

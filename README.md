@@ -207,6 +207,17 @@ This system optimized for the reality of Claude Code:
 - **`METHODOLOGY.md` explains**: Why we do it
 - **Templates provide**: Structure when needed
 
+### The plugin — the methodology that follows the person
+
+This repo is the **record layer**: it travels with each project, self-contained. The **operator layer** — the `adr-authoring`, `adrs4ai-tooling`, and `question-tours` skills plus `/adr:new`, `/adr:unanswered`, `/adr:qst-lint` commands — also ships as a Claude Code **plugin**, so the teaching follows *you* across every repo, template-adopted or not:
+
+```
+/plugin marketplace add ADRs4AI/plugins
+/plugin install adr@adrs4ai
+```
+
+Home: [`ADRs4AI/plugins`](https://github.com/ADRs4AI/plugins) (Apache 2.0; versions always pinned — releases are deliberate). Once listed, it will also be installable from the Claude plugin directory on claude.ai.
+
 ---
 
 ## Customization
@@ -305,7 +316,7 @@ the full rationale.
 
 ## License & Attribution
 
-**License**: [MIT](LICENSE), plus a [template-output grant](TEMPLATE-OUTPUT-GRANT.md) —
+**License**: [Apache 2.0](LICENSE), plus a [template-output grant](TEMPLATE-OUTPUT-GRANT.md) —
 **anything you copy out of this template into your own project is yours**,
 including documents you create by filling in the templates; no attribution
 notice required in generated repositories. (Attribution of the methodology's
