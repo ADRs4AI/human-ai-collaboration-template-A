@@ -153,26 +153,31 @@ inbox-archive filename:
 # See docs/inbox/CONVENTIONS.md § 1 for why per-message model attribution is
 # load-bearing.
 
+# Crew verbs are LIGHT SHIMS over the pneumatic porcelain (HQ ADR-0044 = A):
+# one shared existence-check (scripts/pneumatic-shim.sh) teaches the install
+# at the moment of need; arguments forward VERBATIM — `just last <alias> -k 3
+# --full` reaches pneumatic exactly as typed, no quote dance.
+
 # Read the last K messages from an agent's session JSONL (default K=1).
 # Resolves <alias> via docs/inbox/agent-sessions.json. Renders per-message
 # `model` attribution on every entry.
 [group('inbox')]
-[doc("Read last K messages from agent's session: just last <alias> [k]")]
-last alias k='1':
-    @python3 scripts/last-message.py {{alias}} -k {{k}}
+[doc("Read a seat's last messages: just last <alias> [-k N] [--full] — flags forward to pneumatic verbatim")]
+last alias *flags:
+    @scripts/pneumatic-shim.sh last {{quote(alias)}} {{flags}}
 
-# Same as `last`, but no body truncation (full message contents).
+# Same as `last --full` — kept as its own verb for taught muscle memory.
 [group('inbox')]
-[doc("Read last K messages from agent (full, no truncation): just last-full <alias> [k]")]
-last-full alias k='1':
-    @python3 scripts/last-message.py {{alias}} -k {{k}} --full
+[doc("Read a seat's last messages, untruncated: just last-full <alias> [-k N]")]
+last-full alias *flags:
+    @scripts/pneumatic-shim.sh last {{quote(alias)}} --full {{flags}}
 
 # List configured agent → session-UUID aliases. Edit
 # docs/inbox/agent-sessions.json to add or update.
 [group('inbox')]
 [doc("List configured agent session aliases (docs/inbox/agent-sessions.json)")]
 aliases:
-    @python3 scripts/last-message.py --list
+    @scripts/pneumatic-shim.sh aliases
 
 # Print a seat's read_order — its onboarding packet as data, not prose.
 # Invented by Notary Opus 4.7 (crossfoot, 2026-07-09); backported by
@@ -181,14 +186,14 @@ aliases:
 [group('inbox')]
 [doc("Print a seat's onboarding read_order, with found/missing markers: just onboard <alias>")]
 onboard alias:
-    @python3 scripts/last-message.py {{alias}} --onboard
+    @scripts/pneumatic-shim.sh onboard {{quote(alias)}}
 
 # List recent session JSONLs in the storage dir. Use this to find UUIDs for
 # new agents and populate docs/inbox/agent-sessions.json.
 [group('inbox')]
 [doc("Discover recent session JSONLs in this project (find UUIDs for new aliases)")]
 discover-sessions:
-    @python3 scripts/last-message.py --discover
+    @scripts/pneumatic-shim.sh discover
 
 # ─── crew — named seats, groups, health, wait discipline ─────────────────────
 #
@@ -266,8 +271,8 @@ crew:
 # 🟢 OK. (Refined in caring-feedback per Commodore's review, 2026-07-03.)
 [group('crew')]
 [doc("Health check all seats: detect stalls, errors, blocked states")]
-pulse stale_threshold='6':
-    @python3 scripts/last-message.py --pulse --stale-threshold {{stale_threshold}}
+pulse *flags:
+    @scripts/pneumatic-shim.sh pulse {{flags}}
 
 # ─── wake infrastructure (ported from caring-feedback, ADR-0050 lineage) ─────
 #
@@ -275,28 +280,15 @@ pulse stale_threshold='6':
 # in detached tmux sessions (survive closing the terminal tab) and can be
 # woken from anywhere with a literal keystroke injection, hardened against
 # mid-turn injection, composition-flushing a human's draft, message-length
-# fragility, and ping-pong spam. See scripts/last-message.py's wake-
-# infrastructure header comment for full attribution and known-open items;
-# maintainers' meta-repo ADR-0006 records this port. Requires `tmux`
-# (brew install tmux / apt install tmux) — without it, everything else in
-# this justfile keeps working; these four recipes fail with an install hint.
+# fragility, and ping-pong spam. The wake-guard doctrine (mid-turn refusal,
+# cooldowns, composition-flush protection) lives in pneumatic's manual:
+# https://adrs.systems/pneumatic — maintainers' meta-repo ADR-0006 records
+# the original port. Requires `tmux` (brew install tmux / apt install tmux).
 
 [group('crew')]
-[doc("Launch (or attach to) a seat's tmux session. `just launch --next-inactive` spins up the next seat with no running session")]
+[doc("Launch (or attach to) a seat's tmux session — harness-aware (claude AND codex seats; pneumatic reads the registry's harness.launch_cmd)")]
 launch seat='' *flags='':
-    #!/usr/bin/env bash
-    # Delegated to pneumatic (HQ ADR-0044): the bundled last-message.py is
-    # harness-UNAWARE — it builds `claude --resume` for every seat, which
-    # exits instantly for codex/other-vendor seats (field: Lector 6 of
-    # moreover, Sounder 6 of porthole — correct harness blocks, never read).
-    # pneumatic launch reads the registry's harness.launch_cmd.
-    if ! command -v pneumatic >/dev/null 2>&1; then
-        echo "❌ just launch delegates to pneumatic (harness-aware launches: claude AND codex seats)."
-        echo "   Install once:  pip install adrs4ai-pneumatic    — docs: https://adrs.systems/pneumatic"
-        echo "   (every other recipe in this justfile keeps working without it)"
-        exit 1
-    fi
-    pneumatic launch {{seat}} {{flags}}
+    @scripts/pneumatic-shim.sh launch {{quote(seat)}} {{flags}}
 
 # Backported from ADRs4AI HQ meta-repo, 2026-07-10 (Herald 5) — see its
 # docs/adr/0008-rapid-relaunch-via-vscode-terminals-manager.md for the full
@@ -315,17 +307,17 @@ blame pattern *flags:
 [group('crew')]
 [doc("List all seat-* tmux sessions with state (attached/detached)")]
 seats:
-    @python3 scripts/last-message.py --seats
+    @scripts/pneumatic-shim.sh seats
 
 [group('crew')]
 [doc("Update terminal titles for all running seat sessions")]
 update-seat-titles:
-    @python3 scripts/last-message.py --update-titles
+    @scripts/pneumatic-shim.sh update-titles
 
 [group('crew')]
 [doc("Wake a seat by sending a message to its tmux session (--force to override guards)")]
 wake seat message *flags='':
-    @python3 scripts/last-message.py --wake {{quote(seat)}} --message {{quote(message)}} {{flags}}
+    @scripts/pneumatic-shim.sh wake {{quote(seat)}} --message {{quote(message)}} {{flags}}
 
 # Block until a new brief addressed to <recipient> lands in docs/inbox/.
 # v4 semantics (caring-feedback dogfooding): wake condition = mtime > start AND

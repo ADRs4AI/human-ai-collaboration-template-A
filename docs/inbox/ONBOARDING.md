@@ -136,7 +136,7 @@ local-time offset).
 - `just inbox` / `just inbox-archive <filename>` — list / archive
 - `just crew` — who's registered, last-active, last sent/received
 - `just pulse` — per-seat health check (stalls, errors)
-- `just last <alias> [k]` — read another seat's last K messages **with
+- `just last <alias> [-k N] [--full]` — read another seat's last K messages **with
   per-message model attribution** (the drift-detection signal)
 - `just safe-commit "msg" <files...>` — commit without sweeping cross-session
   staging pollution

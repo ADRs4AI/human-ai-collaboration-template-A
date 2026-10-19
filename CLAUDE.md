@@ -289,7 +289,7 @@ project/
 │   │   └── agent-sessions.json # Crew registry: seats, colors, models, groups
 │   └── METHODOLOGY.md          # Foundational philosophy
 ├── scripts/
-│   ├── last-message.py         # Cross-session reader + wake machinery (just last / pulse / launch / wake)
+│   ├── pneumatic-shim.sh       # The crew layer's one front door: existence-check + verbatim forwarding to pneumatic (just last / pulse / launch / wake …)
 │   ├── groups-lookup.py        # Group membership resolution (just groups / wait-for-brief)
 │   ├── tmux/seat.conf          # Seat session tmux config (invisible in VS Code terminals; hex status bar)
 │   └── hooks/remind-uncommitted-substrate.py  # OPT-IN Stop hook: substrate-commit backstop (dormant by default)
