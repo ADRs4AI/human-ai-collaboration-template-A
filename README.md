@@ -219,6 +219,16 @@ This repo is the **record layer**: it travels with each project, self-contained.
 
 Home: [`ADRs4AI/plugins`](https://github.com/ADRs4AI/plugins) (Apache 2.0; versions always pinned — releases are deliberate). Once listed, it will also be installable from the Claude plugin directory on claude.ai.
 
+### The MCP server — the record's typed verbs
+
+Agents shouldn't grep a decision record; they should ask it. The [`@adrs4ai/mcp`](https://www.npmjs.com/package/@adrs4ai/mcp) server gives any MCP client — Claude Code, or anything speaking the protocol — typed verbs over the record (`list_open_questions`, `lookup`, `answer_question`, `apply_batch`, and the rest), through the format's one parser, [`@adrs4ai/docket-core`](https://www.npmjs.com/package/@adrs4ai/docket-core). Repos born from this template (v3.12 and later) already carry the stanza in `.mcp.json` at the root — a session restart loads it. Any other repo adds exactly this (the `.` is the repo the session sits in):
+
+```json
+{ "mcpServers": { "adrs4ai": { "command": "npx", "args": ["-y", "@adrs4ai/mcp", "."] } } }
+```
+
+The `adr` plugin above and this server are the same operator layer through two doors: the plugin carries the *teaching* (skills and commands), the MCP carries the *verbs*. Install both; they never conflict.
+
 ---
 
 ## Customization
