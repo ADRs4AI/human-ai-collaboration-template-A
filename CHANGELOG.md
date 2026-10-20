@@ -8,8 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- *(Open slots riding v3.12.x: marker family-form grammar, parseability contract, citation teaching, the questions-reference re-key, the prediction-Recommendation variant + attachments convention (design-shaped, consult first), directive-example neutralization, settings-allowlist defaults, tooling entry 14's pointer to the no-adrs-mirror wiring skill, the fixtures roster's remaining rows per HQ seed-2026-10-20's ANS.)*
+
+## [3.12.1] — 2026-10-20 — patch, same day: the README's MCP section rides the DOI, the stanza pins, fixtures die at birth
+
+- **README §"The MCP server — the record's typed verbs"** (Cartographer 5's pen, `1cd8e94` — landed minutes after the v3.12.0 tag, so the release artifact, DOI tarball, and schemas bundle lacked it while `main`-born instances had it; this patch closes that gap, which is its reason for existing today rather than someday).
+- **The MCP stanza pins exact — `@adrs4ai/mcp@0.1.0`** in `.mcp.json` and the tooling skill's taught example, with the pin rule taught beside it (the plugin directory's UNPINNED_NPX finding, blocking there; house update-posture A agrees — the code that installs is the code that was reviewed). Bump deliberately, release by release.
 - **Fixture files die at instantiation — enforced, not judged** (the founder's ruling, 2026-10-20: *"TEMPLATE-OUTPUT-GRANT.md should be on no repo but the template"*): `placeholders.yaml` gains a `fixtures:` section (path + why per row; a row joins only with a ruling) and `just instantiate-check` now FAILS on instances while any fixture file remains, naming each with its why — the ⟦SIGIL⟧ move applied to files, closing the judgment-call class every cold-boot report hit (porthole item 20's ~20 keep-or-delete calls; Reveille's grant-anxiety; Glazier's delete-then-flag in porthole, hereby resolved: the deletion was right). Canonical is exempt by the same origin==manifest-remote test the lock-warn uses; a repo with no manifest cannot be canonical and is checked. First row: `TEMPLATE-OUTPUT-GRANT.md` — the grant is the rights-holder's standing promise at the source; instances inherit it without carrying the paper. Roster deliberation for the other candidates (`CHANGELOG.md`, `CITATION.cff`, `.zenodo.json`, `NOTICE` — the last pending Covenant's §4-vs-grant read) + the kintsugi-manifest disposition: HQ `seed-2026-10-20-fixture-files-die-at-birth`.
-- *(Open slots riding v3.12.x: marker family-form grammar, parseability contract, citation teaching, the questions-reference re-key, the prediction-Recommendation variant + attachments convention (design-shaped, consult first), directive-example neutralization, settings-allowlist defaults, tooling entry 14's pointer to the no-adrs-mirror wiring skill.)*
 
 ## [3.12.0] — 2026-10-20 — the plugin release: the operator layer ships, the MCP wires in, Apache 2.0
 
