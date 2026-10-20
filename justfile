@@ -557,14 +557,36 @@ instantiate-check:
             LOCKWARN="⚠️  kintsugi.yaml present with NO kintsugi.lock — this instance is adopted-but-never-wired: no template fix will ever reach it. Run: kintsugi adopt"
         fi
     fi
-    if [[ -z "$HITS" ]]; then
-        echo "✅ instantiation complete — no ⟦SIGIL⟧ placeholders remain"
+    # Fixture files die at instantiation (the founder's ruling 2026-10-20;
+    # the registry's fixtures: section says why each row exists). Canonical
+    # keeps them by design — same origin==canonical-remote test as above;
+    # a repo with NO kintsugi.yaml cannot be canonical, so it is checked.
+    FIXHITS=""
+    IS_CANON=""
+    if [[ -f kintsugi.yaml ]]; then
+        CANON_R=$(grep -m1 '^  remote:' kintsugi.yaml | sed 's/^  remote: *//')
+        ORIGIN_R=$(git config --get remote.origin.url 2>/dev/null | sed 's/\.git$//; s|github.com/jlumbroso/human-ai-collaboration-template-A|github.com/ADRs4AI/human-ai-collaboration-template-A|')
+        [[ -n "$ORIGIN_R" && "$ORIGIN_R" == "$CANON_R" ]] && IS_CANON=1
+    fi
+    if [[ -z "$IS_CANON" ]]; then
+        while IFS= read -r fx; do
+            [[ -n "$fx" && -e "$fx" ]] && FIXHITS="${FIXHITS}${FIXHITS:+$'\n'}${fx}"
+        done < <(grep -E '^  - path: ' "$REG" 2>/dev/null | sed 's/^  - path: *//')
+    fi
+    if [[ -z "$HITS" && -z "$FIXHITS" ]]; then
+        echo "✅ instantiation complete — no ⟦SIGIL⟧ placeholders remain, no fixture files linger"
         [[ -n "$LOCKWARN" ]] && echo "$LOCKWARN" && exit 2
         exit 0
     fi
-    echo "⟦SIGILS⟧ remaining — fill-and-delete each (file:line:⟦TOKEN⟧):"
-    echo "$HITS"
-    echo "— $(echo "$HITS" | wc -l | tr -d ' ') occurrence(s). The registry explains each token: $REG"
+    if [[ -n "$HITS" ]]; then
+        echo "⟦SIGILS⟧ remaining — fill-and-delete each (file:line:⟦TOKEN⟧):"
+        echo "$HITS"
+        echo "— $(echo "$HITS" | wc -l | tr -d ' ') occurrence(s). The registry explains each token: $REG"
+    fi
+    if [[ -n "$FIXHITS" ]]; then
+        echo "fixture files remain — template-only artifacts; DELETE each (the registry's fixtures: section says why):"
+        echo "$FIXHITS"
+    fi
     [[ -n "$LOCKWARN" ]] && echo "$LOCKWARN"
     exit 1
 

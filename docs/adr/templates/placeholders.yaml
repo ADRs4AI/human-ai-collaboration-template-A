@@ -45,3 +45,17 @@ tokens:
   GATE-WHY:
     files: [CLAUDE.md]
     note: what the gate actually catches; an unfollowable directive teaches that directives are decorative
+
+# ---------------------------------------------------------------------------
+# FIXTURE FILES — template-only artifacts that DIE AT INSTANTIATION.
+# The founder's ruling, 2026-10-20: "TEMPLATE-OUTPUT-GRANT.md should be on no
+# repo but the template." Four cold-boot reports each made ~20 keep-or-delete
+# judgment calls (porthole item 20), and a judgment call on a legal-looking
+# file loses to caution every time — so deletion is MANDATED, not judged:
+# `just instantiate-check` FAILS on an instance while any path below exists.
+# The canonical template is exempt (origin == the manifest's canonical remote,
+# the same test the lock-warn uses). A row joins this list only with a ruling;
+# roster deliberation: HQ seed-2026-10-20-fixture-files-die-at-birth.
+fixtures:
+  - path: TEMPLATE-OUTPUT-GRANT.md
+    why: the rights-holder's standing grant to instantiators — the promise lives at the source repo and covers you without the paper (ruled 2026-10-20)
