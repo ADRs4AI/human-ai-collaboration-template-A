@@ -2,7 +2,7 @@
 <!--
 adr teaching map: the example is not the teaching — these are the up-links from this file to what teaches its form; load them rather than winging it. (Sibling: the template-version marker dates the mold this file was minted from.)
   skill: adr-authoring
-  mcp: adrs-for-ai
+  mcp: adrs4ai
   plugin: adr@adrs4ai
 -->
 
