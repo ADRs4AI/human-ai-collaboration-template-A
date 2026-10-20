@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- **adr-authoring §3 gains the generic-QST class** (the founder's rule at muster, 2026-10-20, relayed by Gleaner 5: *"'QST' should not be used in any other context than to instantiate an actual specific QST"*): the token mints (`### QST:`) or points (`QST-<ID>`); in prose, write *question*. Parser-safe but signal-diluting — the №85 every-occurrence-authored principle applied to the grammar's own token. Specimen: muster ADR-0013:33, caught in a file that cites three handles correctly eight lines up.
 - *(Open slots riding v3.12.x: marker family-form grammar, parseability contract, citation teaching, the questions-reference re-key, the prediction-Recommendation variant + attachments convention (design-shaped, consult first), directive-example neutralization, settings-allowlist defaults, tooling entry 14's pointer to the no-adrs-mirror wiring skill, the fixtures roster's remaining rows per HQ seed-2026-10-20's ANS.)*
 
 ## [3.12.1] — 2026-10-20 — patch, same day: the README's MCP section rides the DOI, the stanza pins, fixtures die at birth
