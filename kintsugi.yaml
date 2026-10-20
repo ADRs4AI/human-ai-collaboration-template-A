@@ -87,6 +87,10 @@ artifacts:
     class: stencil
   scripts/tmux/seat.conf:
     class: stencil     # load-bearing for `just launch` TODAY (Grafter's hard-fail specimen, 2026-08-14: a missing copy broke Jérémie's launch; this row makes that failure class self-healing via missing-local → create); retires to pneumatic's external row when the package absorbs tmux config — Understudy's scope-call, minor bump on its day
+  scripts/pneumatic-shim.sh:
+    class: stencil     # the crew layer's one front door (ADR-0044 molt); template-maintained logic, instances never adapt it. Rowless from its v3.12.0 birth until Tender's §1b catch №4 (2026-10-20) — the shim shipped everywhere by wave-heal but would never have UPDATED
+  docs/adr/templates/placeholders.yaml:
+    class: stencil     # the ⟦SIGIL⟧ + fixtures registry — DATA the healed justfile's instantiate-check READS, so it must heal in lockstep or the check runs on a birth-era registry and silently enforces nothing (Tender's §1b catch №3, 2026-10-20: this file changed at v3.12.1 — the fixtures: section — while being undeliverable; the freshening class precisely)
 
   # pneumatic — wake/messaging/registry machinery; arrives via PyPI, never via
   # file-propagation. Visibility-only row: kintsugi reports it, never touches
@@ -123,6 +127,17 @@ artifacts:
 #     if a ruling wants the grant delivered mechanically, that becomes a
 #     row with a class chosen in their lane, on the record. (Gap found by
 #     Tender 5's §1b release check, 2026-09-11 — entries added v3.11.4.)
+#     NOTE 2026-10-20: TEMPLATE-OUTPUT-GRANT.md is now also fixtures row 1
+#     (placeholders.yaml) — instances DELETE it at instantiation by the
+#     founder's ruling; its absence here stays correct for the same reason.
+#   .zenodo.json, CITATION.cff — the TEMPLATE's own citability (its DOI, its
+#     creators): a row would propagate template-citability INTO instances,
+#     making every instance claim the template's DOI as its own — a false
+#     citation surface, the exact wrong direction. Both are fixtures-roster
+#     candidates (die at instantiation; HQ seed-2026-10-20-fixture-files-
+#     die-at-birth, rec A) — they travel by that roster's ANS, never by
+#     file-propagation. (Tender's §1b catches №3/№4 follow-through,
+#     2026-10-20 — entries added same day.)
 
 renames:                    # canonical facts, verbatim (checklist #4); re-extract before each tag
   "3.9.0":
