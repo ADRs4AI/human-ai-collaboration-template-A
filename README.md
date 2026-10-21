@@ -224,8 +224,12 @@ Home: [`ADRs4AI/plugins`](https://github.com/ADRs4AI/plugins) (Apache 2.0; versi
 Agents shouldn't grep a decision record; they should ask it. The [`@adrs4ai/mcp`](https://www.npmjs.com/package/@adrs4ai/mcp) server gives any MCP client — Claude Code, or anything speaking the protocol — typed verbs over the record (`list_open_questions`, `lookup`, `answer_question`, `apply_batch`, and the rest), through the format's one parser, [`@adrs4ai/docket-core`](https://www.npmjs.com/package/@adrs4ai/docket-core). Repos born from this template (v3.12 and later) already carry the stanza in `.mcp.json` at the root — a session restart loads it. Any other repo adds exactly this (the `.` is the repo the session sits in):
 
 ```json
-{ "mcpServers": { "adrs4ai": { "command": "npx", "args": ["-y", "@adrs4ai/mcp", "."] } } }
+{ "mcpServers": { "adrs4ai": { "command": "npx", "args": ["-y", "@adrs4ai/mcp@0.1.1", "."] } } }
 ```
+
+(Pin the exact version and bump deliberately — the code that installs is the code that was reviewed.)
+
+The same verbs answer in any shell without a session: **the CLI, the record's second mouth** — [`@adrs4ai/docket`](https://www.npmjs.com/package/@adrs4ai/docket), always invoked scoped (`npx -y @adrs4ai/docket list-open`, never bare `docket`). Twelve clerking verbs plus the `tour` group, writes dry-run by default (`--apply`), and one law on its face: *exit codes certify structure, never readiness*.
 
 The `adr` plugin above and this server are the same operator layer through two doors: the plugin carries the *teaching* (skills and commands), the MCP carries the *verbs*. Install both; they never conflict.
 
