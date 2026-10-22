@@ -290,6 +290,17 @@ pulse *flags:
 launch seat='' *flags='':
     @scripts/pneumatic-shim.sh launch {{quote(seat)}} {{flags}}
 
+# FOUND a NEW seat (vs launch = an existing one). Consent-first by design:
+# the brief is delivered, the chair is held, and REGISTRATION IS THE
+# RECRUIT'S OWN ACT — never hand-edit agent-sessions.json to pre-create the
+# alias (a pre-inserted row breaks the consent choreography; field specimen
+# cam-hq 2026-10-22, where this verb's absence from the justfile was the
+# reason a seat hand-rolled a founding). Declining is honored (exit 20).
+[group('crew')]
+[doc("Found a NEW seat, consent-first: just recruit 'claude-sonnet-5' docs/inbox/<founding-brief>.md — any supported harness; see pneumatic recruit --help")]
+recruit model_spec brief='' *flags='':
+    @scripts/pneumatic-shim.sh recruit {{quote(model_spec)}} {{quote(brief)}} {{flags}}
+
 # Backported from ADRs4AI HQ meta-repo, 2026-07-10 (Herald 5) — see its
 # docs/adr/0008-rapid-relaunch-via-vscode-terminals-manager.md for the full
 # design record. Generates .vscode/terminals.json for the VS Code Terminals

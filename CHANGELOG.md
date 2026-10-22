@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- **Founding gets its verb on the muscle-memory surface — `just recruit`** (field specimen, cam-hq 2026-10-22: a twice-compacted seat asked to recruit hand-edited the registry and hand-rolled a founding — `pneumatic recruit` existed and was good, but the justfile's ten-shim molt never included it, and `just --list` is where seats discover verbs; the founder: "that's not good, we need to debug this"): the justfile gains the `recruit` shim (quote()-disciplined, verbatim forwarding, the launch-vs-recruit distinction in its doc line) and ONBOARDING §3 gains the RULE — founding is one verb; **registration is the recruit's own act, it IS the consent; never pre-create their alias** (the pre-inserted row was the specimen's second failure). The abort-verb gap the same specimen hit (`recruit` has no cancel; manual tmux-kill + rescue was the only path) is routed to pneumatic's lane. Same-day proof the verb's own UX is clean: Assayer 5's founding ran it with zero friction.
 - *(Open slots riding v3.12.x: marker family-form grammar, parseability contract, citation teaching, the questions-reference re-key, the prediction-Recommendation variant + attachments convention (design-shaped, consult first), directive-example neutralization, settings-allowlist defaults, the fixtures roster's remaining rows per HQ seed-2026-10-20's ANS.)*
 
 ## [3.12.2] — 2026-10-21 — the second mouth: the CLI teaches everywhere the MCP does, and the fixtures law learns to heal

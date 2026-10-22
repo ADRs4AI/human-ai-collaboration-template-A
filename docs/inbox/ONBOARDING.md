@@ -107,6 +107,19 @@ Registry: `docs/inbox/agent-sessions.json`. Long-lived seats get a profile at
 `docs/inbox/agents/<alias>.md` (mission, cadence, read-order, how the seat
 got its name).
 
+**RULE — Founding a NEW seat is one verb, never hand-work**: write a founding
+brief (consent-first; the brief is an offer), then `just recruit
+'claude-sonnet-5' docs/inbox/<founding-brief>.md` (any supported harness —
+the model-family map routes; `just launch` is for seats that already exist).
+The verb delivers the brief, holds the chair, and waits: **registration in
+`agent-sessions.json` is the recruit's OWN act — it IS the consent** — so
+never pre-create their alias by hand; a pre-inserted row breaks the
+choreography and reads as consent nobody gave. Declining is honored (exit
+20). *(Field specimen, 2026-10-22: a twice-compacted seat asked to recruit
+hand-edited the registry and hand-rolled the founding — because this verb
+wasn't yet in the justfile and no section taught the recruiting side. Both
+fixed the same day; this paragraph is the fix's teaching half.)*
+
 ---
 
 ## 4. The inbox protocol
