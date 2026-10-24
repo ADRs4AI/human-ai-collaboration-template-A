@@ -164,20 +164,20 @@ inbox-archive filename:
 [group('inbox')]
 [doc("Read a seat's last messages: just last <alias> [-k N] [--full] — flags forward to pneumatic verbatim")]
 last alias *flags:
-    @scripts/pneumatic-shim.sh last {{quote(alias)}} {{flags}}
+    @bash scripts/pneumatic-shim.sh last {{quote(alias)}} {{flags}}
 
 # Same as `last --full` — kept as its own verb for taught muscle memory.
 [group('inbox')]
 [doc("Read a seat's last messages, untruncated: just last-full <alias> [-k N]")]
 last-full alias *flags:
-    @scripts/pneumatic-shim.sh last {{quote(alias)}} --full {{flags}}
+    @bash scripts/pneumatic-shim.sh last {{quote(alias)}} --full {{flags}}
 
 # List configured agent → session-UUID aliases. Edit
 # docs/inbox/agent-sessions.json to add or update.
 [group('inbox')]
 [doc("List configured agent session aliases (docs/inbox/agent-sessions.json)")]
 aliases:
-    @scripts/pneumatic-shim.sh aliases
+    @bash scripts/pneumatic-shim.sh aliases
 
 # Print a seat's read_order — its onboarding packet as data, not prose.
 # Invented by Notary Opus 4.7 (crossfoot, 2026-07-09); backported by
@@ -186,14 +186,14 @@ aliases:
 [group('inbox')]
 [doc("Print a seat's onboarding read_order, with found/missing markers: just onboard <alias>")]
 onboard alias:
-    @scripts/pneumatic-shim.sh onboard {{quote(alias)}}
+    @bash scripts/pneumatic-shim.sh onboard {{quote(alias)}}
 
 # List recent session JSONLs in the storage dir. Use this to find UUIDs for
 # new agents and populate docs/inbox/agent-sessions.json.
 [group('inbox')]
 [doc("Discover recent session JSONLs in this project (find UUIDs for new aliases)")]
 discover-sessions:
-    @scripts/pneumatic-shim.sh discover
+    @bash scripts/pneumatic-shim.sh discover
 
 # ─── crew — named seats, groups, health, wait discipline ─────────────────────
 #
@@ -272,7 +272,7 @@ crew:
 [group('crew')]
 [doc("Health check all seats: detect stalls, errors, blocked states")]
 pulse *flags:
-    @scripts/pneumatic-shim.sh pulse {{flags}}
+    @bash scripts/pneumatic-shim.sh pulse {{flags}}
 
 # ─── wake infrastructure (ported from caring-feedback, ADR-0050 lineage) ─────
 #
@@ -288,7 +288,7 @@ pulse *flags:
 [group('crew')]
 [doc("Launch (or attach to) a seat's tmux session — harness-aware (claude AND codex seats; pneumatic reads the registry's harness.launch_cmd)")]
 launch seat='' *flags='':
-    @scripts/pneumatic-shim.sh launch {{quote(seat)}} {{flags}}
+    @bash scripts/pneumatic-shim.sh launch {{quote(seat)}} {{flags}}
 
 # FOUND a NEW seat (vs launch = an existing one). Consent-first by design:
 # the brief is delivered, the chair is held, and REGISTRATION IS THE
@@ -299,7 +299,7 @@ launch seat='' *flags='':
 [group('crew')]
 [doc("Found a NEW seat, consent-first: just recruit 'claude-sonnet-5' docs/inbox/<founding-brief>.md — any supported harness; see pneumatic recruit --help")]
 recruit model_spec brief='' *flags='':
-    @scripts/pneumatic-shim.sh recruit {{quote(model_spec)}} {{quote(brief)}} {{flags}}
+    @bash scripts/pneumatic-shim.sh recruit {{quote(model_spec)}} {{quote(brief)}} {{flags}}
 
 # Backported from ADRs4AI HQ meta-repo, 2026-07-10 (Herald 5) — see its
 # docs/adr/0008-rapid-relaunch-via-vscode-terminals-manager.md for the full
@@ -318,17 +318,17 @@ blame pattern *flags:
 [group('crew')]
 [doc("List all seat-* tmux sessions with state (attached/detached)")]
 seats:
-    @scripts/pneumatic-shim.sh seats
+    @bash scripts/pneumatic-shim.sh seats
 
 [group('crew')]
 [doc("Update terminal titles for all running seat sessions")]
 update-seat-titles:
-    @scripts/pneumatic-shim.sh update-titles
+    @bash scripts/pneumatic-shim.sh update-titles
 
 [group('crew')]
 [doc("Wake a seat by sending a message to its tmux session (--force to override guards)")]
 wake seat message *flags='':
-    @scripts/pneumatic-shim.sh wake {{quote(seat)}} --message {{quote(message)}} {{flags}}
+    @bash scripts/pneumatic-shim.sh wake {{quote(seat)}} --message {{quote(message)}} {{flags}}
 
 # Block until a new brief addressed to <recipient> lands in docs/inbox/.
 # v4 semantics (caring-feedback dogfooding): wake condition = mtime > start AND

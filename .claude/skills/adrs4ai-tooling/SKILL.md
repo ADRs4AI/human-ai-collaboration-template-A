@@ -3,7 +3,7 @@ name: adrs4ai-tooling
 description: Use when the human or the session needs the ADRs4AI toolchain — a tool is missing (a crew recipe fails, kintsugi.yaml sits at root with no kintsugi installed, no MCP tools in session), the human asks how to install or launch anything (VS Code, the ADR Manager extension, terminals, seat colors), a fresh hive is being set up, OR this session is in a repo that is not a template instance at all and wants the methodology. Every integration teaches as detect → explain → offer → verify, in the register of whoever is asking.
 ---
 
-<!-- skill version: "adrs4ai-tooling 3.12.0" — co-versioned with human-ai-collaboration-template-A; commissioned by the founder 2026-09-26 (HQ ADR-0040): "the seats ARE the interface to the toolchain" -->
+<!-- skill version: "adrs4ai-tooling 3.12.3" — co-versioned with human-ai-collaboration-template-A; commissioned by the founder 2026-09-26 (HQ ADR-0040): "the seats ARE the interface to the toolchain" -->
 
 # The toolchain: detect, explain, offer, verify
 
