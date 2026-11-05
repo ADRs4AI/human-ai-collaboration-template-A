@@ -10,6 +10,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - *(Open slots riding v3.12.x: marker family-form grammar, parseability contract, citation teaching, the questions-reference re-key, the prediction-Recommendation variant + attachments convention (design-shaped, consult first), directive-example neutralization, settings-allowlist defaults, the fixtures roster's remaining rows per HQ seed-2026-10-20's ANS, crossfoot's failure-class graduation candidates (Tender 0039 §4.1 — field-derived, read their richer copy first).)*
 
+## [3.12.4] — 2026-11-05 — the strangers' reviews bite: the founder's name leaves every clone, two crashed recipes return, consent un-pre-signs
+
+*(Source: three external review rounds of the getting-started guidebook walking this template at `081555a` — Lapidary-of-CAM's brief 2026-11-05-0938, forwarded at the founder's explicit instruction. The first defect is the founder's own catch by name.)*
+
+- **⟦HUMAN-NAME⟧ — the founder's name no longer ships in every clone**: `.vscode/settings.json` hardcoded `adrManager.humanName: "Jérémie Lumbroso"`, pre-filling Deciders and "Answering as" — **every stranger's answers were bylined as him**, and no sigil meant `instantiate-check` passed silently. Now a registry token (`placeholders.yaml` row, `.vscode/settings.json` in its files list), so the check catches it at birth. Attribution is the method's point; this token guards it.
+- **`just refresh-terminals` and `just blame` run again** — both path-loaded the removed `last-message.py` (the 3.0.0 molt left dangling loads; `FileNotFoundError` at HEAD for every consumer, reviewer-reproduced; the guidebook cut its crew-launch step over it). Fix: `scripts/registry_lib.py` — the eight registry/tmux/color helpers extracted VERBATIM from the removed module's last revision (provenance in its header; ast-closure computed, runtime-verified), both loaders now one `import`. NOT the fork returning: pneumatic still absorbs this at the refresh-terminals port.
+- **`enableAllProjectMcpServers: false`** — `true` pre-signed MCP consent for every stranger clone (trust → auto-approve → `npx` not found → a silently failed server, and the approval prompt never appears). The template's own philosophy, applied to itself: consent is enacted, never pre-signed.
+- **The teal goes announced**: QUICK-START opens with the heads-up (window turns teal, built-in AI goes quiet, updates manual — on purpose, reversible, the why in the quiet-window entry) — the doctrine was defensible, the silence wasn't.
+- **README gains "The permission surface, honestly"**: which gates are technical controls (the *ask* rows) and which are collaboration rules (discipline + record) — anyone teaching consent over this template now has the distinction on the template's own face.
+
+
 ## [3.12.3] — 2026-10-23 — launch-eve polish: founding on the muscle-memory surface, the shim armored, stamps trued
 
 - **The justfile's shim calls armored against the kintsugi mode-drop bug** (Tender's wave census 10-23: `kintsugi create`/replace writes bytes but drops `100755` → the shim arrived non-executable in 30/38 hives, latent until a justfile execs it): all eleven crew-verb recipes now invoke `bash scripts/pneumatic-shim.sh …` — mode-proof by construction, so a fresh instance whose checkout lost the exec bit keeps every crew verb on day one. The real fix (mode-preserving create/replace/take) is kintsugi's, routed with Tender's reproducer; this is the stencil's own armor meanwhile.

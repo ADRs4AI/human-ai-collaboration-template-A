@@ -136,7 +136,7 @@
             "Read(Pipfile.lock)"
         ]
     },
-    "enableAllProjectMcpServers": true,
+    "enableAllProjectMcpServers": false,
     "enabledMcpjsonServers": [],
     "disabledPlugins": [],
     "enableAllGlobalMcpServers": false,

@@ -45,6 +45,9 @@ tokens:
   GATE-WHY:
     files: [CLAUDE.md]
     note: what the gate actually catches; an unfollowable directive teaches that directives are decorative
+  HUMAN-NAME:
+    files: [.vscode/settings.json]
+    note: the human the ADR Manager bylines ("Answering as", Deciders pre-fill) — shipped as the founder's own name, unsigiled, through three releases, bylining every stranger's answers as him (Lapidary's reviewers, 2026-11-05); attribution is the method's point, so this token guards it
 
 # ---------------------------------------------------------------------------
 # FIXTURE FILES — template-only artifacts that DIE AT INSTANTIATION.

@@ -60,10 +60,12 @@ from zoneinfo import ZoneInfo
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_LM_PATH = REPO_ROOT / "scripts" / "last-message.py"
-_spec = importlib.util.spec_from_file_location("last_message", _LM_PATH)
-last_message = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(last_message)
+# Helpers come from scripts/registry_lib.py — the verbatim subset extracted
+# when the ADR-0044 molt removed last-message.py (this path-load crashed at
+# HEAD; see registry_lib.py's header for provenance).
+import sys as _sys
+_sys.path.insert(0, str(REPO_ROOT / "scripts"))
+import registry_lib as last_message  # keeps every call site unchanged
 
 FILE_TOOLS = {"Write", "Edit", "MultiEdit", "NotebookEdit"}
 READ_TOOLS = {"Read"}

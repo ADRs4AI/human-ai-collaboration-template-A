@@ -4,6 +4,13 @@
 
 ---
 
+> **Heads-up, first open**: your VS Code window will turn **teal** and go
+> **quiet** — built-in AI chat/completions off, updates set to manual. That's
+> this template, on purpose (anti-ambient, never anti-AI: the collaborator is
+> invited deliberately, in a terminal), and it's all in `.vscode/settings.json`
+> — recolor or re-enable anything; the why lives in the tooling skill's "quiet
+> window" entry.
+
 ## 30-Second Overview
 
 This system preserves valuable conversations by turning them into persistent artifacts.

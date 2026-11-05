@@ -93,15 +93,15 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 TERMINALS_TXT = REPO_ROOT / ".vscode" / "terminals.txt"
 TERMINALS_JSON = REPO_ROOT / ".vscode" / "terminals.json"
 
-# ─── Reuse last-message.py's own registry/color logic rather than
-# re-deriving it — a dash in the filename makes it an invalid module name for
-# a normal `import`, so it's loaded by path instead. Keeps color resolution
-# (settings.color_hex → named color → gray) identical to what the tmux
-# status bar already shows for the same seat. ────────────────────────────────
-_LM_PATH = REPO_ROOT / "scripts" / "last-message.py"
-_spec = importlib.util.spec_from_file_location("last_message", _LM_PATH)
-last_message = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(last_message)
+# ─── Registry/color/tmux helpers come from scripts/registry_lib.py — the
+# verbatim subset extracted when the ADR-0044 molt removed last-message.py
+# (this script path-loaded the removed file and crashed at HEAD for every
+# consumer; Lapidary-of-CAM's reviewers reproduced it, 2026-11-05). Color
+# resolution (settings.color_hex → named color → gray) stays identical to
+# what the tmux status bar shows for the same seat. ─────────────────────────
+import sys as _sys
+_sys.path.insert(0, str(REPO_ROOT / "scripts"))
+import registry_lib as last_message  # keeps every call site unchanged
 
 ICON = "robot"  # Confirmed present in VS Code's bundled @vscode/codicons set.
 MAX_DESCRIPTION_LENGTH = 100

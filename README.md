@@ -208,6 +208,10 @@ This system optimized for the reality of Claude Code:
 - **`METHODOLOGY.md` explains**: Why we do it
 - **Templates provide**: Structure when needed
 
+### The permission surface, honestly
+
+`.claude/settings.json` ships a working allowlist (broad `git`/`gh`/`npm`/`brew`, with `git push`, `rm`, and kin under *ask*), and project MCP servers are **not** pre-approved — your collaborator's first server use asks you, because consent is enacted, never pre-signed. Two different kinds of gate live here, and teaching over this template should never conflate them: the *ask* rows are **technical controls** (the harness stops and asks); everything else — commit-by-pathspec, answers-are-yours, the directives — is a **collaboration rule**, held by discipline and record, not by machinery. Both are real; only one is enforced by software. Tighten or loosen either in your own instance deliberately.
+
 ### The plugin — the methodology that follows the person
 
 This repo is the **record layer**: it travels with each project, self-contained. The **operator layer** — the `adr-authoring`, `adrs4ai-tooling`, and `question-tours` skills plus `/adr:new`, `/adr:unanswered`, `/adr:qst-lint` commands — also ships as a Claude Code **plugin**, so the teaching follows *you* across every repo, template-adopted or not:
