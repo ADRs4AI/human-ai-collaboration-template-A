@@ -10,6 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - *(Open slots riding v3.12.x: marker family-form grammar, parseability contract, citation teaching, the questions-reference re-key, the prediction-Recommendation variant + attachments convention (design-shaped, consult first), directive-example neutralization, settings-allowlist defaults, the fixtures roster's remaining rows per HQ seed-2026-10-20's ANS, crossfoot's failure-class graduation candidates (Tender 0039 §4.1 — field-derived, read their richer copy first).)*
 
+## [3.12.5] — 2026-11-16 — catch №6: the vendored trio graduates to rows (verbs and engines travel together)
+
+- **`refresh-terminals.py`, `blame.py`, `registry_lib.py` gain stencil rows** (Tender's §1b catch №6 — the founder's own live hard-fail: `just refresh-terminals --all` in a justfile-CREATE hive hit "can't open scripts/refresh-terminals.py", because the justfile *rows* while its engines sat absence-blocked; catch №5 with the polarity flipped, and the travels-or-rests-together clause enacted the hard way). The 2026-08-10 "transition state, never rowed" ruling takes the **seat.conf retraction** — its own 2026-08-14 precedent: while the justfile ships the verb, the engine is a template artifact in fact. The rows carry the retirement clause: the trio leaves together at the pneumatic port (Understudy's scope-call), and kintsugi-created hives now receive working verbs mechanically — Tender's hand-delivery playbook line retires.
+
+
 ## [3.12.4] — 2026-11-05 — the strangers' reviews bite: the founder's name leaves every clone, two crashed recipes return, consent un-pre-signs
 
 *(Source: three external review rounds of the getting-started guidebook walking this template at `081555a` — Lapidary-of-CAM's brief 2026-11-05-0938, forwarded at the founder's explicit instruction. The first defect is the founder's own catch by name.)*

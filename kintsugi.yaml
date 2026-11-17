@@ -89,6 +89,12 @@ artifacts:
     class: stencil     # load-bearing for `just launch` TODAY (Grafter's hard-fail specimen, 2026-08-14: a missing copy broke Jérémie's launch; this row makes that failure class self-healing via missing-local → create); retires to pneumatic's external row when the package absorbs tmux config — Understudy's scope-call, minor bump on its day
   scripts/pneumatic-shim.sh:
     class: stencil     # the crew layer's one front door (ADR-0044 molt); template-maintained logic, instances never adapt it. Rowless from its v3.12.0 birth until Tender's §1b catch №4 (2026-10-20) — the shim shipped everywhere by wave-heal but would never have UPDATED
+  scripts/refresh-terminals.py:
+    class: stencil     # ROWED at v3.12.5 by the founder's own live hard-fail (Tender §1b catch №6, 2026-11-16: a justfile-CREATE hive got the verb without the engine — "can't open scripts/refresh-terminals.py"). The 2026-08-10 "transition state, never rowed" ruling takes the seat.conf retraction (2026-08-14's own precedent): while the justfile ships the verb, the engine is a template artifact in fact. Retires to pneumatic at the port (Understudy's scope-call) — row and recipe leave together
+  scripts/blame.py:
+    class: stencil     # same catch, same retraction, same retirement clause as refresh-terminals.py above
+  scripts/registry_lib.py:
+    class: stencil     # their shared helpers (extracted verbatim at v3.12.4); the travels-or-rests-together clause enacted — the trio rows together, retires together at the pneumatic port
   docs/adr/templates/placeholders.yaml:
     class: stencil     # the ⟦SIGIL⟧ + fixtures registry — DATA the healed justfile's instantiate-check READS, so it must heal in lockstep or the check runs on a birth-era registry and silently enforces nothing (Tender's §1b catch №3, 2026-10-20: this file changed at v3.12.1 — the fixtures: section — while being undeliverable; the freshening class precisely)
 
@@ -105,15 +111,14 @@ artifacts:
 
 # Deliberately UNTRACKED — legible absences (enumeration doctrine: every path
 # gets a row or a reason):
-#   scripts/blame.py, scripts/refresh-terminals.py, scripts/registry_lib.py —
-#     vendored pneumatic precursors (ruling 2026-08-10): transition state, not
-#     template artifacts; the external row above is their forwarding address.
-#     registry_lib.py joined at v3.12.4 (their shared helpers, extracted
-#     verbatim when the molt's removal of last-message.py left both importers
-#     crashing — Tender's §1b catch №5: it shipped UNROWED at the tag, the
-#     exact class catches №3/№4 taught; this line is the reason it gets).
-#     last-message.py itself LEFT at 3.0.0 — the trio travels or rests
-#     together; if any gains a row, all three must.
+#   (the vendored trio — blame.py, refresh-terminals.py, registry_lib.py —
+#     GRADUATED from this absence block to stencil rows above at v3.12.5:
+#     Tender's §1b catch №6, the founder's own live hard-fail in a
+#     justfile-create hive proved the recipes ship the verbs, so the engines
+#     are template artifacts in fact. Their history here: absence ruled
+#     2026-08-10; registry_lib joined at №5; last-message.py left at 3.0.0.
+#     The retirement clause rides the rows — the trio leaves together at the
+#     pneumatic port.)
 #     (seat.conf was originally in this list; a field hard-fail specimen argued
 #     it into a stencil row above — amendment 2026-08-14, the ruling's honest
 #     quarter-retraction on the one file that is config-not-logic.)
